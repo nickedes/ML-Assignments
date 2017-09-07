@@ -1,6 +1,8 @@
 from sklearn.datasets import load_svmlight_file
+from collections import Counter
 import numpy as np
 import sys
+
 
 def predict(Xtr, Ytr, Xts, metric=None):
 
@@ -13,15 +15,27 @@ def predict(Xtr, Ytr, Xts, metric=None):
         metric = np.identity(D)
 
     Yts = np.zeros((Xts.shape[0], 1))
-
+    dists = np.zeros((2, Xtr.shape[0]))
+    # No. of nearest neighbours
+    k = 10
     for i in range(Xts.shape[0]):
         '''
         Predict labels for test data using k-NN. Specify your tuned value of k here
+        Calculate metric distance, the diagonal contains distances after performing matrix opns using broadcasting
         '''
-
+        print("i=", i)
+        dists[0] = np.diag(
+            np.sqrt(np.dot(np.dot((Xtr[:, np.newaxis] - Xts[i]), metric), (Xtr[:, np.newaxis] - Xts[i]).T)))
+        dists[1] = Ytr
+        transpose = dists.T
+        predictions = transpose[transpose[:, 0].argsort()]
+        y_predictions = predictions.T.astype(int)
+        Yts[i] = Counter(
+            y_predictions[1][:k]).most_common(1)[0][0]
     return Yts
 
-def main(): 
+
+def main():
 
     # Get training and testing file names from the command line
     traindatafile = sys.argv[1]
@@ -30,24 +44,25 @@ def main():
     # The training file is in libSVM format
     tr_data = load_svmlight_file(traindatafile)
 
-    Xtr = tr_data[0].toarray();
-    Ytr = tr_data[1];
+    Xtr = tr_data[0].toarray()
+    Ytr = tr_data[1]
 
     # The testing file is in libSVM format too
     ts_data = load_svmlight_file(testdatafile)
 
-    Xts = ts_data[0].toarray();
-    # The test labels are useless for prediction. They are only used for evaluation
+    Xts = ts_data[0].toarray()
+    # The test labels are useless for prediction. They are only used for
+    # evaluation
 
     # Load the learned metric
     metric = np.load("model.npy")
 
     ### Do soemthing (if required) ###
 
+    # Get the predicted values of labels
     Yts = predict(Xtr, Ytr, Xts, metric)
-
     # Save predictions to a file
-	# Warning: do not change this file name
+    # Warning: do not change this file name
     np.savetxt("testY.dat", Yts)
 
 if __name__ == '__main__':
