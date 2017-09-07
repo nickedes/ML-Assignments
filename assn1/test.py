@@ -25,7 +25,7 @@ def predict(Xtr, Ytr, Xts, metric=None):
         '''
         print("i=", i)
         dists[0] = np.diag(
-            np.sqrt(np.dot(np.dot((Xtr[:, np.newaxis] - Xts[i]), metric), (Xtr[:, np.newaxis] - Xts[i]).T)))
+            np.dot(np.dot((Xtr - Xts[i]), metric), (Xtr - Xts[i]).T))
         dists[1] = Ytr
         transpose = dists.T
         predictions = transpose[transpose[:, 0].argsort()]
