@@ -24,8 +24,11 @@ def predict(Xtr, Ytr, Xts, metric=None):
         Calculate metric distance, the diagonal contains distances after performing matrix opns using broadcasting
         '''
         print("i=", i)
-        dists[0] = np.diag(
-            np.dot(np.dot((Xtr - Xts[i]), metric), (Xtr - Xts[i]).T))
+        difference = Xtr - Xts[i]
+        # product = difference * metric
+        product = np.dot(difference, metric)
+        # get only diagonal elements from result of product.difference.T
+        dists[0] = np.einsum('ij,ji->i', product, difference.T)
         dists[1] = Ytr
         transpose = dists.T
         predictions = transpose[transpose[:, 0].argsort()]
