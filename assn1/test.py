@@ -23,7 +23,6 @@ def predict(Xtr, Ytr, Xts, metric=None):
         Predict labels for test data using k-NN. Specify your tuned value of k here
         Calculate metric distance, the diagonal contains distances after performing matrix opns using broadcasting
         '''
-        print("i=", i)
         difference = Xtr - Xts[i]
         # product = difference * metric
         product = np.dot(difference, metric)
