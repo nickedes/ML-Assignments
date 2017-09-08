@@ -103,7 +103,7 @@ The mathematical expression for the decision boundary is :\\
 \centering
 \includegraphics[width=0.3\columnwidth]{proto_blank.png}%
 \hfill
-\includegraphics[width=0.5\columnwidth]{Q1-1.png}%
+\includegraphics[width=0.6\columnwidth]{Q1-1-1.png}%
 \caption{Learning with Prototypes: the figure on the left shows the two prototypes. The figure on the right shows what the decision boundary if the distance measure used is $d(\vz^1,\vz^2) = \left \langle \vz^1-\vz^2, V (\vz^1-\vz^2) \right \rangle$, for any two points $\vz^1,\vz^2 \in \bR^2$. The decision boundary in this case is the line $y = 3x-1$.}%
 \label{fig:proto1}%
 \end{figure}
@@ -189,13 +189,13 @@ Then, d\left ( \mu_{+}, \space z \right ) - d\left ( \mu_{-}, \space z \right ) 
 x = \frac{1}{2} \\
 \end{math}\\
 The mathematical expression for the decision boundary is :\\
-\begin{center} \begin{math} x = \frac{1}{2} \end{math} \end{center}
+\begin{center} \begin{math} \boxed{x = \frac{1}{2}} \end{math} \end{center}
 
 \begin{figure}[th]%
 \centering
 \includegraphics[width=0.3\columnwidth]{proto_blank.png}%
 \hfill
-\includegraphics[width=0.6\columnwidth]{Q1-2.png}%
+\includegraphics[width=0.7\columnwidth]{Q1-2-1.png}%
 \caption{Learning with Protypes: the figure on the left shows the two prototypes. The figure on the right shows what the decision boundary if the distance measure used is $d(\vz^1,\vz^2) =\left \langle \vz^1-\vz^2, U (\vz^1-\vz^2) \right \rangle$, for any two points $\vz^1,\vz^2 \in \bR^2$. The decision boundary in this case is the line $x = 1/2$.}%
 \label{fig:proto2}%
 \end{figure}
@@ -335,10 +335,12 @@ So Equation 1 changes to :\\
 
 \begin{math}
 \;\;\;\;s.t. \left \langle \textbf{w}^{y^{i}}, x^{i} \right \rangle \geq \left \langle \textbf{w}^{k}, x^{i} \right \rangle + 1 - \xi_{i}\; , \forall i\; \forall k\neq y^{i} \\
+\end{math}\\
+
+\begin{math}
 \; \; \; \; \xi_{i} \geq 0, \forall i
 \end{math}
-
-So \begin{math}\widehat{\xi _{i}}\end{math} is for every data point.
+So \begin{math}\widehat{\xi _{i}}\end{math} is for every data point.\\
 
 The given constraint: \; \; \begin{math} \left \langle \textbf{w}^{y^{i}}, x^{i} \right \rangle \geq \left \langle \textbf{w}^{k}, x^{i} \right \rangle + 1 - \xi_{i}\; , \forall i\; \forall k\neq y^{i} \\ \end{math} \\
 
@@ -353,19 +355,27 @@ So we can safely say that :
 \xi_{i} = \max\left (   1 + \left \langle \textbf{w}^{k}, x^{i} \right \rangle - \left \langle \textbf{w}^{y^{i}}, x^{i} \right \rangle \; \right ), \forall i,\; \forall k\neq y^{i} \\
 \end{math}
 
-As,\begin{math} \eta ^{i} = \left \langle \textbf{W}, \textbf{x}^{i} \right \rangle \Rightarrow \eta_{k} ^{i} = \left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle  and \;\eta_{y} ^{i} = \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle \end{math}
+As,\begin{math} \eta ^{i} = \left \langle \textbf{W}, \textbf{x}^{i} \right \rangle \Rightarrow \eta_{k} ^{i} = \left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle  and \;\eta_{y} ^{i} = \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle \end{math}\\
 
-Since \begin{math} \xi_{i}\end{math} satisfies all the conditions, hence it is correct to assume that \begin{math} \xi_{i}\end{math} will be the maximum value among all the inequalities.\\
+\begin{math}
+\xi_{i} \geq 1 + \eta_{k}^{i} - \eta_{y} ^{i} \;\;\; \forall k\neq y^{i} \\
+\end{math}
 
-\begin{math}\xi_{i} = \max \left ( 1 + \eta_{k}^{i} - \eta_{y} ^{i} \right ), k\neq y\end{math}
+\begin{math}
+\xi_{i}
+\end{math} is evaluated for all \begin{math}\textbf{w} \in \textbf{W}\end{math}, except for k \begin{math}\neq\end{math} y. We will take the largest possible value for \begin{math}\xi_{i}\end{math}. So \begin{math}\xi_{i}\end{math} will be maximum only when \begin{math}\eta_{k}\end{math} is maximum, satisfying the condition that \begin{math}k \neq y\end{math}.\\
 
-\begin{math}\xi_{i} =   1 + \underset{k\neq y}{\max} \;\eta_{k}^{i} - \eta_{y} ^{i}  \;and\; \xi_{i}\geq 0\end{math}
+So \begin{math}\xi_{i}\end{math} can be s.t., \begin{math}
+\xi_{i} \geq 1 + \max \eta_{k}^{i} - \eta_{y} ^{i} \;\;\; \forall k\neq y^{i} \\
+\end{math}, but because of the objective we will not want to set it any larger than necessary. As setting larger than that value will be unnecessary in the objective.\\
+
+\begin{math}\xi_{i} =   1 + \underset{k\neq y}{\max} \;\eta_{k}^{i} - \eta_{y} ^{i}  \end{math}\;and\;\begin{math} \xi_{i}\geq 0\end{math}
 
 Therefore \begin{math} \xi_{i}\end{math} is always a positive function and can be written as :
 
 \begin{math}\xi_{i} =   \left [  1 + \underset{k\neq y}{\max} \;\eta_{k}^{i} - \eta_{y} ^{i}\;\right ]_{+}\end{math}
 
-The above is same as \begin{math} l_{cs}\left ( y^{i},\eta ^{i} \right ) \end{math}.\\ 
+The above is same as \begin{math} l_{cs}\left ( y^{i},\eta ^{i} \right ) \end{math}.\\ It is called as the crammer-singer loss function.
 
 Hence, \begin{math} l_{cs}\left ( y^{i},\eta ^{i} \right ) = \xi _{i} \end{math}\\
 
@@ -389,9 +399,9 @@ As stated \begin{math} l_{cs}\left ( y^{i},\eta ^{i} \right ) \end{math}.\\
 
 Hence \begin{math} l_{cs} = \xi_{i}^{0}\end{math}, So the problem (P2) after plugging the value of \begin{math} l_{cs} \end{math} becomes similar to (P1).\\
 
-(P2) is :\\\\
+(P2) is :\\
 
-\begin{math}\left \{ \widehat{\textbf{W}} \right \} = \underset{\textbf{}}{arg} \; \underset{  \textbf{W}}{min} \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} l _{cs}\left ( y^{i}, \eta ^{i} \right )\end{math}
+\begin{math}\left \{ \widehat{\textbf{W}} \right \} = \underset{\textbf{}}{arg} \; \underset{  \textbf{W}}{min} \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} l _{cs}\left ( y^{i}, \eta ^{i} \right )\end{math}\\
 
 Then, Put value of \begin{math} l_{cs}\end{math}. The problem becomes,\\
 
@@ -399,7 +409,7 @@ Then, Put value of \begin{math} l_{cs}\end{math}. The problem becomes,\\
 
 As we know that above has minimum at \begin{math}\left \{ \textbf{W}^{0}, \left \{ \xi _{i}^{0} \right \} \right \} \end{math}
 
-This problem is already solved as we know, \begin{math}\textbf{W}^{0}\end{math} minimizes  \begin{math}\sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2}\end{math} and the \begin{math}\sum_{i=1}^{n} \xi_{i}^{0}\end{math} is just a constant and is already the optimal value.
+This problem is already solved as we know, \begin{math}\textbf{W}^{0}\end{math} minimizes  \begin{math}\sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2}\end{math} and the \begin{math}\sum_{i=1}^{n} \xi_{i}^{0}\end{math} is just a constant and is already the optimal value.\\
 
 So \begin{math}\textbf{W}^{0}\end{math} is also a solution for (P2).\\
 
@@ -415,17 +425,17 @@ Now, \begin{math}\textbf{W}^{1}\end{math} is an optimum for (P2). This means :\\
 
 \begin{math}
 \eta_{k} ^{i} = \left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle  and \;\eta_{y} ^{i} = \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle
-\end{math}
+\end{math}\\
 
-\begin{math}l_{cs}(y^{i}, \eta^{i}) \geq \left [  1 +  \;\left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle - \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle\;\right ]_{+}\forall i; \;\forall k \neq y^{i}\end{math} 
+\begin{math}l_{cs}(y^{i}, \eta^{i}) \geq \left [  1 +  \;\left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle - \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle\;\right ]_{+}\forall i; \;\forall k \neq y^{i}\end{math}. 
 As \begin{math}l_{cs}(y^{i}, \eta^{i})\end{math} is the maximum value so this inequality should be satisfied. \\
-, As \begin{math}l_{cs}(y^{i}, \eta^{i})\end{math} is the maximum value so this inequality should be satisfied. \\
+As \begin{math}l_{cs}(y^{i}, \eta^{i})\end{math} is the maximum value so this inequality should be satisfied. \\
 
 So we can say that there is some \begin{math}
 \xi_{i}^{1}\end{math} which is equivalent to \begin{math}l_{cs}(y^{i}, \eta^{i})\end{math} and \begin{math} \xi_{i}^{1} \geq 0 \end{math} as \begin{math}l_{cs}(y^{i}, \eta^{i}) \geq 0 \end{math}.\\
 
 Therefore, 
-\begin{math} \xi_{i}^{1}  \geq  1 +  \;\left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle - \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle\;\forall i; \;\forall k \neq y^{i}\end{math} 
+\begin{math} \xi_{i}^{1}  \geq  1 +  \;\left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle - \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle\;\forall i; \;\forall k \neq y^{i}\end{math} \\
 
 So the \begin{math}
 \sum_{i=1}^{n} \xi_{i}^{1} 
@@ -439,10 +449,10 @@ So, \begin{math}
 \end{math} has  \begin{math}
 \min
 \end{math} at \begin{math}\textbf{W}^{1} \end{math} and \begin{math}
-\left \{\xi_{i}\right \}\end{math} value as \begin{math}\left \{ \xi_{i}^{1}\right \} \end{math}, as it is optimum.\\
+\left \{\xi_{i}\right \}\end{math} value as \begin{math}\left \{ \xi_{i}^{1}\right \} \end{math}, as it is optimum.\\\\
 
 \begin{math}
-\left \{ \widehat{\textbf{W}}, \left \{ \widehat{\xi _{i}} \right \} \right \} = \underset{\textbf{W},}{arg} \; \underset{ \left \{ \widehat{\xi _{i}} \right \}}{min} \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} \xi _{i}\end{math}  \;has optimum at \begin{math} \left \{ \textbf{W}^{1}, \left \{ \xi _{i}^{1} \right \} \right \} \end{math}.\\
+\left \{ \widehat{\textbf{W}}, \left \{ \widehat{\xi _{i}} \right \} \right \} = \underset{\textbf{W},}{arg} \; \underset{ \left \{ \widehat{\xi _{i}} \right \}}{min} \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} \xi _{i}\end{math}  \;has optimum at \begin{math} \left \{ \textbf{W}^{1}, \left \{ \xi _{i}^{1} \right \} \right \} \end{math}.\\\\
 
 Therefore (P1) and (P2) are equivalent.
 

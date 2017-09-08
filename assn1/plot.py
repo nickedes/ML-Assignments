@@ -1,0 +1,37 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(-10, 10, 1000)
+plt.plot(x, 3*x - 1, 'k', label='y=3x-1', lw=2, linestyle='-')
+points = ((0, 1), (1, 0))
+plt.annotate('(0,1)', xy=(0, 1))
+plt.annotate('(1,0)', xy=(1, 0))
+
+plt.scatter((0, 1), (1, 0))
+plt.axis([-5, 5, -5, 5])
+plt.axvline(x=0)
+plt.axhline(y=0)
+plt.fill([-1, 2, 4, 4], [-4, 5, 4, -2], 'g', alpha=0.5, edgecolor='g')
+plt.fill([-1, 2, -4, -4], [-4, 5, 4, -2], 'r', alpha=0.6, edgecolor='y')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
+
+y = np.linspace(-10, 10, 1000)
+x=np.array([0.5]*1000)
+plt.plot(x, y, 'k', label='x=1/2', lw=2, linestyle='-')
+points = ((0, 1), (1, 0))
+plt.annotate('(0,1)', xy=(0, 1))
+plt.annotate('(1,0)', xy=(1, 0))
+
+plt.scatter((0, 1), (1, 0))
+plt.axvline(x=0)
+plt.axhline(y=0)
+plt.axis([-4, 4, -4, 4])
+plt.fill([0.5, 0.5, 5, 5], [-5, 5, 5, -5], 'g', alpha=0.5, edgecolor='g')
+plt.fill([0.5, 0.5, -5, -5], [-5, 5, 5, -5], 'r', alpha=0.6, edgecolor='y')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
