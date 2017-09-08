@@ -432,13 +432,19 @@ So the \begin{math}
 \end{math} is minimum as it is same as \begin{math}\sum_{i=1}^{n} l_{cs}\end{math}.\\
 
 So If I plug in \begin{math} \xi_{i} \end{math} in (P2) instead of \begin{math}
-l_{cs}
-\end{math}. So it becomes constrained problem instead of unconstrained, but the meaning remains same.
+l_{cs}\end{math}. So it becomes constrained problem instead of unconstrained, but the meaning remains same.\\
 
 So, \begin{math}
 \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} \xi _{i}
-\end{math}
+\end{math} has  \begin{math}
+\min
+\end{math} at \begin{math}\textbf{W}^{1} \end{math} and \begin{math}
+\left \{\xi_{i}\right \}\end{math} value as \begin{math}\left \{ \xi_{i}^{1}\right \} \end{math}, as it is optimum.\\
 
+\begin{math}
+\left \{ \widehat{\textbf{W}}, \left \{ \widehat{\xi _{i}} \right \} \right \} = \underset{\textbf{W},}{arg} \; \underset{ \left \{ \widehat{\xi _{i}} \right \}}{min} \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} \xi _{i}\end{math}  \;has optimum at \begin{math} \left \{ \textbf{W}^{1}, \left \{ \xi _{i}^{1} \right \} \right \} \end{math}.\\
+
+Therefore (P1) and (P2) are equivalent.
 
 \end{mlsolution}
 
