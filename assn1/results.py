@@ -21,6 +21,6 @@ for x in accuracy:
     print(x, accuracy[x])
 
 for x in accuracy:
-    print(x, "average - ", sum(accuracy[x])/len(accuracy[x])
+    print(x, "average - ", sum(accuracy[x])/len(accuracy[x]))
 
-print("Tuned k -", k)
+print(tuned_K)
