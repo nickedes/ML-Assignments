@@ -1,5 +1,5 @@
 import numpy as np
-from modshogun import LMNN, RealFeatures, MulticlassLabels, KNN, MulticlassAccuracy
+from modshogun import LMNN, RealFeatures, MulticlassLabels
 from sklearn.datasets import load_svmlight_file
 import sys
 
@@ -38,28 +38,34 @@ def main():
     # Cast data to Shogun format to work with LMNN
     features = RealFeatures(Xtr.T)
     labels = MulticlassLabels(Ytr.astype(np.float64))
+    print(2.1)
 
     ### Do magic stuff here to learn the best metric you can ###
-
     # Number of target neighbours per example - tune this using validation
     k = 10
     # Initialize the LMNN package
     lmnn = LMNN(features, labels, k)
+    print(2.2)
 
     init_transform = np.eye(Xtr.shape[1])
+    print(2.3)
 
     # Choose an appropriate timeout
-    lmnn.set_maxiter(2000)
+    lmnn.set_maxiter(8000)
+    print(2.4)
     lmnn.train(init_transform)
+    print(2.5)
 
     # Let LMNN do its magic and return a linear transformation
     # corresponding to the Mahalanobis metric it has learnt
     L = lmnn.get_linear_transform()
+    print(2.6)
     M = np.matrix(np.dot(L.T, L))
+    print(2.7)
 
     # Save the model for use in testing phase
     # Warning: do not change this file name
-    np.save("model.npy", M)
+    np.save("model2.npy", M)
     # use mahabol metric instead of euclidean
 
 

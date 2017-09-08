@@ -390,21 +390,56 @@ As stated \begin{math} l_{cs}\left ( y^{i},\eta ^{i} \right ) \end{math}.\\
 Hence \begin{math} l_{cs} = \xi_{i}^{0}\end{math}, So the problem (P2) after plugging the value of \begin{math} l_{cs} \end{math} becomes similar to (P1).\\
 
 (P2) is :\\\\
+
 \begin{math}\left \{ \widehat{\textbf{W}} \right \} = \underset{\textbf{}}{arg} \; \underset{  \textbf{W}}{min} \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} l _{cs}\left ( y^{i}, \eta ^{i} \right )\end{math}
 
-Then, Put value of \begin{math} l_{cs}\end{math}. The problem becomes,
+Then, Put value of \begin{math} l_{cs}\end{math}. The problem becomes,\\
 
-\begin{math}\left \{ \widehat{\textbf{W}} \right \} = \underset{\textbf{}}{arg} \; \underset{  \textbf{W}}{min} \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} \xi_{i}^{0}\end{math}
+\begin{math}\left \{ \widehat{\textbf{W}} \right \} = \underset{\textbf{}}{arg} \; \underset{  \textbf{W}}{min} \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} \xi_{i}^{0}\end{math}\\
 
-This problem is already solved as we know, \begin{math}\textbf{W}^{0}\end{math} minimizes  \begin{math}\sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2}\end{math} and the \begin{math}\sum_{i=1}^{n} \xi_{i}^{0}\end{math} is just a constant which vanishes while minimizing.
+As we know that above has minimum at \begin{math}\left \{ \textbf{W}^{0}, \left \{ \xi _{i}^{0} \right \} \right \} \end{math}
 
-So \begin{math}\textbf{W}^{0}\end{math} is also a solution for (P2).
+This problem is already solved as we know, \begin{math}\textbf{W}^{0}\end{math} minimizes  \begin{math}\sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2}\end{math} and the \begin{math}\sum_{i=1}^{n} \xi_{i}^{0}\end{math} is just a constant and is already the optimal value.
+
+So \begin{math}\textbf{W}^{0}\end{math} is also a solution for (P2).\\
+
+Now, \begin{math}\textbf{W}^{1}\end{math} is an optimum for (P2). This means :\\
+
+\begin{math}\left \{ \widehat{\textbf{W}} \right \} = \underset{\textbf{}}{arg} \; \underset{  \textbf{W}}{min} \sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} l _{cs}\left ( y^{i}, \eta ^{i} \right )\end{math} has minima at \begin{math}\textbf{W}^{1}\end{math}.\\
+
+\begin{math}
+\sum_{i=1}^{n} l_{cs} (y^{i}, \eta^{i}) 
+\end{math} is the sum of losses, it is same for every \textbf{i}.\\
+
+\begin{math}l_{cs}(y^{i}, \eta^{i}) =   \left [  1 + \underset{k\neq y}{\max} \;\eta_{k}^{i} - \eta_{y} ^{i}\;\right ]_{+}\end{math}\\
+
+\begin{math}
+\eta_{k} ^{i} = \left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle  and \;\eta_{y} ^{i} = \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle
+\end{math}
+
+\begin{math}l_{cs}(y^{i}, \eta^{i}) \geq \left [  1 +  \;\left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle - \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle\;\right ]_{+}\forall i; \;\forall k \neq y^{i}\end{math} 
+As \begin{math}l_{cs}(y^{i}, \eta^{i})\end{math} is the maximum value so this inequality should be satisfied. \\
+, As \begin{math}l_{cs}(y^{i}, \eta^{i})\end{math} is the maximum value so this inequality should be satisfied. \\
+
+So we can say that there is some \begin{math}
+\xi_{i}^{1}\end{math} which is equivalent to \begin{math}l_{cs}(y^{i}, \eta^{i})\end{math} and \begin{math} \xi_{i}^{1} \geq 0 \end{math} as \begin{math}l_{cs}(y^{i}, \eta^{i}) \geq 0 \end{math}.\\
+
+Therefore, 
+\begin{math} \xi_{i}^{1}  \geq  1 +  \;\left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle - \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle\;\forall i; \;\forall k \neq y^{i}\end{math} 
+
+So the \begin{math}
+\sum_{i=1}^{n} \xi_{i}^{1} 
+\end{math} is minimum as it is same as \begin{math}\sum_{i=1}^{n} l_{cs}\end{math}.\\
+
+So If I plug in \begin{math} \xi_{i} \end{math} in (P2) instead of \begin{math}
+l_{cs}
+\end{math}. So it becomes constrained problem instead of unconstrained, but the meaning remains same.
+
+So, \begin{math}
+\sum_{k=1}^{K} \left \| \textbf{w}^{k} \right \|^{2}_{2} + \sum_{i=1}^{n} \xi _{i}
+\end{math}
 
 
-
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis feugiat vehicula dolor, sed ultricies leo. Phasellus euismod dictum felis in euismod. Proin pretium vel neque in placerat. Proin imperdiet egestas vulputate. Etiam faucibus accumsan ante non viverra. Duis ultrices ac odio vel sodales. In maximus gravida dolor, ut commodo lacus. Pellentesque ante massa, venenatis id aliquam et, posuere sed dui. Duis dignissim justo sit amet augue posuere fringilla. Suspendisse at nisi gravida, mattis justo sit amet, elementum elit. Praesent et massa ornare, consequat dui eget, ornare risus. Duis est nibh, sollicitudin nec mattis non, mattis in leo. Donec finibus justo sed massa sagittis, non fermentum nibh dictum. Pellentesque et congue purus. Donec porta pretium porttitor.
-
-Morbi euismod risus eu tortor ornare malesuada. Nunc sed sollicitudin neque, efficitur rhoncus tellus. Cras malesuada augue arcu. Sed sem odio, tincidunt quis laoreet ac, facilisis ut nibh. Quisque gravida dolor at egestas aliquam. Aenean mollis massa sit amet enim mattis, vel fermentum tortor facilisis. Donec pellentesque est velit, vitae posuere lorem tristique ut. 
 \end{mlsolution}
 
 \begin{mlsolution}
