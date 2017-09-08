@@ -1,5 +1,5 @@
 import numpy as np
-from train import gettestData
+# from train import gettestData
 
 # pred_Y = np.loadtxt("testY.dat")
 # Xts, Yts = gettestData()
@@ -17,4 +17,10 @@ results = [(sum(accuracy[x])/len(accuracy[x]), x) for x in accuracy]
 # get value of k, with the largest accuracy
 tuned_K = sorted(results, key=lambda item: item[0], reverse=True)[0][1]
 
-print(accuracy, results, tuned_K)
+for x in accuracy:
+    print(x, accuracy[x])
+
+for x in accuracy:
+    print(x, "average - ", sum(accuracy[x])/len(accuracy[x])
+
+print("Tuned k -", k)
