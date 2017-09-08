@@ -122,7 +122,7 @@ def crossval():
     # get training data
     Xtr, Ytr = gettrainData()
     # set of values of K for K-NN
-    vals = [1, 2, 3, 5, 10, 20, 100]
+    vals = [1, 2, 3, 5, 10, 15, 20, 100]
 
     # split list of number of training points into 5 parts (5-fold)
     split_data = np.array_split(range(Xtr.shape[0]), folds)
@@ -173,6 +173,6 @@ if __name__ == '__main__':
     # Run for finding accuracies for a set values of k
     # run()
     # plots Accuracies vs k
-    plotAcc()
+    # plotAcc()
     # Perform k-fold cross valdiation and reports best k
-    # crossval()
+    crossval()

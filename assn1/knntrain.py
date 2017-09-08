@@ -171,8 +171,8 @@ def crossval():
 
 if __name__ == '__main__':
     # Run for finding accuracies for a set values of k
-    # run()
+    run()
     # plots Accuracies vs k
     plotAcc()
     # Perform k-fold cross valdiation and reports best k
-    # crossval()
+    crossval()

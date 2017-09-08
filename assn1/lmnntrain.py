@@ -1,5 +1,5 @@
 import numpy as np
-from modshogun import LMNN, RealFeatures, MulticlassLabels, KNN, MulticlassAccuracy
+from modshogun import LMNN, RealFeatures, MulticlassLabels
 from sklearn.datasets import load_svmlight_file
 import sys
 
