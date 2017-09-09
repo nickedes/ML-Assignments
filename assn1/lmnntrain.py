@@ -49,7 +49,7 @@ def main():
     init_transform = np.eye(Xtr.shape[1])
 
     # Choose an appropriate timeout
-    lmnn.set_maxiter(2000)
+    lmnn.set_maxiter(8000)
     lmnn.train(init_transform)
 
     # Let LMNN do its magic and return a linear transformation

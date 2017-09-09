@@ -37,7 +37,7 @@ Xts, Yts = gettestData()
 Xtr = Xtr[:len(Xtr)//4]
 Ytr = Ytr[:len(Ytr)//4]
 
-itml = ITML_Supervised(num_constraints=100)
+itml = ITML_Supervised(num_constraints=500)
 # learning
 itml.fit(Xtr, Ytr)
 # Get the learnt metric
