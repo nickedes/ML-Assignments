@@ -49,7 +49,7 @@ def main():
     init_transform = np.eye(Xtr.shape[1])
 
     # Choose an appropriate timeout
-    lmnn.set_maxiter(8000)
+    lmnn.set_maxiter(5000)
     lmnn.train(init_transform)
 
     # Let LMNN do its magic and return a linear transformation
@@ -59,7 +59,7 @@ def main():
 
     # Save the model for use in testing phase
     # Warning: do not change this file name
-    np.save("model.npy", M)
+    np.save("modellmnn.npy", M)
     # use mahabol metric instead of euclidean
 
 

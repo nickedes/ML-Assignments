@@ -45,4 +45,4 @@ lsml.fit(Xtr, Ytr)
 M = lsml.metric()
 
 # Metric saved
-np.save("modellsml4.npy", M)
+np.save("model.npy", M)

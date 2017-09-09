@@ -44,4 +44,4 @@ itml.fit(Xtr, Ytr)
 M = itml.metric()
 
 # Metric saved
-np.save("modelitml2.npy", M)
+np.save("model.npy", M)
