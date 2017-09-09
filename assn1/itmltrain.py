@@ -37,11 +37,11 @@ Xts, Yts = gettestData()
 Xtr = Xtr[:len(Xtr)//4]
 Ytr = Ytr[:len(Ytr)//4]
 
-itml = ITML_Supervised(num_constraints=500)
+itml = ITML_Supervised(num_constraints=1000)
 # learning
 itml.fit(Xtr, Ytr)
 # Get the learnt metric
 M = itml.metric()
 
 # Metric saved
-np.save("modelitml.npy", M)
+np.save("modelitml2.npy", M)

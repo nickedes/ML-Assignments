@@ -35,14 +35,14 @@ Xtr, Ytr = gettrainData()
 Xts, Yts = gettestData()
 
 # Taking only a fraction of data. i.e. 1/4th
-Xtr = Xtr[:len(Xtr)//4]
-Ytr = Ytr[:len(Ytr)//4]
+Xtr = Xtr[:len(Xtr)//2]
+Ytr = Ytr[:len(Ytr)//2]
 
-lsml = LSML_Supervised(num_constraints=100)
+lsml = LSML_Supervised(num_constraints=1000)
 # learning
 lsml.fit(Xtr, Ytr)
 # Get the learnt metric
 M = lsml.metric()
 
 # Metric saved
-np.save("modellsml.npy", M)
+np.save("modellsml4.npy", M)

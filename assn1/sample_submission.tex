@@ -208,28 +208,61 @@ Second answer
 \end{mlsolution}
 
 \begin{mlsolution}
-We need to design a likelihood and prior distribution such that \begin{math}
-\stackrel\frown{w}_{fr} \end{math} this is the map estimate.
-\\The Posterior distribution on w can be seen as proportional to the product of the likelihood and the prior distributions.
+We need to design a likelihood and prior distribution such that $\hat\vw_\text{fr}$ this is the map estimate.
+\\The Posterior distribution on \textbf{w} can be seen as proportional to the product of the likelihood and the prior distributions.
 
-Let's take the gaussian likelihood and gaussian prior :
-\\\\
-\begin{math}
-P[y^{i}|x^{i}, w] = \mathcal{N} \left ( \left \langle w, x^{i} \right \rangle, \sigma^{2} \right ) 
-\end{math}\\ \\
-\begin{math}
-= \frac{1}{{\sigma \sqrt {2\pi } }}e^{{{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}
-\end{math}
-\\\\So Log likelihood will be :
-\\\\
-\begin{math}
-log P[\textbf{y} | \textbf{X}, \textbf{w}] = C - \frac{1}{2\sigma^{2}} \sum_{i = 1}^{n} \left ( y^{i} - \left \langle \textbf{w}, \textbf{x}^{i} \right \rangle \right )^{2}
-\end{math}\\\\Here \textbf
+Let's take the gaussian likelihood and gaussian prior,
+\\Here \textbf
 X
- is \textbf{n}*\textbf{d} matrix where \textbf{n} is the no. of data points and \textbf{d} is the no. of features. \\\\Taking {}Gaussian prior, with a minor modification of assuming a \begin{math} \beta \end{math} vector whose each component \begin{math} \beta_{j} \end{math} is multiplied with each of the component of the \begin{math}\textbf{w}^{T}.\textbf{w}\end{math}
+ is \textbf{n}*\textbf{d} matrix where \textbf{n} is the no. of data points and \textbf{d} is the no. of features.
+\\\\
+\[
+P[y^{i}|x^{i}, w] = \mathcal{N} \left ( \left \langle w, x^{i} \right \rangle, \sigma^{2} \right ) 
 \\
-Such that \begin{math} \beta = \left \{ \beta_{1}, \beta_{2}, ..., \beta_{d} \right \} , \beta_{j} > 0\end{math}  and d is the dimension.
+= \frac{1}{{\sigma \sqrt {2\pi } }}e^{{{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}
+\]\\
 
+\[
+\text{P}[\textbf{y} | \textbf{X}, \textbf{w}] = 
+= \frac{1}{{\sigma \sqrt {2\pi } }} \prod_{i=1}^{n} e^{{{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}
+
+\]
+So Log likelihood will be :
+\\\\
+\begin{math}
+\log P[\textbf{y} | \textbf{X}, \textbf{w}] = C - \frac{1}{2\sigma^{2}} \sum_{i = 1}^{n} \left ( y^{i} - \left \langle \textbf{w}, \textbf{x}^{i} \right \rangle \right )^{2}
+\end{math}
+\\\\Taking Gaussian prior, with a minor modification :\\\\Consider a \begin{math} \beta \end{math} Such that \[ \beta = \left [ \frac{1}{\beta_{1}}\;\; \frac{1}{\beta_{2}}\;\; .\;..  \;\;\frac{1}{\beta_{d}} \right ] , \beta_{j} > 0\] and d is the dimension of \beta.\\Then, \[ \text{I}{}' = \beta\cdot\vI\] Where $\vI$ is the identity matrix.\\
+
+\[ \text{I}{}' = \begin{bmatrix}
+\frac{1}{\beta_{1}} & 0 & . & . & 0\\ 
+0 & \frac{1}{\beta_{2}} & . & . & 0 \\ 
+0 & . & . & . & 0\\ 
+0 & . & . & . & 0\\ 
+0 & . & . & . & \frac{1}{\beta_{d}}
+\end{bmatrix}\]
+
+Using Gaussian prior, 
+\[
+P[\textbf{w}] = \mathcal{N}\left ( 0, \rho^{2}.\text{I}{}' \right ) = \frac{1}{\sqrt{\left ( 2\pi \right)^{d}\rho^{2}\left | \text{I}{}' \right |}}\exp\left ( - \frac{\textbf{w}^T\text{I}{}'^{-1}\textbf{w}}{2\rho^{2}} \right )
+\]
+
+Actually \text{I}{}' is diagonal matrix. So, It's inverse is :
+
+\[
+    \text{I}{}'^{-1} = \begin{bmatrix}
+\beta_{1} & 0 & . & . & 0\\ 
+0 & \beta_{2} & . & . & 0 \\ 
+0 & . & . & . & 0\\ 
+0 & . & . & . & 0\\ 
+0 & . & . & . & \beta_{d}
+\end{bmatrix}
+\]
+
+So, 
+\[
+\textbf{w}^T\text{I}{}'^{-1}\textbf{w} = \sum_{i=1}^{d}   \beta_j \left ( \textbf{w}_{j} \right )^{2}
+\]
 So, 
 \begin{math}
 P[\textbf{w}] = \mathcal{N}\left ( 0, \rho^{2}.I_{d} \right ) = \frac{1}{\sqrt{\left ( 2\pi \right)^{d}\rho^{2}}}\exp\left ( - \frac{\sum_{j = 1}^{d} \beta_{j}\left ( \textbf{w}_{j} \right )^{2} }{2\rho^{2}} \right )
@@ -746,14 +779,14 @@ So a good value of k, based on our validation technique is the one with highest 
 
 \textbf{Part 3 solution :}\\
 
-I tried this for different k values as I faced an issue that my training process for LMNN metric got killed when training from whole data. So instead of training for whole data, learned the LMNN metric using a fraction of data. So the results obtained is:\\\\For k = 10, and 1/6th of the training data LMNN metric is learnt and then accuracy is calculated using this metric instead of euclidean distance.\\\\1) When No. of iterations = 2000\\Accuracy obtained is 0.83625 for k = 10 and 1/6th of training data.\\\\2) When No. of iterations = 8000\\Accuracy obtained is 0.8361 for k = 10 and 1/6th of training data.
-
-\newpage
+I tried this for different k values as I faced an issue that my training process for LMNN metric got killed when training from whole data. So instead of training for whole data, learned the LMNN metric using a fraction of data. So the results obtained is:\\\\For k = 10, and 1/6th of the training data LMNN metric is learnt and then accuracy is calculated using this metric instead of euclidean distance.\\\\1) When maximum No. of iterations = 2000\\Accuracy obtained is 0.83625 for k = 10 and 1/6th of training data.\\\\2) When maximum No. of iterations = 8000\\Accuracy obtained is 0.8361 for k = 10 and 1/6th of training data.\\\\Therefore fixing no. of iterations to 2000 for model.
+\newpage 
 
 \textbf{Extra Credit part :}\\
 
-Using the ITML technique with 1/4th of the training data and k = 10 and fixing the no. of constraints to 50, the accuracy obtained is = 0.8273.\\Using the ITML technique with 1/4th of the training data and k = 10 and fixing the no. of constraints to 100, the accuracy obtained is = 0.8298.\\\\Thus storing and using the second observation.
-\\\\Also using the LSML technique with 1/4th of the training data and k = 10 and fixing the no. of constraints to 100, the accuracy obtained is =  0.81415.
+Using the ITML technique with 1/4th of the training data and k = 10 and fixing the no. of constraints to 50, the accuracy obtained is = 0.8273.\\Using the ITML technique with 1/4th of the training data and k = 10 and fixing the no. of constraints to 100, the accuracy obtained is = 0.8298.\\ When k = 15 for 1/4th of the training data and fixing the no. of constraints to 500, the accuracy obtained is 0.83375. \\\\Thus storing and using the second observation.
+\\\\Following are the results using LSML technique:\\
+1) Using  1/4th of the training data for fitting the model and k = 10 and fixing the no. of constraints to 100, the accuracy obtained is =  0.8141. \\2) Using 1/4th of the training data and k = 10, fixing the no. of constraints = 500, the accuracy obtained is 0.8153. \\3) Using 1/3rd of the training data for fitting the model and k = 10, fixing the no. of constraints = 100, accuracy obtained is 0.8154.\\4) Using half of the training data, fixing the no. of constraints = 1000 and k = 10, accuracy obtained is 0.8155. Hence using the model from the last observation.
 
 \end{mlsolution}
 \end{document}\\

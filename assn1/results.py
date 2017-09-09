@@ -1,7 +1,7 @@
 import numpy as np
 from train import gettestData
 
-pred_Y = np.loadtxt("testY.dat")
+pred_Y = np.loadtxt("testlsml4.dat")
 Xts, Yts = gettestData()
 
 correct_obs = np.sum(pred_Y == Yts)
