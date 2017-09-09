@@ -203,9 +203,50 @@ The mathematical expression for the decision boundary is :\\
 \end{mlsolution}
 
 \begin{mlsolution}
-Second answer
+
+Likelihood distribution :
+\[
+P[y^{i}|x^{i}, \textbf{w}] = \mathcal{N} \left ( \left \langle \textbf{w}, x^{i} \right \rangle, \sigma^{2} \right ) \\
+= \frac{1}{{\sigma \sqrt {2\pi } }}e^{{{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}
+\]
+
+Prior distribution : \\
+
+Using Beta-prior, the beta distribution is defined over the interval [0, 1] this distribution can be scaled to an interval [p, q].
+
+We have a constraint, \[\left \| \textbf{w} \right \| \leq r \]
+
+So the $\left \| \textbf{w} \right\|$ can take values from $0$ to $r$. For scaling the beta distribution from $[0, 1]$ to $[0, r]$.
+
+$w = x*(r-0) + 0$\\
+
+$w = rx$
+
+\[
+\beta{}'\left ( \alpha, \beta \right ) = \frac{\left ( w - 0 \right )^{\alpha - 1} . \left ( r - w \right )^{\beta - 1}}{\left ( r - 0 \right )^{\alpha + \beta - 1}.\; \text{B}\left ( \alpha, \;\beta \right ) }
+\]
+
+\[
+= \; \frac{\left ( w \right )^{\alpha - 1} . \left ( r - w \right )^{\beta - 1}}{\left ( r \right )^{\alpha + \beta - 1}.\; \text{B}\left ( \alpha, \;\beta \right ) }
+\]
+
+So Taking a prior of the following form : \\
+
+\[
+\mathbb{P}\left [ \textbf{w} \right ] = \left\{\begin{matrix}
+\frac{\left (\textbf{w} \right )^{\alpha - 1} . \left ( r - \textbf{w} \right )^{\beta - 1}}{\left ( r \right )^{\alpha + \beta - 1}.\; \text{B}\left ( \alpha, \;\beta \right ) } & ,\;0 \leq \textbf{w} \leq r\\ 
+0 &,\; otherwise
+\end{matrix}\right.
+\]\\
+
+Map Estimate is proportional to the product of likelihood and prior. So,
+
+\[
+\log P[\textbf{w}\mid\textbf{X},\textbf{y}]  = \log P[\textbf{y}|\textbf{X}, \textbf{w}] + \log P[\textbf{w}]
+\]\\
 
 \end{mlsolution}
+
 
 \begin{mlsolution}
 We need to design a likelihood and prior distribution such that $\hat\vw_\text{fr}$ this is the map estimate.
@@ -223,8 +264,7 @@ P[y^{i}|x^{i}, w] = \mathcal{N} \left ( \left \langle w, x^{i} \right \rangle, \
 \]\\
 
 \[
-\text{P}[\textbf{y} | \textbf{X}, \textbf{w}] = 
-= \frac{1}{{\sigma \sqrt {2\pi } }} \prod_{i=1}^{n} e^{{{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}
+\text{P}[\textbf{y} | \textbf{X}, \textbf{w}] =  \frac{1}{{\sigma \sqrt {2\pi } }} \prod_{i=1}^{n} e^{{{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } \mathord{\left/ {\vphantom {{ - \left( {y^{i} - \left \langle w, x^{i} \right \rangle } \right)^2 } {2\sigma ^2 }}} \right. \kern-\nulldelimiterspace} {2\sigma ^2 }}}
 
 \]
 So Log likelihood will be :
@@ -232,7 +272,9 @@ So Log likelihood will be :
 \begin{math}
 \log P[\textbf{y} | \textbf{X}, \textbf{w}] = C - \frac{1}{2\sigma^{2}} \sum_{i = 1}^{n} \left ( y^{i} - \left \langle \textbf{w}, \textbf{x}^{i} \right \rangle \right )^{2}
 \end{math}
-\\\\Taking Gaussian prior, with a minor modification :\\\\Consider a \begin{math} \beta \end{math} Such that \[ \beta = \left [ \frac{1}{\beta_{1}}\;\; \frac{1}{\beta_{2}}\;\; .\;..  \;\;\frac{1}{\beta_{d}} \right ] , \beta_{j} > 0\] and d is the dimension of \beta.\\Then, \[ \text{I}{}' = \beta\cdot\vI\] Where $\vI$ is the identity matrix.\\
+\\\\Taking Gaussian prior, with a minor modification :\\\\Consider a \begin{math} \beta \end{math} Such that \[ \beta = \left [ \frac{1}{\beta_{1}}\;\; \frac{1}{\beta_{2}}\;\; .\;..  \;\;\frac{1}{\beta_{d}} \right ] , \beta_{j} > 0\] and d is the dimension of $\beta$. \;Then,
+
+ \[ \text{I}{}' = \beta\cdot\vI\] Where $\vI$ is the identity matrix.\\
 
 \[ \text{I}{}' = \begin{bmatrix}
 \frac{1}{\beta_{1}} & 0 & . & . & 0\\ 
@@ -264,9 +306,9 @@ So,
 \textbf{w}^T\text{I}{}'^{-1}\textbf{w} = \sum_{i=1}^{d}   \beta_j \left ( \textbf{w}_{j} \right )^{2}
 \]
 So, 
-\begin{math}
-P[\textbf{w}] = \mathcal{N}\left ( 0, \rho^{2}.I_{d} \right ) = \frac{1}{\sqrt{\left ( 2\pi \right)^{d}\rho^{2}}}\exp\left ( - \frac{\sum_{j = 1}^{d} \beta_{j}\left ( \textbf{w}_{j} \right )^{2} }{2\rho^{2}} \right )
-\end{math}
+\[
+P[\textbf{w}] = \frac{1}{\sqrt{\left ( 2\pi \right)^{d}\rho^{2}\left | \text{I}{}' \right |}}\exp\left ( - \frac{\sum_{j = 1}^{d} \beta_{j}\left ( \textbf{w}_{j} \right )^{2} }{2\rho^{2}} \right )
+\]
 \\Taking log we get :\\
 
 \begin{math}
@@ -281,67 +323,68 @@ P \begin{math}[\textbf{w}\mid\textbf{X},\textbf{y}]  \propto \end{math}\;P\begin
 
 \begin{math}
 \widehat{\textbf{w}}_{\textbf{MAP}}  = \arg \underset{\textbf{w}}{\max} \log P[\textbf{y}|\textbf{X}, \textbf{w}] + \log P[\textbf{w}]
-\end{math}\\
+\end{math}\\\\
 Using the expressions of log-likelihood and log-prior, we can say that :\\
 
-\begin{math}
+\[
 \widehat{\textbf{w}}_{\textbf{MAP}}  = \arg \underset{\textbf{w}}{\max} \;
 C - \frac{1}{2\sigma^{2}} \sum_{i = 1}^{n} \left ( y^{i} - \left \langle \textbf{w}, \textbf{x}^{i} \right \rangle \right )^{2} + C^{'} - \frac{1}{2\rho^{2}} \sum_{j = 1}^{d} \beta_{j}\left ( \textbf{w}_{j} \right )^{2}
-\end{math}\\\\
+\]\\
 Ignoring constants \\
 
-\begin{math}
+\[
 \widehat{\textbf{w}}_{\textbf{MAP}}  = \arg \underset{\textbf{w}}{\min} \;
 \frac{1}{2\sigma^{2}} \sum_{i = 1}^{n} \left ( y^{i} - \left \langle \textbf{w}, \textbf{x}^{i} \right \rangle \right )^{2} + \frac{1}{2\rho^{2}} \sum_{j = 1}^{d} \beta_{j}\left ( \textbf{w}_{j} \right )^{2}
-\end{math}\\\\
-Multiplying the equation by \begin{math}2\sigma^{2}\end{math}, we get Equation 1:\\
+\]\\
+Multiplying the equation by \begin{math}2\sigma^{2}\end{math}, we get Equation 1:
 
-\begin{math}
+\[
 \widehat{\textbf{w}}_{\textbf{MAP}}  = \arg \underset{\textbf{w}}{\min} \; \sum_{i = 1}^{n} \left ( y^{i} - \left \langle \textbf{w}, \textbf{x}^{i} \right \rangle \right )^{2} + \frac{\sigma^{2}}{\rho^{2}} \sum_{j = 1}^{d} \beta_{j}\left ( \textbf{w}_{j} \right )^{2}
-\end{math}\\\\
-Let's take \begin{math}\alpha_{j}\end{math} , such that \begin{math} \alpha_{j} = \frac{\sigma^{2}}{\rho^{2}}.\beta_{j}  \end{math}.
-Such that \begin{math} \alpha = \left \{ \alpha_{1}, \alpha_{2}, ..., \alpha_{d} \right \} , \alpha_{j} > 0\end{math}  and d is the dimension.
+\]\\
+Let's take $\alpha_{j}$, such that, \[ \alpha_{j} = \frac{\sigma^{2}}{\rho^{2}}.\beta_{j}  \]
+So, \[ \alpha = \left [ \alpha_{1} \; \alpha_{2}\; ...\; \alpha_{d} \right ]\; , \alpha_{j} > 0\]  and d is the dimension.
 So Equation 1 changes to :\\
 
-\begin{math}
+\[
 \widehat{\textbf{w}}_{\textbf{MAP}}  = \arg \underset{\textbf{w}}{\min} \; \sum_{i = 1}^{n} \left ( y^{i} - \left \langle \textbf{w}, \textbf{x}^{i} \right \rangle \right )^{2} + \sum_{j = 1}^{d} \alpha_{j}\left ( \textbf{w}_{j} \right )^{2}
-\end{math}\\\\This is similar to the \begin{math}\widehat{\textbf{w}}_{fr}\end{math} as given in the question.\\It has a closed form solution which can be derived as follows : \\\\Take derivative of \begin{math}\widehat{\textbf{w}}_{fr}\end{math} w.r.t \textbf{w}\\\\
+\]\\\\This is similar to the \begin{math}\widehat{\textbf{w}}_{fr}\end{math} as given in the question. It has a closed form solution which can be derived as follows : \\\\Take derivative of \begin{math}\widehat{\textbf{w}}_{fr}\end{math} w.r.t \textbf{w}\\\\
 
-\begin{math}
+\[
 \frac{ d\widehat{\textbf{w}}_{\textbf{fr}} }{dx} = \left ( 2 \right ) \sum_{i = 1}^{n}\left ( y^{i} - \left \langle \textbf{w}, \textbf{x}^{i} \right \rangle \right )\left ( - \textbf{x}^{i} \right ) + \frac{d}{dw} (\sum_{j = 1}^{d} \alpha_{j}\left ( \textbf{w}_{j} \right )^{2})
-\end{math}\\
+\]
 
-\begin{math}
+\[
 \frac{ d\widehat{\textbf{w}}_{\textbf{fr}} }{dx} = \left ( -2 \right ) \sum_{i = 1}^{n}\left ( \textbf{x}^{i}y^{i} - \textbf{x}^{i}\left \langle \textbf{w}, \textbf{x}^{i} \right \rangle \right  ) + \sum_{j = 1}^{d} \frac{d}{d\textbf{w}_{j}} (\alpha_{j}\left ( \textbf{w}_{j} \right )^{2})
-\end{math}\\
+\]
 
-\begin{math}
+\[
 \frac{ d\widehat{\textbf{w}}_{\textbf{fr}} }{dx} = \left ( -2 \right ) \sum_{i = 1}^{n}\left ( \textbf{x}^{i}y^{i} - \textbf{w}. (\textbf{x}^{i})^{2} \right  ) + \sum_{j = 1}^{d} (2\alpha_{j}\textbf{w}_{j})
-\end{math}\\
+\]
 
-\begin{math}
-\frac{ d\widehat{\textbf{w}}_{\textbf{fr}} }{dx} = \left ( -2 \right ) \sum_{i = 1}^{n}\left ( \textbf{x}^{i}y^{i} \right  )  + 2 \; \textbf{w}.\sum_{i=1}^{n} (\textbf{x}^{i})^{2} + 2 \alpha^{T}\textbf{w}
-\end{math}\\\\ Equating this equation to zero to get the value of \textbf{w}, We get :\\
+\[
+\frac{ d\widehat{\textbf{w}}_{\textbf{fr}} }{dx} = \left ( -2 \right ) \sum_{i = 1}^{n}\left ( \textbf{x}^{i}y^{i} \right  )  + 2 \; \textbf{w}.\sum_{i=1}^{n} (\textbf{x}^{i})^{2} + 2 \alpha^{T}\cdot\textbf{w}
+\]\\ Equating this equation to zero to get the value of \textbf{w}, We get :\\
 
-\begin{math}
+\[
 \textbf{w}.\sum_{i=1}^{n} (\textbf{x}^{i})^{2} + \alpha^{T}\textbf{w} = \sum_{i = 1}^{n}\left ( \textbf{x}^{i}y^{i} \right  ) 
-\end{math}\\
+\]
 
-\begin{math}
+\[
 \textbf{w}\textbf{X}^{T}\textbf{X} + \alpha^{T}\textbf{w} = \textbf{X}^{T}\textbf{Y}
-\end{math}\\
+\]
 
-\begin{math}
-\textbf{w}\left ( \textbf{X}^{T}\textbf{X} + \alpha^{T}I \right ) = \textbf{X}^{T}\textbf{Y}\end{math}\\
+\[
+\textbf{w}\left ( \textbf{X}^{T}\textbf{X} + \alpha^{T}I \right ) = \textbf{X}^{T}\textbf{Y}\]
 
-\begin{math}
+\[
 \textbf{w} = \left ( \textbf{X}^{T}\textbf{X} + \alpha^{T}I \right )^{-1} \textbf{X}^{T}\textbf{Y}
-\end{math}\\
+\]
+
 \\So this is the closed form expression for \begin{math}\widehat{\textbf{w}}_{fr}\end{math} :
 
-\begin{math}
+\[
 \widehat{\textbf{w}}_{fr} = \left ( \textbf{X}^{T}\textbf{X} + \alpha^{T}I \right )^{-1} \textbf{X}^{T}\textbf{Y}
-\end{math}\\
+\]\\
 
 \end{mlsolution}
 
@@ -382,21 +425,22 @@ As,\begin{math} \eta ^{i} = \left \langle \textbf{W}, \textbf{x}^{i} \right \ran
 \xi_{i}
 \end{math} is evaluated for all \begin{math}\textbf{w} \in \textbf{W}\end{math}, except for k \begin{math}\neq\end{math} y. We will take the largest possible value for \begin{math}\xi_{i}\end{math}. So \begin{math}\xi_{i}\end{math} will be maximum only when \begin{math}\eta_{k}\end{math} is maximum, satisfying the condition that \begin{math}k \neq y\end{math}.\\
 
-So \begin{math}\xi_{i}\end{math} can be s.t., \begin{math}
-\xi_{i} \geq 1 + \max \eta_{k}^{i} - \eta_{y} ^{i} \;\;\; \forall k\neq y^{i} \\
-\end{math}, but because of the objective we will not want to set it any larger than necessary. As setting larger than that value will be unnecessary in the objective.\\
+So \begin{math}\xi_{i}\end{math} can be s.t., \[
+\xi_{i} \geq 1 + \max \eta_{k}^{i} - \eta_{y} ^{i} \;\;\; \forall k\neq y^{i} 
+\]
+But because of the objective we will not want to set it any larger than necessary. As setting larger than that value will be unnecessary in the objective.\\
 
-\begin{math}\xi_{i} =   1 + \underset{k\neq y}{\max} \;\eta_{k}^{i} - \eta_{y} ^{i}  \end{math}\;and\;\begin{math} \xi_{i}\geq 0\end{math}
+\begin{math}\xi_{i} =   1 + \underset{k\neq y}{\max} \;\eta_{k}^{i} - \eta_{y} ^{i}  \end{math}\;and\;\begin{math} \xi_{i}\geq 0\end{math}\\
 
-Therefore \begin{math} \xi_{i}\end{math} is always a positive function and can be written as :
+Therefore \begin{math} \xi_{i}\end{math} is always a positive function and can be written as :\\
 
-\begin{math}\xi_{i} =   \left [  1 + \underset{k\neq y}{\max} \;\eta_{k}^{i} - \eta_{y} ^{i}\;\right ]_{+}\end{math}
+\begin{math}\xi_{i} =   \left [  1 + \underset{k\neq y}{\max} \;\eta_{k}^{i} - \eta_{y} ^{i}\;\right ]_{+}\end{math}\\
 
-The above is same as \begin{math} l_{cs}\left ( y^{i},\eta ^{i} \right ) \end{math}.\\ It is called as the crammer-singer loss function.
+The above is same as \begin{math} l_{cs}\left ( y^{i},\eta ^{i} \right ) \end{math}. It is called as the crammer-singer loss function.\\
 
 Hence, \begin{math} l_{cs}\left ( y^{i},\eta ^{i} \right ) = \xi _{i} \end{math}\\
 
-So the constrained formulation can now be written in an unconstrained formulation which is same as (P2). As \begin{math} \xi _{i} \end{math} can be replaced by \begin{math} l_{cs}\end{math}. Hence by this expression (P2) can be derived from (P1) and vice-versa.
+So the constrained formulation can now be written in an unconstrained formulation which is same as (P2). As \begin{math} \xi _{i} \end{math} can be replaced by \begin{math} l_{cs}\end{math}. Hence by this expression (P2) can be derived from (P1) and vice-versa.\\
 
 Suppose \begin{math} \left \{ \textbf{W}^{0}, \left \{ \xi _{i}^{0} \right \} \right \} \end{math} is the optimum for P1 equation.
 
@@ -451,8 +495,27 @@ As \begin{math}l_{cs}(y^{i}, \eta^{i})\end{math} is the maximum value so this in
 So we can say that there is some \begin{math}
 \xi_{i}^{1}\end{math} which is equivalent to \begin{math}l_{cs}(y^{i}, \eta^{i})\end{math} and \begin{math} \xi_{i}^{1} \geq 0 \end{math} as \begin{math}l_{cs}(y^{i}, \eta^{i}) \geq 0 \end{math}.\\
 
-Therefore, 
-\begin{math} \xi_{i}^{1}  \geq  1 +  \;\left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle - \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle\;\forall i; \;\forall k \neq y^{i}\end{math} \\
+So let, 
+\[ \xi_{i}^{1}  \geq  1 +  \;\left \langle \textbf{w}^{k}, \textbf{x}^{i} \right \rangle - \left \langle \textbf{w}^{y^{i}}, \textbf{x}^{i} \right \rangle\;\forall i; \;\forall k \neq y^{i}\]
+
+Now, coming to (P1) as per given constraint:
+
+\[
+\left \langle \textbf{w}^{y^{i}}, x^{i} \right \rangle \geq \left \langle \textbf{w}^{k}, x^{i} \right \rangle + 1 - \xi_{i}\; , \forall i\; \forall k\neq y^{i}
+\]
+
+\[
+\xi_{i} \geq \left \langle \textbf{w}^{k}, x^{i} \right \rangle + 1 - \left \langle \textbf{w}^{y^{i}}, x^{i} \right \rangle\; , \forall i\; \forall k\neq y^{i}
+\]
+
+\[
+\xi_{i} \geq \xi_{i}^{1}
+\]
+
+Also,
+\[
+\xi_{i}^{1} \geq 0 \;\; \Rightarrow \;\; \xi_{i} \geq 0
+\]
 
 So the \begin{math}
 \sum_{i=1}^{n} \xi_{i}^{1} 
@@ -484,55 +547,55 @@ Therefore (P1) and (P2) are equivalent.
 1 - y^{i}<\textbf{w}, x^{i}> &, y^{i}<\textbf{w}, x^{i}> \;<  1\\
 0 & , y^{i}<\textbf{w}, x^{i}> \;\geq  1
 \end{matrix}\right.
-\end{math}
+\end{math}\\
 
 \begin{math}
 f\left ( \textbf{w} \right )
 \end{math} is just the sum of hinge losses, where hinge function is not differentiable at \begin{math}y^{i}<\textbf{w}, x^{i}> = 1\end{math} . To find the sub-differential of f at w, \\
 
-\begin{math}
+\[
 \frac{df\left ( \textbf{w} \right )}{d\textbf{w}} = \sum \frac{dv\left ( x^{i}, y^{i} \right )}{d\textbf{w}}
-\end{math}\\
+\]\\
 
-\begin{math}
+\[
 \frac{dv\left ( x^{i}, y^{i} \right )}{d\textbf{w}} = \left\{\begin{matrix}
 -y^{i}x^{i} &,  y^{i}<\textbf{w}, x^{i}> \;<  1\\ 
 0 & , y^{i}<\textbf{w}, x^{i}> \;\geq  1
 \end{matrix}\right.
-\end{math}\\
+\]\\
 
-\begin{math}
+\[
 \bigtriangledown f = \frac{df\left ( \textbf{w} \right )}{d\textbf{w}}
-\end{math}\\
+\]\\
 
 Since \begin{math}\bigtriangledown f\end{math} is the subgradient of f. Therefore it should satisfy \\
 
-\begin{math}
+\[
 f\left ( \textbf{w}{}' \right ) \geq f\left ( \textbf{w}{} \right ) + \left \langle \bigtriangledown f, \textbf{w} - \textbf{w}{}' \right \rangle
-\end{math}\\
+\]\\
 
 As given in the question, 
 g\begin{math} = \sum_{i=1}^{n}h_{i} \end{math} where  \\
 
-\begin{math}
+\[
 h_{i} = \left\{
 \begin{matrix}
 -y^{i}x^{i} &,  y^{i} \left \langle \textbf{w}, x^{i} \right \rangle \;<  1\\ 
 0 & , y^{i} \left \langle \textbf{w}, x^{i} \right \rangle \;\geq  1
 \end{matrix}\right.
-\end{math}\\
+\]\\
 
 So by the equations \textbf{g} appears to be same as \begin{math}f\left ( \textbf{w} \right ).\end{math} This can be proved by showing that for every \begin{math}\textbf{w}{}' \in \mathbb{R}^{d}, f\left ( \textbf{w}{}' \right ) \geq f\left ( \textbf{w} \right ) + \left \langle g, \textbf{w}{}' - \textbf{w} \right \rangle:\end{math}\\
 
-\begin{math}
-f\left ( \textbf{w}{}' \right ) = \sum_{i=1}^{n} \left [  1 - y^{i}<\textbf{w}{}', x^{i}> \right ]_{+} \end{math}\\
+\[
+f\left ( \textbf{w}{}' \right ) = \sum_{i=1}^{n} \left [  1 - y^{i}<\textbf{w}{}', x^{i}> \right ]_{+} \]\\
 
-\begin{math}f\left ( \textbf{w} \right ) = \sum_{i=1}^{n} \left [  1 - y^{i}<\textbf{w}, x^{i}> \right ]_{+}
-\end{math}\\
+\[f\left ( \textbf{w} \right ) = \sum_{i=1}^{n} \left [  1 - y^{i}<\textbf{w}, x^{i}> \right ]_{+}
+\]\\
 
-\begin{math}
+\[
 f\left ( \textbf{w}{}' \right ) - f\left ( \textbf{w} \right ) = \sum_{i=1}^{n} \left [  1 - y^{i}<\textbf{w}{}', x^{i}> \right ]_{+} - \sum_{i=1}^{n} \left [  1 - y^{i}<\textbf{w}, x^{i}> \right ]_{+}
-\end{math}\\
+\]\\
 
 \begin{math}
 f\left ( \textbf{w}{}' \right ) - f\left ( \textbf{w} \right ) = \sum_{i=1}^{n} \left [  1 - y^{i}<\textbf{w}{}', x^{i}> \right ]_{+} - \left [  1 - y^{i}<\textbf{w}, x^{i}> \right ]_{+}
@@ -742,9 +805,22 @@ showing test accuracies (fraction of the 20K points that were correctly classifi
 \end{tabular}
 \end{center}
 
+
+I also ran K-NN for values of k other than those provided in question i.e., for these set of k values = \left [1, 2, 3, 5, 10, 15, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000] \right ]. The plot for accuracy vs K is :
+
+\begin{figure}[th]%
+\centering
+\includegraphics[width=0.6\columnwidth]{AllKAccuracy.png}%
+\caption{Plot of Test accuracies vs k }%
+\label{fig:accuracyallK}%
+\end{figure}\\
+
+Observation : The Accuracy of KNN increases only till a value of k, and then it starts to decrease. Accuracy increases only till k = 15 and then starts to decrease slowly and steadily.\\\\
+
+\newpage
 \textbf{Part 2 solution:}\\
 
-The validation technique used : k-fold validation, the given training data is partitioned into k equal sized subsamples. Of the k subsamples, a single subsample is the validation data for testing the model (or our new test data), and remaining k − 1 subsamples make up our training data. Repeat this process k times (the folds), with each of the k subsamples used exactly once as the validation data. Take the average of the accuracies of the k results obtained from the folds to give an accuracy.
+The validation technique used : k-fold validation, the given training data is partitioned into k equal sized subsets. Of the k subsets, a single subset is the validation data for testing the model (or our new test data), and remaining \begin{math}k - 1 \end{math} subsets make up our training data. Repeat this process k times (the folds), with each of the k subsets used exactly once as the validation data. Take the average of the accuracies of the k results obtained from the folds to give an accuracy.
 
 Used 5-fold validation, with the following possible values of k in k-NN = [1, 2, 3, 5, 10, 20]
 Results are as follows : 
@@ -784,10 +860,27 @@ I tried this for different k values as I faced an issue that my training process
 
 \textbf{Extra Credit part :}\\
 
-I have used two techniques : ITML and LSML. Following are the results : 
-Using the ITML technique with 1/4th of the training data and k = 10 and fixing the no. of constraints to 50, the accuracy obtained is = 0.8273.\\Using the ITML technique with 1/4th of the training data and k = 10 and fixing the no. of constraints to 100, the accuracy obtained is = 0.8298.\\ When k = 15 for 1/4th of the training data and fixing the no. of constraints to 500, the accuracy obtained is 0.83375. \\\\Thus storing and using the last observation.
-\\\\Following are the results using LSML technique:\\
-1) Using  1/4th of the training data for fitting the model and k = 10 and fixing the no. of constraints to 100, the accuracy obtained is =  0.8141. \\2) Using 1/4th of the training data and k = 10, fixing the no. of constraints = 500, the accuracy obtained is 0.8153. \\3) Using 1/3rd of the training data for fitting the model and k = 10, fixing the no. of constraints = 100, accuracy obtained is 0.8154.\\4) Using half of the training data, fixing the no. of constraints = 1000 and k = 10, accuracy obtained is 0.8155. Hence using the model from the last observation.
+I have used two techniques : ITML and LSML. Following are the results : \\
+
+1) Using the ITML technique with 1/4th of the training data and k = 10 and fixing the no. of constraints to 50, the accuracy obtained is = 0.8273.\\
+
+2)Using the ITML technique with 1/4th of the training data and k = 10 and fixing the no. of constraints to 100, the accuracy obtained is = 0.8298.\\
+
+3)When k = 15 for 1/4th of the training data and fixing the no. of constraints to 500, the accuracy obtained is 0.83375. \\
+
+Hence, storing and using the last observation.\\\\
+
+Following are the results using LSML technique:\\
+
+1) Using  1/4th of the training data for fitting the model and k = 10 and fixing the no. of constraints to 100, the accuracy obtained is =  0.8141. \\
+
+2) Using 1/4th of the training data and k = 10, fixing the no. of constraints = 500, the accuracy obtained is 0.8153. \\
+
+3) Using 1/3rd of the training data for fitting the model and k = 10, fixing the no. of constraints = 100, accuracy obtained is 0.8154.\\
+
+4) Using half of the training data, fixing the no. of constraints = 1000 and k = 10, accuracy obtained is 0.8155.\\
+
+Hence storing and using the model in the last observation.
 
 \end{mlsolution}
 \end{document}\\

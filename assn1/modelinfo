@@ -1,8 +1,1 @@
-modellsml -> constraints = 500, testlsml acc = 0.8153
-modellsml2 -> constraints = 100, data -> 1/3, testlsml2 acc = 0.8154
-modellsml3 -> constraints = 1000, data -> 1/3, testlsml3 acc = 0.8154
-modellsml1000 -> constraints = 1000, testlsml1000 acc = 0.8153
-testY(recent) -> itml, 500 cons, k = 15 --> accuracy = 0.83375
-modelitml2 -> constraints = 1000, 1/3 data testitml2 accuracy = 0.82875
-modellsml4 -> constraints = 1000, data -> 1/2, testlsml4 acc = 0.8155
-modellmnn -> iter= 5000, data ->1/6
+modellmnn -> iter= 5000, data ->1/6 -> testlmnn

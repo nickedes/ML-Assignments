@@ -58,7 +58,7 @@ def main():
     # evaluation
 
     # Load the learned metric
-    metric = np.load("modelitml2.npy")
+    metric = np.load("modellmnn.npy")
 
     ### Do soemthing (if required) ###
 
@@ -66,8 +66,9 @@ def main():
     Yts = predict(Xtr, Ytr, Xts, metric)
     # Save predictions to a file
     # Warning: do not change this file name
-    np.savetxt("testitml2.dat", Yts)
+    np.savetxt("testlmnn.dat", Yts)
 
 
 if __name__ == '__main__':
     main()
+modellmnn

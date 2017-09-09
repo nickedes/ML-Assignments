@@ -45,7 +45,7 @@ def run():
     Xts, Yts = gettestData()
     # Xtr, Ytr, Xts, Yts = Xtr[:10], Ytr[:10], Xts[:10], Yts[:10]
     # all values of k
-    vals = [1, 2, 3, 5, 10]
+    vals = [1, 2, 3, 5, 10, 15, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000]
     accuracy = {}
     test_error = {}
     # get predictions for all k
@@ -83,6 +83,7 @@ def predict(Xtr, Ytr, Xts, vals, metric=None):
         yts_labels[k] = [0]*num_test
     for i in range(num_test):
         # calculate difference with each training point using broadcasting
+        print(i)
         difference = Xtr[:, np.newaxis] - Xts[i]
         # get euclidean distance
         dists[0] = np.sqrt(np.square(difference).sum(axis=2)).T
@@ -171,8 +172,8 @@ def crossval():
 
 if __name__ == '__main__':
     # Run for finding accuracies for a set values of k
-    run()
+    # run()
     # plots Accuracies vs k
     plotAcc()
     # Perform k-fold cross valdiation and reports best k
-    crossval()
+    # crossval()

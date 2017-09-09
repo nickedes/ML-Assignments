@@ -28,6 +28,7 @@ def gettestData():
     Yts = ts_data[1]  # The trainig labels
     return Xts, Yts
 
+
 # get training data
 Xtr, Ytr = gettrainData()
 # get testing data
