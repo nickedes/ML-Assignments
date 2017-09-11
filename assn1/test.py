@@ -17,7 +17,7 @@ def predict(Xtr, Ytr, Xts, metric=None):
     Yts = np.zeros((Xts.shape[0], 1))
     dists = np.zeros((2, Xtr.shape[0]))
     # No. of nearest neighbours
-    k = 10
+    k = 15
     for i in range(Xts.shape[0]):
         '''
         Predict labels for test data using k-NN. Specify your tuned value of k here
@@ -58,7 +58,7 @@ def main():
     # evaluation
 
     # Load the learned metric
-    metric = np.load("modellmnn.npy")
+    metric = np.load("model.npy")
 
     ### Do soemthing (if required) ###
 
@@ -66,9 +66,8 @@ def main():
     Yts = predict(Xtr, Ytr, Xts, metric)
     # Save predictions to a file
     # Warning: do not change this file name
-    np.savetxt("testlmnn.dat", Yts)
+    np.savetxt("test.dat", Yts)
 
 
 if __name__ == '__main__':
     main()
-modellmnn

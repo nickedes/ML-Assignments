@@ -32,8 +32,8 @@ def gettestData():
 def main():
 
     Xtr, Ytr = gettrainData()
-    Xtr = Xtr[:len(Xtr)//6]
-    Ytr = Ytr[:len(Ytr)//6]
+    Xtr = Xtr[:len(Xtr)//12]
+    Ytr = Ytr[:len(Ytr)//12]
 
     # Cast data to Shogun format to work with LMNN
     features = RealFeatures(Xtr.T)
@@ -42,14 +42,14 @@ def main():
     ### Do magic stuff here to learn the best metric you can ###
 
     # Number of target neighbours per example - tune this using validation
-    k = 10
+    k = 15
     # Initialize the LMNN package
     lmnn = LMNN(features, labels, k)
 
     init_transform = np.eye(Xtr.shape[1])
 
     # Choose an appropriate timeout
-    lmnn.set_maxiter(5000)
+    lmnn.set_maxiter(2000)
     lmnn.train(init_transform)
 
     # Let LMNN do its magic and return a linear transformation

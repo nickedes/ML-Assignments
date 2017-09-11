@@ -79998,3 +79998,5 @@ i =  19996
 i =  19997
 i =  19998
 i =  19999
+lmnntrain.py:53: RuntimeWarning: [1;34m[WARN][0m In file /feedstock_root/build_artefacts/shogun-cpp_1500595882337/work/shogun-shogun_6.0.0/src/shogun/metric/LMNNImpl.cpp line 286: Maximum number of iterations reached before convergence.
+  lmnn.train(init_transform)
