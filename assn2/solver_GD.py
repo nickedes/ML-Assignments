@@ -11,7 +11,7 @@ def h(x):
     """
     logistic regression function
     """
-    return math.e**(x)/(1. + math.e**(x))
+    return 1.0/(1.0 + math.e**(-x))
 
 
 def calculate_F(w, Xtr, Ytr):
@@ -19,7 +19,7 @@ def calculate_F(w, Xtr, Ytr):
     """
     wx = (np.matrix(w)*np.matrix(Xtr.T)).T
     constraint = 0
-    for i in range(Xtr.get_shape()[0]):
+    for i in range(Xtr.shape[0]):
         val = 1 - Ytr[i]*wx[i]
         if val > 0:
             constraint += val
@@ -45,22 +45,23 @@ def main():
 
     # We have n data points each in d-dimensions
     n, d = Xtr.get_shape()
-
+    print(n)
     # The labels are named 1 and 2 in the data set. Convert them to our
     # standard -1 and 1 labels
     Ytr = 2*(Ytr - 1.5)
     Ytr = Ytr.astype(int)
-    print(Xtr)
+
     # Optional: densify the features matrix.
     # Warning: will slow down computations
     Xtr = Xtr.toarray()
-    print(Xtr)
+
     # Initialize model
     # For primal GD, you only need to maintain w
     # Note: if you have densified the Xt matrix then you can initialize w as a
     # NumPy array
-    w = csr_matrix((1, d))
-
+    # w = csr_matrix((1, d))
+    w = np.ones((1, d))
+    print(w)
     # We will take a timestamp after every "spacing" iterations
     time_elapsed = np.zeros(math.ceil(n_iter/spacing))
     tick_vals = np.zeros(math.ceil(n_iter/spacing))
@@ -75,16 +76,19 @@ def main():
         ### Doing primal GD ###
 
         # Compute gradient
-
-        g = w - Ytr.Xtr
+        val = np.zeros((1, d))
+        for i in range(Xtr.shape[0]):
+            x = np.sum(np.array(w) * np.array(Xtr[i]))
+            if Ytr[i]*x < 1:
+                val += Ytr[i]*x
+        g = w - (1/n)*val
         g.reshape(1, d)  # Reshaping since model is a row vector
-
         # Calculate step lenght. Step length may depend on n and t
-
-        eta = h(n) * 1/math.sqrt(t)
+        print(t)
+        eta = n * 1.0/math.sqrt(t+1)
+        eta = 0.099
 
         # Update the model
-        # w = w + eta * g
         w = w - eta * g
 
         # Use the averaged model if that works better (see [\textbf{SSBD}] section 14.3)
@@ -103,12 +107,13 @@ def main():
             # Calculate the objective value f(w) for the current model w^t or
             # the current averaged model \bar{w}^t
             obj_val[tick] = calculate_F(w, Xtr, Ytr)
+            print(obj_val[tick])
             tick = tick+1
             # Start the timer again - training time!
             t_start = datetime.now()
 
     # Choose one of the two based on whichever works better for you
-    w_final = w.toarray()
+    w_final = np.array(w)
     # w_final = wbar.toarray()
     np.save("model_GD.npy", w_final)
 
