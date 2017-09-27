@@ -5,12 +5,12 @@ from sklearn.datasets import load_svmlight_file
 import random
 from datetime import datetime
 import math
+import matplotlib.pyplot as plt
 
 
 def grad(w, Xtr, Ytr, i):
-    num = (Ytr[i]*w*Xtr.getrow(i).T)[0, 0] - 1
-    den = (Xtr.getrow(i)*(Xtr.getrow(i).T))[0, 0]
-    return num/den
+    gradient = (Ytr[i]*w*Xtr.getrow(i).T)[0, 0] - 1
+    return gradient
 
 
 def calculate_F(w, Xtr, Ytr):
@@ -26,6 +26,14 @@ def calculate_F(w, Xtr, Ytr):
             constraint += val
     f = 0.5*(np.linalg.norm(w.toarray()))**2 + constraint
     return f
+
+
+def draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val):
+    plt.plot(time_elapsed, obj_val, marker='o')
+    plt.show()
+    plt.plot(theotime_vals, obj_val, marker='x')
+    plt.show()
+    pass
 
 
 def main():
@@ -67,6 +75,7 @@ def main():
     # We will take a timestamp after every "spacing" iterations
     time_elapsed = np.zeros(math.ceil(n_iter/spacing))
     tick_vals = np.zeros(math.ceil(n_iter/spacing))
+    theotime_vals = np.zeros(math.ceil(n_iter/spacing))
     obj_val = np.zeros(math.ceil(n_iter/spacing))
 
     tick = 0
@@ -78,15 +87,33 @@ def main():
         # Doing dual SCD
         # Choose a random coordinate from 1 to n
         i_rand = random.randint(1, n)
+        
+        # compute Gradient for random coordinate
+        g = grad(w, Xtr, Ytr, i_rand)
+
+        # projection step
+        pg = g
+        if d_alpha[i_rand] == 0:
+            pg = min(g, 0)
+        elif d_alpha[i_rand] == 1:
+            pg = max(g, 0)
+
+        if pg != 0:
+            d_alpha_old = d_alpha[i_rand]
+            Q = (Xtr.getrow(i_rand)*(Xtr.getrow(i_rand).T))[0, 0]
+            d_alpha[i_rand] = min(max(d_alpha[i_rand] - g/Q, 0), 1)
+            w = w + (d_alpha[i_rand] - d_alpha_old) * \
+                Ytr[i_rand]*Xtr.getrow(i_rand)
+
         # Store the old and compute the new value of alpha along that
         # coordinate
-        d_alpha_old = d_alpha[i_rand]
-        d_alpha[i_rand] = min(
-            max(d_alpha[i_rand] - grad(w, Xtr, Ytr, i_rand), 0), 1)
-        # Update the model - takes only O(d) time!
-        w = w + (d_alpha[i_rand] - d_alpha_old) * \
-            Ytr[i_rand]*Xtr.getrow(i_rand)
-
+        # d_alpha_old = d_alpha[i_rand]
+        # d_alpha[i_rand] = min(
+        #     max(d_alpha[i_rand] - grad(w, Xtr, Ytr, i_rand), 0), 1)
+        # # Update the model - takes only O(d) time!
+        # w = w + (d_alpha[i_rand] - d_alpha_old) * \
+        #     Ytr[i_rand]*Xtr.getrow(i_rand)
+        
         # Take a snapshot after every few iterations
         # Take snapshots after every spacing = 5000 or so SCD
         # iterations since they are fast
@@ -97,6 +124,7 @@ def main():
             time_elapsed[tick] = ttot + delta.total_seconds()
             ttot = time_elapsed[tick]
             tick_vals[tick] = tick
+            theotime_vals[tick] = tick_vals[tick]*spacing*d
             # Calculate the objective value f(w) for the current model w^t
             obj_val[tick] = calculate_F(w, Xtr, Ytr)
             if t == 0:
@@ -110,6 +138,7 @@ def main():
             # Start the timer again - training time!
             t_start = datetime.now()
 
+    # draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
     w_final = min_w.toarray()
     print("min f - ", min_f)
     np.save("model_SCD.npy", w_final)
