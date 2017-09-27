@@ -66,30 +66,30 @@ def main():
 
         # Store the old and compute the new value of alpha along that
         # coordinate
-            d_alpha_old = d_alpha[i_rand]
+        d_alpha_old = d_alpha[i_rand]
 
-            d_alpha[i_rand] = min(
-                max(d_alpha[i_rand] - grad(Xtr, Ytr, d_alpha, i_rand, d), 0), 1)
+        d_alpha[i_rand] = min(
+            max(d_alpha[i_rand] - grad(Xtr, Ytr, d_alpha, i_rand, d), 0), 1)
 
-            # Update the model - takes only O(d) time!
-            w = w + (d_alpha[i_rand] - d_alpha_old) * \
-                Ytr(i_rand)*Xtr.getrow(i_rand)
+        # Update the model - takes only O(d) time!
+        w = w + (d_alpha[i_rand] - d_alpha_old) * \
+            Ytr(i_rand)*Xtr.getrow(i_rand)
 
-            # Take a snapshot after every few iterations
-            # Take snapshots after every spacing = 5000 or so SCD
-            # iterations since they are fast
-            if t % spacing == 0:
-                # Stop the timer - we want to take a snapshot
-                t_now = datetime.now()
-                delta = t_now - t_start
-                time_elapsed[tick] = ttot + delta.total_seconds()
-                ttot = time_elapsed[tick]
-                tick_vals[tick] = tick
-                obj_val[
-                    tick] = ...  # Calculate the objective value f(w) for the current model w^t
-                tick = tick+1
-                # Start the timer again - training time!
-                t_start = datetime.now()
+        # Take a snapshot after every few iterations
+        # Take snapshots after every spacing = 5000 or so SCD
+        # iterations since they are fast
+        if t % spacing == 0:
+            # Stop the timer - we want to take a snapshot
+            t_now = datetime.now()
+            delta = t_now - t_start
+            time_elapsed[tick] = ttot + delta.total_seconds()
+            ttot = time_elapsed[tick]
+            tick_vals[tick] = tick
+            obj_val[
+                tick] = ...  # Calculate the objective value f(w) for the current model w^t
+            tick = tick+1
+            # Start the timer again - training time!
+            t_start = datetime.now()
 
     w_final = w.toarray()
     np.save("model_SCD.npy", w_final)
