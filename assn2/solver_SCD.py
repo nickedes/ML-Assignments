@@ -4,14 +4,28 @@ import sys
 from sklearn.datasets import load_svmlight_file
 import random
 from datetime import datetime
+import math
 
 
-def grad(Xtr, Ytr, d_alpha, i_rand, d):
-    num = -1
-    for j in range(d):
-        num += Ytr[j]*Ytr[i]*(Xtr.getrow(i).T)*Xtr.getrow(j)*d_alpha[j]
-    den = (Xtr.getrow(i).T)*Xtr.getrow(i)
+def grad(w, Xtr, Ytr, i):
+    num = (Ytr[i]*w*Xtr.getrow(i).T)[0, 0] - 1
+    den = (Xtr.getrow(i)*(Xtr.getrow(i).T))[0, 0]
     return num/den
+
+
+def calculate_F(w, Xtr, Ytr):
+    """
+    """
+    wx = (w*Xtr.T).T
+    constraint = 0
+    wx = wx.toarray()
+    n = Xtr.get_shape()[0]
+    for i in range(n):
+        val = 1 - Ytr[i]*wx[i]
+        if val > 0:
+            constraint += val
+    f = 0.5*(np.linalg.norm(w.toarray()))**2 + constraint
+    return f
 
 
 def main():
@@ -48,6 +62,8 @@ def main():
     w = csr_matrix((1, d))
     d_alpha = np.zeros((n,))
 
+    min_w = w
+
     # We will take a timestamp after every "spacing" iterations
     time_elapsed = np.zeros(math.ceil(n_iter/spacing))
     tick_vals = np.zeros(math.ceil(n_iter/spacing))
@@ -59,21 +75,17 @@ def main():
     t_start = datetime.now()
 
     for t in range(n_iter):
-            ### Doing dual SCD ###
-
-            # Choose a random coordinate from 1 to n
+        # Doing dual SCD
+        # Choose a random coordinate from 1 to n
         i_rand = random.randint(1, n)
-
         # Store the old and compute the new value of alpha along that
         # coordinate
         d_alpha_old = d_alpha[i_rand]
-
         d_alpha[i_rand] = min(
-            max(d_alpha[i_rand] - grad(Xtr, Ytr, d_alpha, i_rand, d), 0), 1)
-
+            max(d_alpha[i_rand] - grad(w, Xtr, Ytr, i_rand), 0), 1)
         # Update the model - takes only O(d) time!
         w = w + (d_alpha[i_rand] - d_alpha_old) * \
-            Ytr(i_rand)*Xtr.getrow(i_rand)
+            Ytr[i_rand]*Xtr.getrow(i_rand)
 
         # Take a snapshot after every few iterations
         # Take snapshots after every spacing = 5000 or so SCD
@@ -85,14 +97,23 @@ def main():
             time_elapsed[tick] = ttot + delta.total_seconds()
             ttot = time_elapsed[tick]
             tick_vals[tick] = tick
-            obj_val[
-                tick] = ...  # Calculate the objective value f(w) for the current model w^t
+            # Calculate the objective value f(w) for the current model w^t
+            obj_val[tick] = calculate_F(w, Xtr, Ytr)
+            if t == 0:
+                min_f = obj_val[tick]
+
+            if min_f > obj_val[tick]:
+                min_f = obj_val[tick]
+                min_w = w
+            print(t, obj_val[tick])
             tick = tick+1
             # Start the timer again - training time!
             t_start = datetime.now()
 
-    w_final = w.toarray()
+    w_final = min_w.toarray()
+    print("min f - ", min_f)
     np.save("model_SCD.npy", w_final)
+
 
 if __name__ == '__main__':
     main()

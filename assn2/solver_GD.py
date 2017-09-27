@@ -19,7 +19,8 @@ def calculate_F(w, Xtr, Ytr):
     """
     wx = (np.matrix(w)*np.matrix(Xtr.T)).T
     constraint = 0
-    for i in range(Xtr.shape[0]):
+    n = Xtr.shape[0]
+    for i in range(n):
         val = 1 - Ytr[i]*wx[i]
         if val > 0:
             constraint += val
@@ -45,7 +46,7 @@ def main():
 
     # We have n data points each in d-dimensions
     n, d = Xtr.get_shape()
-    print(n)
+
     # The labels are named 1 and 2 in the data set. Convert them to our
     # standard -1 and 1 labels
     Ytr = 2*(Ytr - 1.5)
@@ -61,7 +62,7 @@ def main():
     # NumPy array
     # w = csr_matrix((1, d))
     w = np.ones((1, d))
-    print(w)
+
     # We will take a timestamp after every "spacing" iterations
     time_elapsed = np.zeros(math.ceil(n_iter/spacing))
     tick_vals = np.zeros(math.ceil(n_iter/spacing))
@@ -84,7 +85,7 @@ def main():
         g = w - (1/n)*val
         g.reshape(1, d)  # Reshaping since model is a row vector
         # Calculate step lenght. Step length may depend on n and t
-        print(t)
+        
         eta = n * 1.0/math.sqrt(t+1)
         eta = 0.099
 
@@ -107,7 +108,7 @@ def main():
             # Calculate the objective value f(w) for the current model w^t or
             # the current averaged model \bar{w}^t
             obj_val[tick] = calculate_F(w, Xtr, Ytr)
-            print(obj_val[tick])
+            print(t, obj_val[tick])
             tick = tick+1
             # Start the timer again - training time!
             t_start = datetime.now()
