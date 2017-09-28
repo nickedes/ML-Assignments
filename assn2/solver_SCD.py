@@ -13,18 +13,33 @@ def grad(w, Xtr, Ytr, i):
     return gradient
 
 
+# def dual(d_alpha, Xtr, Ytr):
+#     # takes too longggg!
+#     n, d = Xtr.get_shape()
+#     prod_alphaQ = np.array((1, n))
+#     x = Xtr.toarray()
+#     for k in range(n):
+#         print(k)
+#         val = 0
+#         for i in range(n):
+#             val += d_alpha[i]*Ytr[i]*Ytr[k]*np.matrix(x[i].reshape(1, d))*np.matrix((x[k].reshape(d,1)))
+#         prod_alphaQ[k] = val[0][0]
+
+#     prod = 0.5 * prod_alphaQ * d_alpha.reshape(n, 1)
+#     return prod - sum(d_alpha)
+
 def calculate_F(w, Xtr, Ytr):
     """
     """
     wx = (w*Xtr.T).T
-    constraint = 0
+    slack = 0
     wx = wx.toarray()
     n = Xtr.get_shape()[0]
     for i in range(n):
         val = 1 - Ytr[i]*wx[i]
         if val > 0:
-            constraint += val
-    f = 0.5*(np.linalg.norm(w.toarray()))**2 + constraint
+            slack += val
+    f = 0.5*(np.linalg.norm(w.toarray()) ** 2) + slack
     return f
 
 
@@ -69,7 +84,6 @@ def main():
     # as a NumPy array
     w = csr_matrix((1, d))
     d_alpha = np.zeros((n,))
-
     min_w = w
 
     # We will take a timestamp after every "spacing" iterations
@@ -87,7 +101,7 @@ def main():
         # Doing dual SCD
         # Choose a random coordinate from 1 to n
         i_rand = random.randint(1, n)
-        
+
         # compute Gradient for random coordinate
         g = grad(w, Xtr, Ytr, i_rand)
 
@@ -99,21 +113,14 @@ def main():
             pg = max(g, 0)
 
         if pg != 0:
+            # Store the old and compute the new value of alpha along that coordinate
             d_alpha_old = d_alpha[i_rand]
             Q = (Xtr.getrow(i_rand)*(Xtr.getrow(i_rand).T))[0, 0]
             d_alpha[i_rand] = min(max(d_alpha[i_rand] - g/Q, 0), 1)
+            # # Update the model - takes only O(d) time!
             w = w + (d_alpha[i_rand] - d_alpha_old) * \
                 Ytr[i_rand]*Xtr.getrow(i_rand)
 
-        # Store the old and compute the new value of alpha along that
-        # coordinate
-        # d_alpha_old = d_alpha[i_rand]
-        # d_alpha[i_rand] = min(
-        #     max(d_alpha[i_rand] - grad(w, Xtr, Ytr, i_rand), 0), 1)
-        # # Update the model - takes only O(d) time!
-        # w = w + (d_alpha[i_rand] - d_alpha_old) * \
-        #     Ytr[i_rand]*Xtr.getrow(i_rand)
-        
         # Take a snapshot after every few iterations
         # Take snapshots after every spacing = 5000 or so SCD
         # iterations since they are fast
