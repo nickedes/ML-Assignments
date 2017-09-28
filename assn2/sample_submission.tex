@@ -17,20 +17,28 @@ If we build a decision tree using the attribute name then the branching factor w
 2. Answer : Yes.\\
 
 3. Decision Tree obtained after ID3 decision tree learning algorithm is shown in Figure 1. Steps for producing this are :
-\\\\Attributes are : Size of research group, Like the research area, Average workload, No. of meetings  per week. Suppose S is this full data given. Then, 
-
-Entropy(S) = 0.9182
-Gain(S, Size of research group) = 0.0679
-Gain(S, Like the research area) = 0.03170
-Gain(S, Average workload) = 0.06131
-Gain(S, No. of meetings  per week) = 0.2516
+\\\\Attributes are : Size of research group, Like the research area, Average workload, No. of meetings  per week. Suppose S is this full data given. Then, \\\\Entropy(S) = 0.9182\\
+Gain(S, Size of research group) = 0.0679\\
+Gain(S, Like the research area) = 0.03170\\
+Gain(S, Average workload) = 0.06131\\
+Gain(S, No. of meetings  per week) = 0.2516\\\\So Root node is No. of meetings per week as it has the highest Gain.\\\\Since "No. of meetings per week" has three possible values, the root node has three branches (2-3, 0-1, $>$3). All rows with 2-3 meetings per week give result "NO", and similarly on taking branch "$>$3" we get "NO" as answer. \\\\We only decide on the remaining three attributes: Size of research group, Like the research area, Average workload. S is now the remaining set under branch "0-1" (No. of meetings per week).\\
+Entropy(S) = 1.0\\
+Gain(S, Size of research group) = 0.11452\\
+Gain(S, Like the research area) = 0.0348\\
+Gain(S, Average workload) = 0.439\\\\Selecting Average workload as the decision node. Splitting into branches upon its possible values. "Average" workload branch leads to always "Yes" as answer.\\Still need to decide for "Heavy" and "Light" average workload branch.\\\\For "Heavy" (Average workload) branch :\\Entropy(S) = 0.7219\\
+Gain(S, Size of research group) = 0.1709\\
+Gain(S, Like the research area) = 0.0729\\\\Selecting Size of research group as the decision node, highest gain.
+Its branches are Medium and Large. Large always yields "NO" and Medium gives "YES" for 1 data point and "NO" for 2 data points, hence choosing "NO" by majority.\\\\For "Light" (Average workload) branch :\\
+Entropy(S) = 1.0\\
+Gain(S, Size of research group) = 2.0\\
+Gain(S, Like the research area) = 1.0\\\\Selecting Size of research group as the decision node, highest gain. We have only Medium size as branch and it's values are "YES" and "NO" one for each data point. So arbitrarily breaking tie by choosing "YES".\\\\Since we have to stop splitting nodes that are at depth 2 or more. Hence this "Light" Average workload branch always results in "YES" as answer, hence assigning directly to "YES" without any further split. Similarly the "Heavy" Average workload branch always results in "NO" as answer irrespective of the "Size of Research group" being Medium or Large, hence directly assigning the leaf node answer "NO" without any further split.\\\\These steps give us the decision tree as shown in figure 1.
 
 \begin{figure}[th]%
 \centering
 \includegraphics[width=0.5\columnwidth]{tree.png}%
 
 \caption{Decision Tree}%
-\label{fig:proto}%
+\label{fig:Dtree}%
 \end{figure}
 
 
