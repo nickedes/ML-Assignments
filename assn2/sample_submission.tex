@@ -4,24 +4,36 @@
 
 \begin{document}
 
-\initmlsubmision{1}                              					% assignment number
-								{John Doe}      						           		% your name
-								{17001}																		% your roll number
+\initmlsubmision{2}                              					% assignment number
+								{Nikhil Mittal}      						           		% your name
+								{17111056}																		% your roll number
 
 \begin{mlsolution}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis feugiat vehicula dolor, sed ultricies leo. Phasellus euismod dictum felis in euismod. Proin pretium vel neque in placerat. Proin imperdiet egestas vulputate. Etiam faucibus accumsan ante non viverra. Duis ultrices ac odio vel sodales. In maximus gravida dolor, ut commodo lacus. Pellentesque ante massa, venenatis id aliquam et, posuere sed dui. Duis dignissim justo sit amet augue posuere fringilla. Suspendisse at nisi gravida, mattis justo sit amet, elementum elit. Praesent et massa ornare, consequat dui eget, ornare risus. Duis est nibh, sollicitudin nec mattis non, mattis in leo. Donec finibus justo sed massa sagittis, non fermentum nibh dictum. Pellentesque et congue purus. Donec porta pretium porttitor.
+1. Answer : NO. It is useful only when the Name exists in the data, but if the name is not present then we can't classify based on name. So the first attribute (name) is not useful in learning.
+If we build a decision tree using the attribute name then the branching factor will be such high that it will shatter any dataset and overfit.
+\\
 
-Morbi euismod risus eu tortor ornare malesuada. Nunc sed sollicitudin neque, efficitur rhoncus tellus. Cras malesuada augue arcu. Sed sem odio, tincidunt quis laoreet ac, facilisis ut nibh. Quisque gravida dolor at egestas aliquam. Aenean mollis massa sit amet enim mattis, vel fermentum tortor facilisis. Donec pellentesque est velit, vitae posuere lorem tristique ut.
+2. Answer : Yes.\\
+
+3. Decision Tree obtained after ID3 decision tree learning algorithm is shown in Figure 1. Steps for producing this are :
+\\\\Attributes are : Size of research group, Like the research area, Average workload, No. of meetings  per week. Suppose S is this full data given. Then, 
+
+Entropy(S) = 0.9182
+Gain(S, Size of research group) = 0.0679
+Gain(S, Like the research area) = 0.03170
+Gain(S, Average workload) = 0.06131
+Gain(S, No. of meetings  per week) = 0.2516
+
 \begin{figure}[th]%
 \centering
-\includegraphics[width=0.3\columnwidth]{proto_blank.png}%
-\hfill
-\includegraphics[width=0.3\columnwidth]{proto_euclid_sample.png}%
-\caption{Learning with Prototypes: the figure on the left shows the two prototypes. The figure on the right shows what the decision boundary if the distance measure used is $d(\vz^1,\vz^2) = \norm{\vz^1-\vz^2}_2$, for any two points $\vz^1,\vz^2 \in \bR^2$. The decision boundary in this case is the line $y = x$.}%
+\includegraphics[width=0.5\columnwidth]{tree.png}%
+
+\caption{Decision Tree}%
 \label{fig:proto}%
 \end{figure}
-Fusce pulvinar convallis lobortis. Mauris iaculis lacus vitae dui suscipit, ut ornare neque placerat. In mattis malesuada rutrum. Vivamus consectetur tempus ex sit amet aliquam. In blandit libero at mi rutrum, nec iaculis orci cursus. Maecenas a dolor lorem. Donec pretium turpis sapien, dapibus sollicitudin odio scelerisque eget. Maecenas egestas tellus a quam scelerisque, et pretium magna condimentum. In dapibus feugiat ornare. Nunc eget nulla convallis, laoreet tortor nec, convallis dui. Etiam in leo vitae nulla facilisis congue. Curabitur blandit sodales augue. Vivamus et aliquam orci, non suscipit elit. Quisque vestibulum lacus at velit congue semper.
+
+
 
 \end{mlsolution}
 
