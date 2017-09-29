@@ -61,8 +61,9 @@ def main():
     # Note: if you have densified the Xt matrix then you can initialize w as a
     # NumPy array
     # w = csr_matrix((1, d))
-    w = np.ones((1, d))
-
+    w = np.empty((1, d))
+    for i in range(d):
+        w[0][i] = 0.01
     # We will take a timestamp after every "spacing" iterations
     time_elapsed = np.zeros(math.ceil(n_iter/spacing))
     tick_vals = np.zeros(math.ceil(n_iter/spacing))
@@ -82,15 +83,14 @@ def main():
             x = np.sum(np.array(w) * np.array(Xtr[i]))
             if Ytr[i]*x < 1:
                 val += Ytr[i]*x
-        g = w - (1/n)*val
+        g = w - val
         g.reshape(1, d)  # Reshaping since model is a row vector
         # Calculate step lenght. Step length may depend on n and t
-        
-        eta = n * 1.0/math.sqrt(t+1)
-        eta = 0.099
+
+        eta = 1.0/math.sqrt(t+1)
 
         # Update the model
-        w = w - eta * g
+        w = w - eta * g/n
 
         # Use the averaged model if that works better (see [\textbf{SSBD}] section 14.3)
         # wbar = ...
