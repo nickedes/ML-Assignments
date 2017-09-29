@@ -159,7 +159,7 @@ Dual problem for the original SVM problem (Say, (P2) ):\\\\
 
 Difference in both of them is : $\alpha_{i}$ here in (P2) is more constrained i.e. $\text{s.t.} \;\;0 \leq \alpha_{i} \leq C$ whereas $\alpha$ in (P1) is just $\alpha_{i} \geq 0$. So (P2) may use projected gradient descent as a solver where as (P1) can use gradient descent as a solver.\\
 
-The original SVM has the term $\sum_{i=1}^{n}\xi_{i}$ and (P1) instead has $\sum_{i=1}^{n}\xi_{i}^{2}$ term in the objective, which brings out all the difference.
+The original SVM has the term $\sum_{i=1}^{n}\xi_{i}$ and (P1) instead has $\sum_{i=1}^{n}\xi_{i}^{2}$ term in the objective, which brings out all the difference. So the dual of (P1) is simply the dual of (P2) \textbf{without} constraints, so the implementation is also simpler. 
 \newpage
 
 \textbf{2.3.5}: Answer:\\
