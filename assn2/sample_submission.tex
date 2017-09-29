@@ -131,13 +131,57 @@ we get,
 \alpha_{i} + \beta_{i} = 0
 \]
 
-This does allow us to substitute $\beta_{i} = - \alpha_{i}$ back in the equation (1). But what we can also notice
+This does allow us to substitute $\beta_{i} = - \alpha_{i}$ back in the equation (1). But what we can also notice is that $3^{rd}$ term in $\mathcal{L}(\alpha, \beta)$ goes to zero at the optimum.\\
+
+After substitution in equation (1), hence it becomes :
+
+\[
+  \mathcal{L}\left ( \alpha \right ) = \underset{\alpha\geq 0}{\text{max}} \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i} \;\;\;\;\;\;\; - (2)
+\]\\\\Since in equation (2) $\beta_{i}$ is not present and even it doesn't impose any restriction(constraint) on $\alpha_{i}$. This means that the constraint $\beta_{i}$ does not change the optimization problem. Since $\beta_{i}$ is the constraint corresponding to $\xi_{i} \geq 0$ then we can say that optimization problem doesn't change even if we remove the constraints $\xi_{i} \geq 0$. Hence these constraints are vacuous.\\\\
+2.3.4: Answer :\\
+
+Dual problem for (P1) :
+\[
+\underset{\alpha\geq 0}{\text{max}} \;\; \mathcal{L}\left ( \alpha \right ) =  \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i}
+\]\\
+or,
+\[
+\underset{\alpha\geq 0}{\text{min}} \;\; - \mathcal{L}\left ( \alpha \right ) = \; \;\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle \;-\; \sum_{i=1}^{n}\alpha_{i}
+\]\\
+
+Dual problem for the original SVM problem (Say, (P2) ):\\
+\[
+\underset{\alpha}{\text{min}} \;\; - \mathcal{L}\left ( \alpha \right ) = \; \;\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle \;-\; \sum_{i=1}^{n}\alpha_{i}
+\]\\
+\[\text{s.t.} \;\;0 \leq \alpha_{i} \leq C\]
+
+Difference in both of them is : $\alpha$ here in (P2) is more constrained i.e. $\text{s.t.} \;\;0 \leq \alpha_{i} \leq C$ whereas $\alpha$ in (P1) is just $\alpha_{i} \geq 0$. So (P2) may use projected gradient descent as a solver where as (P1) can use gradient descent as a solver.
+
+The original SVM has the term $\sum_{i=1}^{n}\xi_{i}$ and (P1) instead has $\sum_{i=1}^{n}\xi_{i}^{2}$ term , which brings out all the difference.
+
+2.3.5
+
+Lagrangian for the Original SVM problem : 
+
+\[
+\mathcal{L}\left ( w, b, \xi, \alpha, \beta \right ) =
+\frac{1}{2} \left \| w \right \|^{2} + C \sum_{i=1}^{n} \xi_{i} - \sum_{i=1}^{n} \beta_{i}\xi_{i} - \sum_{i=1}^{n} \alpha_i\left ( y^{i}\left ( \left \langle w, x^{i} \right \rangle + b \right ) - 1 + \xi_{i} \right )
+\]
+
+whose Dual is 
+
+\[
+\underset{\alpha}{\text{min}} \;\; - \mathcal{L}\left ( \alpha \right ) = \; \;\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle \;-\; \sum_{i=1}^{n}\alpha_{i}
+\]\\
+\[\text{s.t.} \;\;0 \leq \alpha_{i} \leq C\]
+
+It may seem that $\beta_{i}$ ( Lagrange multiplier for the positivity constraint $\xi_{i} /geq 0$) is not present and that the positivity
+
 \end{mlsolution}
 
 \begin{mlsolution}
- Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis feugiat vehicula dolor, sed ultricies leo. Phasellus euismod dictum felis in euismod. Proin pretium vel neque in placerat. Proin imperdiet egestas vulputate. Etiam faucibus accumsan ante non viverra. Duis ultrices ac odio vel sodales. In maximus gravida dolor, ut commodo lacus. Pellentesque ante massa, venenatis id aliquam et, posuere sed dui. Duis dignissim justo sit amet augue posuere fringilla. Suspendisse at nisi gravida, mattis justo sit amet, elementum elit. Praesent et massa ornare, consequat dui eget, ornare risus. Duis est nibh, sollicitudin nec mattis non, mattis in leo. Donec finibus justo sed massa sagittis, non fermentum nibh dictum. Pellentesque et congue purus. Donec porta pretium porttitor.
 
-Morbi euismod risus eu tortor ornare malesuada. Nunc sed sollicitudin neque, efficitur rhoncus tellus. Cras malesuada augue arcu. Sed sem odio, tincidunt quis laoreet ac, facilisis ut nibh. Quisque gravida dolor at egestas aliquam. Aenean mollis massa sit amet enim mattis, vel fermentum tortor facilisis. Donec pellentesque est velit, vitae posuere lorem tristique ut. 
+
 \end{mlsolution}
 					
 \end{document}
