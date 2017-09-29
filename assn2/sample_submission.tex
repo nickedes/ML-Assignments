@@ -60,16 +60,16 @@ s.t. y^{i} \left \langle w, x^{i} \right \rangle \geq 1 - \xi_{i}, \text{for} \;
 \xi_{i} \geq 0\; \text{for} \; \text{all} \; i \in [n]
 \]
 
-2.3.2: Answer :\\
+\textbf{2.3.2}: Answer :\\
 
 Lagrangian for (P1) :
 
 \[
 \mathcal{L}(w, \xi, \alpha, \beta) = \arg \underset{w, {\xi_{i} }}{ \text{min} } \; \underset{\alpha\geq 0 ,\; \beta\geq0}{\text{max}} \; \left \| w \right \|_{2}^{2} + \sum_{i = 1}^{n} \xi^{2}
  - \sum_{i=1}^{n} \alpha_{i} \left ( y^{i} \left \langle w, x^{i} \right \rangle - 1 + \xi_{i} \right ) - \sum_{i=1}^{n}\beta_{i} \xi_{i}
-\]
+\]\\
 
-2.3.3: Answer :\\
+\textbf{2.3.3}: Answer :\\
 
 Derivation for Dual problem for (P1)\\
 
@@ -80,9 +80,9 @@ We can solve this problem by taking gradients.Since our goal is to remove the de
 \frac{\partial  \mathcal{L}}{\partial w}  = 0
 \]\\\[
 w = \frac{1}{2}\sum_{i=1}^{n} \alpha_{i}y^{i}x^{i} 
-\]
+\]\\
 
-Also to remove the dependence on $\xi$, take a gradient with respect to $\xi$, set it equal to zero, and solve for $\xi$ in terms of the other variables.
+Also to remove the dependence on $\xi$, take a gradient with respect to $\xi$, set it equal to zero, and solve for $\xi$ in terms of the other variables.\\
 
 \[
 \frac{\partial  \mathcal{L}}{\partial \xi_{i} } = 2\;\xi_{i} - \alpha_{i} - \beta_{i}
@@ -90,25 +90,26 @@ Also to remove the dependence on $\xi$, take a gradient with respect to $\xi$, s
 \frac{\partial  \mathcal{L}}{\partial \xi_{i} } = 0
 \]\\\[
 \xi_{i} = \frac{\alpha_{i} + \beta_{i}}{2}
-\]
+\]\\
 
-Substitute w and $\xi$ back in $\mathcal{L}(w, \xi, \alpha, \beta)$ and eliminate them.
+Substitute w and $\xi$ back in $\mathcal{L}(w, \xi, \alpha, \beta)$ and eliminate them.\\
 
 \[
-  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \left ( \frac{1}{2}\sum_{i=1}^{n} \alpha_{i}y^{i}x^{i}  \right )\left ( \frac{1}{2}\sum_{j=1}^{n} \alpha_{j}y^{j}x^{j} \right ) + \sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2}  \]\[ - \sum_{i=1}^{n} \alpha_{i}\left ( y^{i}\left ( \frac{1}{2}\sum_{j=1}^{n} \alpha_{j}y^{j}x^{j}  \right )x^{i} - 1  +  \frac{\alpha_{i} + \beta_{i}}{2} \right ) - \sum_{i=1}^{n} \beta_{i} \left ( \frac{\alpha_{i} + \beta_{i}}{2}  \right )
+  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \left ( \frac{1}{2}\sum_{i=1}^{n} \alpha_{i}y^{i}x^{i}  \right )\left ( \frac{1}{2}\sum_{j=1}^{n} \alpha_{j}y^{j}x^{j} \right ) + \sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2}  \]\\\[ - \sum_{i=1}^{n} \alpha_{i}\left ( y^{i}\left ( \frac{1}{2}\sum_{j=1}^{n} \alpha_{j}y^{j}x^{j}  \right )x^{i} - 1  +  \frac{\alpha_{i} + \beta_{i}}{2} \right ) - \sum_{i=1}^{n} \beta_{i} \left ( \frac{\alpha_{i} + \beta_{i}}{2}  \right )
 \]\\
 
 \[
-  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \; \frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2} -\; \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle \]\[ + \sum_{i=1}^{n}\alpha_{i} - \sum_{i=1}^{n} \alpha_{i} \left ( \frac{\alpha_{i} + \beta_{i}}{2}  \right ) - \sum_{i=1}^{n} \beta_{i} \left ( \frac{\alpha_{i} + \beta_{i}}{2}  \right )
+  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \; \frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2} -\; \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle \]\\\[ + \sum_{i=1}^{n}\alpha_{i} - \sum_{i=1}^{n} \alpha_{i} \left ( \frac{\alpha_{i} + \beta_{i}}{2}  \right ) - \sum_{i=1}^{n} \beta_{i} \left ( \frac{\alpha_{i} + \beta_{i}}{2}  \right )
 \]\\
 
 \[
   \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i} - \frac{1}{4}\sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2}
-\]\\
+\]\\\\
 
 $\mathcal{L}(\alpha, \beta)$ is the expression for dual of $\mathcal{L}(w, \xi, \alpha, \beta)$.\\
+\newpage
 
-2.3.1: Answer : \\
+\textbf{2.3.1}: Answer : \\
 
 Using the expression obtained for the Lagrangian dual problem for (P1).
 
@@ -119,47 +120,49 @@ We have
 
 We have to maximize for $\alpha$ and $\beta$ to get optimal value for dual problem.
 
-So let's maximize for $\beta$ first.
+So let's maximize for $\beta$ first.\\
 
 \[
-\frac{\partial \mathcal{L}\left ( \alpha,\; \beta  \right ) }{\partial w} = 0 + 0 -\frac{1}{4}\left ( 2(\alpha_{i} + \beta_{i})(1) \right ) \] \\
+\frac{\partial \mathcal{L}\left ( \alpha,\; \beta  \right ) }{\partial \beta} = 0 + 0 -\frac{1}{4}\left ( 2(\alpha_{i} + \beta_{i})(1) \right ) \] \\
 
-\text{set}\; \[\frac{\partial \mathcal{L}\left ( \alpha,\; \beta  \right ) }{\partial w} = 0
-\]
+\text{set}\; \[\frac{\partial \mathcal{L}\left ( \alpha,\; \beta  \right ) }{\partial \beta} = 0
+\]\\
 we get,
 \[
 \alpha_{i} + \beta_{i} = 0
-\]
+\]\\
 
 This does allow us to substitute $\beta_{i} = - \alpha_{i}$ back in the equation (1). But what we can also notice is that $3^{rd}$ term in $\mathcal{L}(\alpha, \beta)$ goes to zero at the optimum.\\
 
-After substitution in equation (1), hence it becomes :
+After substitution in equation (1), hence it becomes :\\
 
 \[
   \mathcal{L}\left ( \alpha \right ) = \underset{\alpha\geq 0}{\text{max}} \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i} \;\;\;\;\;\;\; - (2)
-\]\\\\Since in equation (2) $\beta_{i}$ is not present and even it doesn't impose any restriction(constraint) on $\alpha_{i}$. This means that the constraint $\beta_{i}$ does not change the optimization problem. Since $\beta_{i}$ is the constraint corresponding to $\xi_{i} \geq 0$ then we can say that optimization problem doesn't change even if we remove the constraints $\xi_{i} \geq 0$. Hence these constraints are vacuous.\\\\
-2.3.4: Answer :\\
+\]\\\\Since in equation (2) $\beta_{i}$ is not present and it doesn't even impose any restriction(constraint) on $\alpha_{i}$. This means that the constraint $\beta_{i}$ does not change the optimization problem. Since $\beta_{i}$ is the constraint corresponding to $\xi_{i} \geq 0$ then we can say that optimization problem doesn't change even if we remove the constraints $\xi_{i} \geq 0$. Hence these constraints are vacuous.\\\\
+\newpage
+\textbf{2.3.4}: Answer :\\
 
 Dual problem for (P1) :
 \[
 \underset{\alpha\geq 0}{\text{max}} \;\; \mathcal{L}\left ( \alpha \right ) =  \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i}
 \]\\
-or,
+or,\\
 \[
 \underset{\alpha\geq 0}{\text{min}} \;\; - \mathcal{L}\left ( \alpha \right ) = \; \;\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle \;-\; \sum_{i=1}^{n}\alpha_{i}
 \]\\
 
-Dual problem for the original SVM problem (Say, (P2) ):\\
+Dual problem for the original SVM problem (Say, (P2) ):\\\\
 \[
 \underset{\alpha}{\text{min}} \;\; - \mathcal{L}\left ( \alpha \right ) = \; \;\frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle \;-\; \sum_{i=1}^{n}\alpha_{i}
 \]\\
-\[\text{s.t.} \;\;0 \leq \alpha_{i} \leq C\]
+\[\text{s.t.} \;\;0 \leq \alpha_{i} \leq C\]\\
 
-Difference in both of them is : $\alpha$ here in (P2) is more constrained i.e. $\text{s.t.} \;\;0 \leq \alpha_{i} \leq C$ whereas $\alpha$ in (P1) is just $\alpha_{i} \geq 0$. So (P2) may use projected gradient descent as a solver where as (P1) can use gradient descent as a solver.
+Difference in both of them is : $\alpha_{i}$ here in (P2) is more constrained i.e. $\text{s.t.} \;\;0 \leq \alpha_{i} \leq C$ whereas $\alpha$ in (P1) is just $\alpha_{i} \geq 0$. So (P2) may use projected gradient descent as a solver where as (P1) can use gradient descent as a solver.\\
 
-The original SVM has the term $\sum_{i=1}^{n}\xi_{i}$ and (P1) instead has $\sum_{i=1}^{n}\xi_{i}^{2}$ term , which brings out all the difference.
+The original SVM has the term $\sum_{i=1}^{n}\xi_{i}$ and (P1) instead has $\sum_{i=1}^{n}\xi_{i}^{2}$ term in the objective, which brings out all the difference.
+\newpage
 
-2.3.5
+\textbf{2.3.5}: Answer:\\
 
 Lagrangian for the Original SVM problem : 
 
@@ -175,8 +178,7 @@ whose Dual is
 \]\\
 \[\text{s.t.} \;\;0 \leq \alpha_{i} \leq C\]
 
-It may seem that $\beta_{i}$ ( Lagrange multiplier for the positivity constraint $\xi_{i} /geq 0$) is not present and that the positivity
-
+It may seem that $\beta_{i}$ ( Lagrange multiplier for the positivity constraint $\xi_{i} \geq 0$) is not present in the dual and that the positivity constraint is vacuous, but that is not the case. While deriving this equation for dual, $\beta_{i}$ was dropped from the optimization problem with a condition that $\alpha_{i} \leq C$, otherwise the corresponding $\beta_{i}$ will be forced to be negative which is NOT allowed. Hence $\xi_{i} \geq 0$ is not vacuous because it imposes a restriction on $\alpha_{i}$ \; \[\text{s.t.} \;\;0 \leq \alpha_{i} \leq C\] If we remove the the positivity constraints from the original SVM problem then this will change the solution as it removes the constraint on $\alpha_{i}$. 
 \end{mlsolution}
 
 \begin{mlsolution}
