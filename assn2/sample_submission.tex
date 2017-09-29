@@ -46,47 +46,71 @@ Gain(S, Like the research area) = 1.0\\\\Selecting Size of research group as the
 \end{mlsolution}
 
 \begin{mlsolution}
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis feugiat vehicula dolor, sed ultricies leo. Phasellus euismod dictum felis in euismod. Proin pretium vel neque in placerat. Proin imperdiet egestas vulputate. Etiam faucibus accumsan ante non viverra. Duis ultrices ac odio vel sodales. In maximus gravida dolor, ut commodo lacus. Pellentesque ante massa, venenatis id aliquam et, posuere sed dui. Duis dignissim justo sit amet augue posuere fringilla. Suspendisse at nisi gravida, mattis justo sit amet, elementum elit. Praesent et massa ornare, consequat dui eget, ornare risus. Duis est nibh, sollicitudin nec mattis non, mattis in leo. Donec finibus justo sed massa sagittis, non fermentum nibh dictum. Pellentesque et congue purus. Donec porta pretium porttitor.
-
-Morbi euismod risus eu tortor ornare malesuada. Nunc sed sollicitudin neque, efficitur rhoncus tellus. Cras malesuada augue arcu. Sed sem odio, tincidunt quis laoreet ac, facilisis ut nibh. Quisque gravida dolor at egestas aliquam. Aenean mollis massa sit amet enim mattis, vel fermentum tortor facilisis. Donec pellentesque est velit, vitae posuere lorem tristique ut.
-
-Fusce pulvinar convallis lobortis. Mauris iaculis lacus vitae dui suscipit, ut ornare neque placerat. In mattis malesuada rutrum. Vivamus consectetur tempus ex sit amet aliquam. In blandit libero at mi rutrum, nec iaculis orci cursus. Maecenas a dolor lorem. Donec pretium turpis sapien, dapibus sollicitudin odio scelerisque eget. Maecenas egestas tellus a quam scelerisque, et pretium magna condimentum. In dapibus feugiat ornare. Nunc eget nulla convallis, laoreet tortor nec, convallis dui. Etiam in leo vitae nulla facilisis congue. Curabitur blandit sodales augue. Vivamus et aliquam orci, non suscipit elit. Quisque vestibulum lacus at velit congue semper.
-
-Nulla efficitur risus nunc, in posuere turpis tempor eget. Sed efficitur id tellus non vestibulum. Praesent elementum condimentum sollicitudin. Integer eget quam dictum, varius est sit amet, aliquam mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi in pretium dui. Sed luctus magna rutrum ex mollis, ut blandit lacus tincidunt. In tincidunt urna neque, placerat consequat velit sagittis id. Morbi pretium maximus fermentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis vehicula efficitur rhoncus. Nullam lacinia semper scelerisque. Maecenas eleifend nisi et ante auctor, a tincidunt arcu molestie. Aenean faucibus feugiat arcu ac mattis.
-\begin{figure}[th]%
-\centering
-\includegraphics[width=0.5\columnwidth]{proto_blank.png}%
-\hfill
-\includegraphics[width=0.5\columnwidth]{proto_euclid_sample.png}%
-\caption{Learning with Prototypes: the figure on the left shows the two prototypes. The figure on the right shows what the decision boundary if the distance measure used is $d(\vz^1,\vz^2) = \norm{\vz^1-\vz^2}_2$, for any two points $\vz^1,\vz^2 \in \bR^2$. The decision boundary in this case is the line $y = x$.}%
-\label{fig:proto}%
-\end{figure}
-Morbi quis suscipit sapien. Pellentesque pulvinar fermentum tellus at malesuada. Nam id metus vitae risus dignissim laoreet. Pellentesque massa velit, vehicula in convallis et, vestibulum sed turpis. In venenatis massa vel mattis tincidunt. Donec varius faucibus elit, in blandit metus interdum sit amet. Nullam vel nibh non nisl mollis volutpat. Donec cursus iaculis lorem, id elementum metus iaculis nec. Cras a diam porttitor, suscipit dolor id, vestibulum nisi. Morbi maximus mauris a iaculis hendrerit. Duis rutrum quam in ex lobortis gravida. Aenean iaculis lacinia metus. Fusce sit amet dignissim elit, sed sodales lacus. Mauris ac neque finibus, bibendum tortor id, scelerisque neque. In nec quam ullamcorper, egestas sem ut, iaculis ante. Nam porta diam ut lacus sagittis euismod. 
+second
 \end{mlsolution}
 
 \begin{mlsolution}
 
+\[
+f(w) = \arg \underset{w, {\xi_{i} }}{\min} \left \| w \right \|_{2}^{2} + \sum_{i = 1}^{n} \xi^{2}
+\]\[
+\\
+s.t. y^{i} \left \langle w, x^{i} \right \rangle \geq 1 - \xi_{i}, \text{for} \; \text{all} \; i \in [n]
+\]\[\\
+\xi_{i} \geq 0\; \text{for} \; \text{all} \; i \in [n]
+\]
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis feugiat vehicula dolor, sed ultricies leo. Phasellus euismod dictum felis in euismod. Proin pretium vel neque in placerat. Proin imperdiet egestas vulputate. Etiam faucibus accumsan ante non viverra. Duis ultrices ac odio vel sodales. In maximus gravida dolor, ut commodo lacus. Pellentesque ante massa, venenatis id aliquam et, posuere sed dui. Duis dignissim justo sit amet augue posuere fringilla. Suspendisse at nisi gravida, mattis justo sit amet, elementum elit. Praesent et massa ornare, consequat dui eget, ornare risus. Duis est nibh, sollicitudin nec mattis non, mattis in leo. Donec finibus justo sed massa sagittis, non fermentum nibh dictum. Pellentesque et congue purus. Donec porta pretium porttitor.
+2.3.2: Answer :\\
 
-Morbi euismod risus eu tortor ornare malesuada. Nunc sed sollicitudin neque, efficitur rhoncus tellus. Cras malesuada augue arcu. Sed sem odio, tincidunt quis laoreet ac, facilisis ut nibh. Quisque gravida dolor at egestas aliquam. Aenean mollis massa sit amet enim mattis, vel fermentum tortor facilisis. Donec pellentesque est velit, vitae posuere lorem tristique ut.
+Lagrangian for (P1) :
 
-\begin{figure}[th]%
-\centering
-\includegraphics[width=0.4\columnwidth]{proto_blank.png}%
-\hfill
-\includegraphics[width=0.4\columnwidth]{proto_euclid_sample.png}%
-\caption{Learning with Prototypes: the figure on the left shows the two prototypes. The figure on the right shows what the decision boundary if the distance measure used is $d(\vz^1,\vz^2) = \norm{\vz^1-\vz^2}_2$, for any two points $\vz^1,\vz^2 \in \bR^2$. The decision boundary in this case is the line $y = x$.}%
-\label{fig:proto}%
-\end{figure}
+\[
+\mathcal{L}(w, \xi, \alpha, \beta) = \arg \underset{w, {\xi_{i} }}{ \text{min} } \; \underset{\alpha\geq 0 ,\; \beta\geq0}{\text{max}} \; \left \| w \right \|_{2}^{2} + \sum_{i = 1}^{n} \xi^{2}
+ - \sum_{i=1}^{n} \alpha_{i} \left ( y^{i} \left \langle w, x^{i} \right \rangle - 1 + \xi_{i} \right ) - \sum_{i=1}^{n}\beta_{i} \xi_{i}
+\]
 
-Fusce pulvinar convallis lobortis. Mauris iaculis lacus vitae dui suscipit, ut ornare neque placerat. In mattis malesuada rutrum. Vivamus consectetur tempus ex sit amet aliquam. In blandit libero at mi rutrum, nec iaculis orci cursus. Maecenas a dolor lorem. Donec pretium turpis sapien, dapibus sollicitudin odio scelerisque eget. Maecenas egestas tellus a quam scelerisque, et pretium magna condimentum. In dapibus feugiat ornare. Nunc eget nulla convallis, laoreet tortor nec, convallis dui. Etiam in leo vitae nulla facilisis congue. Curabitur blandit sodales augue. Vivamus et aliquam orci, non suscipit elit. Quisque vestibulum lacus at velit congue semper.
+2.3.3: Answer :\\
 
-Nulla efficitur risus nunc, in posuere turpis tempor eget. Sed efficitur id tellus non vestibulum. Praesent elementum condimentum sollicitudin. Integer eget quam dictum, varius est sit amet, aliquam mauris. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi in pretium dui. Sed luctus magna rutrum ex mollis, ut blandit lacus tincidunt. In tincidunt urna neque, placerat consequat velit sagittis id. Morbi pretium maximus fermentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis vehicula efficitur rhoncus. Nullam lacinia semper scelerisque. Maecenas eleifend nisi et ante auctor, a tincidunt arcu molestie. Aenean faucibus feugiat arcu ac mattis.
+Derivation for Dual problem for (P1)\\
 
-Morbi quis suscipit sapien. Pellentesque pulvinar fermentum tellus at malesuada. Nam id metus vitae risus dignissim laoreet. Pellentesque massa velit, vehicula in convallis et, vestibulum sed turpis. In venenatis massa vel mattis tincidunt. Donec varius faucibus elit, in blandit metus interdum sit amet. Nullam vel nibh non nisl mollis volutpat. Donec cursus iaculis lorem, id elementum metus iaculis nec. Cras a diam porttitor, suscipit dolor id, vestibulum nisi. Morbi maximus mauris a iaculis hendrerit. Duis rutrum quam in ex lobortis gravida. Aenean iaculis lacinia metus. Fusce sit amet dignissim elit, sed sodales lacus. Mauris ac neque finibus, bibendum tortor id, scelerisque neque. In nec quam ullamcorper, egestas sem ut, iaculis ante. Nam porta diam ut lacus sagittis euismod. 
+We can solve this problem by taking gradients.Since our goal is to remove the dependence on w, the first step is to take a gradient with respect to w, set it equal to zero, and solve for w in terms of the other variables.\\
+\[
+\frac{\partial  \mathcal{L}}{\partial w} = 2w - \sum_{i=1}^{n} \alpha_{i}y^{i}x^{i} 
+\]\\\[
+\frac{\partial  \mathcal{L}}{\partial w}  = 0
+\]\\\[
+w = \frac{1}{2}\sum_{i=1}^{n} \alpha_{i}y^{i}x^{i} 
+\]
+
+Also to remove the dependence on $\xi$, take a gradient with respect to $\xi$, set it equal to zero, and solve for $\xi$ in terms of the other variables.
+
+\[
+\frac{\partial  \mathcal{L}}{\partial \xi_{i} } = 2\;\xi_{i} - \alpha_{i} - \beta_{i}
+\]\\\[
+\frac{\partial  \mathcal{L}}{\partial \xi_{i} } = 0
+\]\\\[
+\xi_{i} = \frac{\alpha_{i} + \beta_{i}}{2}
+\]
+
+Substitute w and $\xi$ back in $\mathcal{L}(w, \xi, \alpha, \beta)$ and eliminate them.
+
+\[
+  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \left ( \frac{1}{2}\sum_{i=1}^{n} \alpha_{i}y^{i}x^{i}  \right )\left ( \frac{1}{2}\sum_{j=1}^{n} \alpha_{j}y^{j}x^{j} \right ) + \sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2}  \]\[ - \sum_{i=1}^{n} \alpha_{i}\left ( y^{i}\left ( \frac{1}{2}\sum_{j=1}^{n} \alpha_{j}y^{j}x^{j}  \right )x^{i} - 1  +  \frac{\alpha_{i} + \beta_{i}}{2} \right ) - \sum_{i=1}^{n} \beta_{i} \left ( \frac{\alpha_{i} + \beta_{i}}{2}  \right )
+\]\\
+
+\[
+  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \; \frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2} -\; \frac{1}{2}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle \]\[ + \sum_{i=1}^{n}\alpha_{i} - \sum_{i=1}^{n} \alpha_{i} \left ( \frac{\alpha_{i} + \beta_{i}}{2}  \right ) - \sum_{i=1}^{n} \beta_{i} \left ( \frac{\alpha_{i} + \beta_{i}}{2}  \right )
+\]\\
+
+\[
+  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i} - \frac{1}{4}\sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2}
+\]\\
+
+$\mathcal{L}(\alpha, \beta)$ is the expression for dual of $\mathcal{L}(w, \xi, \alpha, \beta)$.\\
+
+2.3.1: Answer : \\
+
+
 \end{mlsolution}
 
 \begin{mlsolution}
