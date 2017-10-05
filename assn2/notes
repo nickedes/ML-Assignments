@@ -1,0 +1,4 @@
+C = 10 -> better than C = 1  (Iter - 15920, f - 175844)
+C = 100 -> faster than C = 10 (Iter - 13680, f - 174852)
+C = 200 
+C = 50
