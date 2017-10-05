@@ -31,15 +31,13 @@ def grad(w, Xtr, Ytr, i):
 def calculate_F(w, Xtr, Ytr):
     """
     """
-    wx = (w*Xtr.T).T
-    slack = 0
-    wx = wx.toarray()
-    n = Xtr.get_shape()[0]
-    for i in range(n):
-        val = 1 - Ytr[i]*wx[i]
-        if val > 0:
-            slack += val
-    f = 0.5*(np.linalg.norm(w.toarray()) ** 2) + slack
+    w = csr_matrix(w)
+    wx = csr_matrix.dot(w, Xtr.T)
+    ywx = wx.multiply(Ytr)
+    z = (ywx < 1).toarray()
+    slack = (1 - ywx.toarray()[z]).sum(axis=0)
+
+    f = 0.5*(np.linalg.norm(w.toarray()))**2 + slack
     return f
 
 

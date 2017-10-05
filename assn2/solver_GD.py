@@ -43,19 +43,17 @@ def main():
     # standard -1 and 1 labels
     Ytr = 2*(Ytr - 1.5)
     Ytr = Ytr.astype(int)
-
+    Ytr = Ytr.reshape(1, n)
     # Optional: densify the features matrix.
     # Warning: will slow down computations
-    Xtr = Xtr.toarray()
+    # Xtr = Xtr.toarray()
 
     # Initialize model
     # For primal GD, you only need to maintain w
     # Note: if you have densified the Xt matrix then you can initialize w as a
     # NumPy array
-    # w = csr_matrix((1, d))
-    w = np.empty((1, d))
-    for i in range(d):
-        w[0][i] = 0.01
+    w = csr_matrix((1, d))
+
     # We will take a timestamp after every "spacing" iterations
     time_elapsed = np.zeros(math.ceil(n_iter/spacing))
     tick_vals = np.zeros(math.ceil(n_iter/spacing))
@@ -65,21 +63,22 @@ def main():
 
     ttot = 0.0
     t_start = datetime.now()
-
     for t in range(n_iter):
-        ### Doing primal GD ###
+        # Doing primal GD
 
         # Compute gradient
-        val = np.zeros((1, d))
-        for i in range(Xtr.shape[0]):
-            x = np.sum(np.array(w) * np.array(Xtr[i]))
-            if Ytr[i]*x < 1:
-                val += Ytr[i]*x
+        w = csr_matrix(w)
+        wx = csr_matrix.dot(w, Xtr.T)
+        ywx = wx.multiply(Ytr)
+        yx = Xtr.multiply(Ytr.T)
+        z = (ywx < 1).toarray().ravel()
+        val = np.sum(yx.toarray()[z], axis=0)
         g = w - val
         g.reshape(1, d)  # Reshaping since model is a row vector
+
         # Calculate step lenght. Step length may depend on n and t
 
-        eta = 1.0/math.sqrt(t+1)
+        eta = 1/math.sqrt(t+1)
 
         # Update the model
         w = w - eta * g/n
@@ -100,7 +99,7 @@ def main():
             # Calculate the objective value f(w) for the current model w^t or
             # the current averaged model \bar{w}^t
             obj_val[tick] = calculate_F(w, Xtr, Ytr)
-            print(t, obj_val[tick])
+            print(t, obj_val[tick], len(str(int(obj_val[tick]))))
             tick = tick+1
             # Start the timer again - training time!
             t_start = datetime.now()
