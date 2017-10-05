@@ -98,11 +98,10 @@ def main():
         if pg != 0:
             # Store the old and compute the new value of alpha along that coordinate
             d_alpha_old = d_alpha[i_rand]
-            Q = (Xtr.getrow(i_rand)*(Xtr.getrow(i_rand).T))[0, 0]
+            Q = (Xtr.getrow(i_rand)*(Xtr.getrow(i_rand).T)).sum()
             d_alpha[i_rand] = min(max(d_alpha[i_rand] - g/Q, 0), 1)
             # # Update the model - takes only O(d) time!
-            w = w + (d_alpha[i_rand] - d_alpha_old) * \
-                Ytr[i_rand]*Xtr.getrow(i_rand)
+            w = w + (d_alpha[i_rand] - d_alpha_old)*Ytr[i_rand]*Xtr.getrow(i_rand)
 
         # Take a snapshot after every few iterations
         # Take snapshots after every spacing = 5000 or so SCD
