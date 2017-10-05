@@ -83,7 +83,7 @@ def main():
     for t in range(n_iter):
         # Doing dual SCD
         # Choose a random coordinate from 1 to n
-        i_rand = random.randint(1, n)
+        i_rand = random.randint(1, n - 1)
 
         # compute Gradient for random coordinate
         g = grad(w, Xtr, Ytr, i_rand)
@@ -102,7 +102,7 @@ def main():
             d_alpha[i_rand] = min(max(d_alpha[i_rand] - g/Q, 0), 1)
             # # Update the model - takes only O(d) time!
             w = w + (d_alpha[i_rand] - d_alpha_old)*Ytr[i_rand]*Xtr.getrow(i_rand)
-
++
         # Take a snapshot after every few iterations
         # Take snapshots after every spacing = 5000 or so SCD
         # iterations since they are fast
