@@ -2,29 +2,21 @@ import numpy as np
 from scipy.sparse import csr_matrix
 import sys
 from sklearn.datasets import load_svmlight_file
-import random
 from datetime import datetime
 import math
-
-
-def h(x):
-    """
-    logistic regression function
-    """
-    return 1.0/(1.0 + math.e**(-x))
 
 
 def calculate_F(w, Xtr, Ytr):
     """
     """
-    wx = (np.matrix(w)*np.matrix(Xtr.T)).T
+    w = csr_matrix(w)
+    wx = csr_matrix.dot(w, Xtr.T)
+    ywx = wx.multiply(Ytr)
     constraint = 0
-    n = Xtr.shape[0]
-    for i in range(n):
-        val = 1 - Ytr[i]*wx[i]
-        if val > 0:
-            constraint += val
-    f = 0.5*(np.linalg.norm(w))**2 + constraint
+    z = (ywx < 1).toarray()
+    constraint = (1 - ywx.toarray()[z]).sum(axis=0)
+
+    f = 0.5*(np.linalg.norm(w.toarray()))**2 + constraint
     return f
 
 
