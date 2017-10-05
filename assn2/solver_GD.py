@@ -77,8 +77,8 @@ def main():
         g.reshape(1, d)  # Reshaping since model is a row vector
 
         # Calculate step lenght. Step length may depend on n and t
-
-        eta = 1/math.sqrt(t+1)
+        C = 0.5 * 10**(2)
+        eta = C/math.sqrt(t+1)
 
         # Update the model
         w = w - eta * g/n

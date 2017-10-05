@@ -13,21 +13,6 @@ def grad(w, Xtr, Ytr, i):
     return gradient
 
 
-# def dual(d_alpha, Xtr, Ytr):
-#     # takes too longggg!
-#     n, d = Xtr.get_shape()
-#     prod_alphaQ = np.array((1, n))
-#     x = Xtr.toarray()
-#     for k in range(n):
-#         print(k)
-#         val = 0
-#         for i in range(n):
-#             val += d_alpha[i]*Ytr[i]*Ytr[k]*np.matrix(x[i].reshape(1, d))*np.matrix((x[k].reshape(d,1)))
-#         prod_alphaQ[k] = val[0][0]
-
-#     prod = 0.5 * prod_alphaQ * d_alpha.reshape(n, 1)
-#     return prod - sum(d_alpha)
-
 def calculate_F(w, Xtr, Ytr):
     """
     """
