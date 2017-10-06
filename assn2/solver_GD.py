@@ -63,46 +63,49 @@ def main():
 
     ttot = 0.0
     t_start = datetime.now()
-    for t in range(n_iter):
-        # Doing primal GD
+    for t in range(1, n_iter+1):
+        try:
+            # Doing primal GD
 
-        # Compute gradient
-        w = csr_matrix(w)
-        wx = csr_matrix.dot(w, Xtr.T)
-        ywx = wx.multiply(Ytr)
-        yx = Xtr.multiply(Ytr.T)
-        z = (ywx < 1).toarray().ravel()
-        val = np.sum(yx.toarray()[z], axis=0)
-        g = w - val
-        g.reshape(1, d)  # Reshaping since model is a row vector
+            # Compute gradient
+            w = csr_matrix(w)
+            wx = csr_matrix.dot(w, Xtr.T)
+            ywx = wx.multiply(Ytr)
+            yx = Xtr.multiply(Ytr.T)
+            z = (ywx < 1).toarray().ravel()
+            val = np.sum(yx.toarray()[z], axis=0)
+            g = w - val
+            g.reshape(1, d)  # Reshaping since model is a row vector
 
-        # Calculate step lenght. Step length may depend on n and t
-        C = 0.5 * 10**(2)
-        eta = C/math.sqrt(t+1)
+            # Calculate step lenght. Step length may depend on n and t
+            C = 0.5 * 10**(2)
+            eta = C/math.sqrt(t)
 
-        # Update the model
-        w = w - eta * g/n
+            # Update the model
+            w = w - eta * g/n
 
-        # Use the averaged model if that works better (see [\textbf{SSBD}] section 14.3)
-        # wbar = ...
+            # Use the averaged model if that works better (see [\textbf{SSBD}] section 14.3)
+            # wbar = ...
 
-        # Take a snapshot after every few iterations
-        # Take snapshots after every spacing = 5 or 10 GD iterations since they
-        # are slow
-        if t % spacing == 0:
-            # Stop the timer - we want to take a snapshot
-            t_now = datetime.now()
-            delta = t_now - t_start
-            time_elapsed[tick] = ttot + delta.total_seconds()
-            ttot = time_elapsed[tick]
-            tick_vals[tick] = tick
-            # Calculate the objective value f(w) for the current model w^t or
-            # the current averaged model \bar{w}^t
-            obj_val[tick] = calculate_F(w, Xtr, Ytr)
-            print(t, obj_val[tick], len(str(int(obj_val[tick]))))
-            tick = tick+1
-            # Start the timer again - training time!
-            t_start = datetime.now()
+            # Take a snapshot after every few iterations
+            # Take snapshots after every spacing = 5 or 10 GD iterations since they
+            # are slow
+            if t % spacing == 0:
+                # Stop the timer - we want to take a snapshot
+                t_now = datetime.now()
+                delta = t_now - t_start
+                time_elapsed[tick] = ttot + delta.total_seconds()
+                ttot = time_elapsed[tick]
+                tick_vals[tick] = tick
+                # Calculate the objective value f(w) for the current model w^t or
+                # the current averaged model \bar{w}^t
+                obj_val[tick] = calculate_F(w, Xtr, Ytr)
+                print(t, obj_val[tick], len(str(int(obj_val[tick]))))
+                tick = tick+1
+                # Start the timer again - training time!
+                t_start = datetime.now()
+        except KeyboardInterrupt:
+            break
 
     # Choose one of the two based on whichever works better for you
     w_final = np.array(w)
