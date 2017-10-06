@@ -101,7 +101,7 @@ def main():
                 tick_vals[tick] = tick
                 # Calculate the objective value f(w) for the current model w^t or
                 # the current averaged model \bar{w}^t
-                obj_val[tick] = calculate_F(w, Xtr, Ytr)
+                obj_val[tick] = calculate_F(wbar, Xtr, Ytr)
                 print(t, obj_val[tick], len(str(int(obj_val[tick]))))
                 tick = tick+1
                 # Start the timer again - training time!
@@ -110,9 +110,9 @@ def main():
             break
 
     # Choose one of the two based on whichever works better for you
-    w_final = np.array(w)
+    w_final = np.array(wbar)
     # w_final = wbar.toarray()
-    np.save("model_GD.npy", w_final)
+    np.save("model_GDbar.npy", w_final)
 
 
 if __name__ == '__main__':
