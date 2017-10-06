@@ -80,10 +80,10 @@ def main():
 
             # Calculate step lenght. Step length may depend on n and t
             C = 0.5 * 10**(2)
-            eta = C/math.sqrt(t)
+            eta = C/(n*math.sqrt(t))
 
             # Update the model
-            w = w - eta * g/n
+            w = w - eta * g
 
             # Use the averaged model if that works better (see [\textbf{SSBD}]
             # section 14.3)
@@ -111,7 +111,6 @@ def main():
 
     # Choose one of the two based on whichever works better for you
     w_final = np.array(wbar)
-    # w_final = wbar.toarray()
     np.save("model_GDbar.npy", w_final)
 
 

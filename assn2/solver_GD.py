@@ -4,6 +4,7 @@ import sys
 from sklearn.datasets import load_svmlight_file
 from datetime import datetime
 import math
+import matplotlib.pyplot as plt
 
 
 def calculate_F(w, Xtr, Ytr):
@@ -18,6 +19,14 @@ def calculate_F(w, Xtr, Ytr):
 
     f = 0.5*(np.linalg.norm(w.toarray()))**2 + constraint
     return f
+
+
+def draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val):
+    plt.plot(time_elapsed, obj_val, marker='o')
+    plt.show()
+    plt.plot(theotime_vals, obj_val, marker='x')
+    plt.show()
+    pass
 
 
 def main():
@@ -57,6 +66,7 @@ def main():
     # We will take a timestamp after every "spacing" iterations
     time_elapsed = np.zeros(math.ceil(n_iter/spacing))
     tick_vals = np.zeros(math.ceil(n_iter/spacing))
+    theotime_vals = np.zeros(math.ceil(n_iter/spacing))
     obj_val = np.zeros(math.ceil(n_iter/spacing))
 
     tick = 0
@@ -97,6 +107,7 @@ def main():
                 time_elapsed[tick] = ttot + delta.total_seconds()
                 ttot = time_elapsed[tick]
                 tick_vals[tick] = tick
+                theotime_vals[tick] = tick_vals[tick]*spacing*d
                 # Calculate the objective value f(w) for the current model w^t or
                 # the current averaged model \bar{w}^t
                 obj_val[tick] = calculate_F(w, Xtr, Ytr)
@@ -109,7 +120,7 @@ def main():
 
     # Choose one of the two based on whichever works better for you
     w_final = np.array(w)
-    # w_final = wbar.toarray()
+    draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
     np.save("model_GD.npy", w_final)
 
 
