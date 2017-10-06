@@ -9,21 +9,24 @@ import matplotlib.pyplot as plt
 
 
 def grad(w, Xtr, Ytr, i):
-    gradient = (Ytr[i]*w*Xtr.getrow(i).T)[0, 0] - 1
+    xi = Xtr[i]
+    gradient = Ytr[i]*np.dot(xi, w) - 1
     return gradient
 
 
 def calculate_F(w, Xtr, Ytr):
     """
     """
-    w = csr_matrix(w)
-    wx = csr_matrix.dot(w, Xtr.T)
-    ywx = wx.multiply(Ytr)
-    z = (ywx < 1).toarray()
-    slack = (1 - ywx.toarray()[z]).sum(axis=0)
-
-    f = 0.5*(np.linalg.norm(w.toarray()))**2 + slack
+    wx = np.dot(w, Xtr.T)
+    ywx = wx*Ytr
+    slack = (1 - ywx[(ywx < 1)]).sum(axis=0)
+    f = 0.5*(np.linalg.norm(w))**2 + slack
     return f
+
+
+def calculate_dual(w, d_alpha):
+    dual = 0.5*(np.linalg.norm(w.toarray()))**2 - d_alpha.sum()
+    return dual
 
 
 def draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val):
