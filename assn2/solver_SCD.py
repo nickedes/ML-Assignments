@@ -59,18 +59,17 @@ def main():
     # standard -1 and 1 labels
     Ytr = 2*(Ytr - 1.5)
     Ytr = Ytr.astype(int)
-
+    Ytr.reshape(n, 1)
     # Optional: densify the features matrix.
     # Warning: will slow down computations
-    # Xtr = Xtr.toarray()
+    Xtr = Xtr.toarray()
 
     # Initialize model
     # For dual SCD, you will need to maintain d_alpha and w
     # Note: if you have densified the Xt matrix then you can initialize w
     # as a NumPy array
-    w = csr_matrix((1, d))
+    w = np.zeros(d)
     d_alpha = np.zeros((n,))
-    min_w = w
 
     # We will take a timestamp after every "spacing" iterations
     time_elapsed = np.zeros(math.ceil(n_iter/spacing))
@@ -89,8 +88,9 @@ def main():
         i_rand = random.randint(1, n - 1)
 
         # compute Gradient for random coordinate
-        g = grad(w, Xtr, Ytr, i_rand)
-
+        xi = Xtr[i_rand]
+        #print(xi.shape, w.shape)
+        g = Ytr[i_rand]*np.dot(xi, w) - 1
         # projection step
         pg = g
         if d_alpha[i_rand] == 0:
@@ -99,13 +99,14 @@ def main():
             pg = max(g, 0)
 
         if pg != 0:
-            # Store the old and compute the new value of alpha along that coordinate
+            # Store the old and compute the new value of alpha along that
+            # coordinate
             d_alpha_old = d_alpha[i_rand]
-            Q = (Xtr.getrow(i_rand)*(Xtr.getrow(i_rand).T)).sum()
+            Q = (Xtr[i_rand]*Xtr[i_rand].T).sum()
             d_alpha[i_rand] = min(max(d_alpha[i_rand] - g/Q, 0), 1)
             # # Update the model - takes only O(d) time!
-            w = w + (d_alpha[i_rand] - d_alpha_old)*Ytr[i_rand]*Xtr.getrow(i_rand)
-+
+            w = w + (d_alpha[i_rand] - d_alpha_old) * \
+                Ytr[i_rand]*Xtr[i_rand]
         # Take a snapshot after every few iterations
         # Take snapshots after every spacing = 5000 or so SCD
         # iterations since they are fast
@@ -117,22 +118,18 @@ def main():
             ttot = time_elapsed[tick]
             tick_vals[tick] = tick
             theotime_vals[tick] = tick_vals[tick]*spacing*d
-            # Calculate the objective value f(w) for the current model w^t
-            obj_val[tick] = calculate_F(w, Xtr, Ytr)
-            if t == 0:
-                min_f = obj_val[tick]
-
-            if min_f > obj_val[tick]:
-                min_f = obj_val[tick]
-                min_w = w
-            print(t, obj_val[tick])
+            # Calculate the objective dual value f(alpha) for the current model
+            # w
+            obj_val[tick] = 0.5*(np.linalg.norm(w))**2 - d_alpha.sum()
+            # print(t, obj_val[tick])
             tick = tick+1
             # Start the timer again - training time!
             t_start = datetime.now()
 
     # draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
-    w_final = min_w.toarray()
-    print("min f - ", min_f)
+    w_final = w
+    print("Dual - ", obj_val[-1])
+    print("Primal f(w) - ", calculate_F(w_final, Xtr, Ytr))
     np.save("model_SCD.npy", w_final)
 
 
