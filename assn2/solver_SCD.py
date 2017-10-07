@@ -126,7 +126,7 @@ def main():
             # Start the timer again - training time!
             t_start = datetime.now()
 
-    # draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
+    draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
     w_final = w
     print("Dual - ", obj_val[-1])
     print("Primal f(w) - ", calculate_F(w_final, Xtr, Ytr))

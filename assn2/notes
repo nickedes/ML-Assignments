@@ -3,6 +3,11 @@ C = 10 -> better than C = 1  (Iter - 15920, f - 175844)
 C = 100 -> faster than C = 10 (Iter - 13680, f - 174852)
 C = 50  ( Iter - 15400, f - 174838.382002 )  (wbar, Iter - 3100, f - 178946.638815)
 
-# SCD
-iters - 100000000, spacing - 5000, Dual -  -174823.594595, Primal f(w) -  174829.036302
+Iter - 10000, spacing - 500
+w -> 174844.337702
+wbar -> 175785.849779
 
+# SCD
+iters - 100000000, spacing - 5000, Dual -  -174823.594595, Primal f(w) -  174829.036302 [IN su/model_SCD.npy]
+
+python solver_SCD.py train.dat 10000000 5000 -> model_SCD1.npy
