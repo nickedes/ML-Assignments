@@ -23,8 +23,16 @@ def calculate_F(w, Xtr, Ytr):
 
 def draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val):
     plt.plot(time_elapsed, obj_val, marker='o')
+    plt.xlabel('Time elapsed --->')
+    plt.ylabel('f(W) --->')
+    plt.title("GD Plot")
+    plt.savefig("GD-elapsed.png")   # save the figure to file
     plt.show()
     plt.plot(theotime_vals, obj_val, marker='x')
+    plt.xlabel('Theoretical time --->')
+    plt.ylabel('f(W) --->')
+    plt.title("GD Plot")
+    plt.savefig("GD-theo.png")   # save the figure to file
     plt.show()
     return
 
@@ -109,7 +117,6 @@ def main():
                 theotime_vals[tick] = tick_vals[tick]*spacing*d
                 # Calculate the objective value f(w) for the current model w^t
                 obj_val[tick] = calculate_F(w, Xtr, Ytr)
-                # print(t, obj_val[tick])
                 tick = tick+1
                 # Start the timer again - training time!
                 t_start = datetime.now()
@@ -119,7 +126,7 @@ def main():
     # Choosen w over wbar
     w_final = np.array(w)
     # plot graphs
-    draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
+    # draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
     # save model
     np.save("model_GD.npy", w_final)
 
