@@ -53,7 +53,7 @@ def main():
     Ytr = 2*(Ytr - 1.5)
     Ytr = Ytr.astype(int)
     Ytr = Ytr.reshape(1, n)
-    
+
     # Initialize model
     # For primal GD, you only need to maintain w
     w = csr_matrix((1, d))
