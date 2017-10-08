@@ -25,10 +25,18 @@ def calculate_dual(w, d_alpha):
 
 def draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val):
     plt.plot(time_elapsed, obj_val, marker='o')
+    plt.xlabel('Time elapsed --->')
+    plt.ylabel('f(W) --->')
+    plt.title("SCD Plot")
+    plt.savefig("SCD-elapsed.png")   # save the figure to file
     plt.show()
     plt.plot(theotime_vals, obj_val, marker='x')
+    plt.xlabel('Theoretical time --->')
+    plt.ylabel('f(W) --->')
+    plt.title("SCD Plot")
+    plt.savefig("SCD-theo.png")   # save the figure to file
     plt.show()
-    pass
+    return
 
 
 def main():
