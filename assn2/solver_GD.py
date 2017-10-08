@@ -69,23 +69,29 @@ def main():
     ttot = 0.0
     t_start = datetime.now()
     # constant used in step length
-    C = 0.5 * 10**(2)
-    for t in range(1, n_iter+1):
+    C = 0.3 * 10**(2)
+    for t in range(0, n_iter):
         try:
             # Doing primal GD
 
             # Compute gradient
             w = csr_matrix(w)
+            # calculate <w, X^i> for all i
             wx = csr_matrix.dot(w, Xtr.T)
+            # calculate y^i * <w, X^i> for all i
             ywx = wx.multiply(Ytr)
+            # calculate y^i * X^i for all i
             yx = Xtr.multiply(Ytr.T)
-            z = (ywx < 1).toarray().ravel()
-            val = np.sum(yx.toarray()[z], axis=0)
+            # Those y^i * <w, X^i> which are less than 1
+            condition = (ywx < 1).toarray().ravel()
+            # sum of all y^i * X^i where y^i * <w, X^i> is less than 1
+            val = np.sum(yx.toarray()[condition], axis=0)
+            # evaluate gradient
             g = w - val
             g.reshape(1, d)  # Reshaping since model is a row vector
 
             # step lenght. Step length depends on n and t
-            eta = C/(n*math.sqrt(t))
+            eta = C/(n*math.sqrt(t+1))
 
             # Update the model
             w = w - eta * g
