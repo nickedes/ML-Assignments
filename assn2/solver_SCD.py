@@ -25,7 +25,7 @@ def calculate_F(w, Xtr, Ytr):
 
 
 def calculate_dual(w, d_alpha):
-    dual = 0.5*(np.linalg.norm(w.toarray()))**2 - d_alpha.sum()
+    dual = 0.5*(np.linalg.norm(w))**2 - d_alpha.sum()
     return dual
 
 
@@ -120,17 +120,17 @@ def main():
             theotime_vals[tick] = tick_vals[tick]*spacing*d
             # Calculate the objective dual value f(alpha) for the current model
             # w
-            obj_val[tick] = 0.5*(np.linalg.norm(w))**2 - d_alpha.sum()
+            obj_val[tick] = calculate_dual(w, d_alpha)#calculate_F(w, Xtr, Ytr)
             # print(t, obj_val[tick])
             tick = tick+1
             # Start the timer again - training time!
             t_start = datetime.now()
 
-    draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
+    # draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
     w_final = w
-    print("Dual - ", obj_val[-1])
+    print("Dual - ", calculate_dual(w_final, d_alpha))
     print("Primal f(w) - ", calculate_F(w_final, Xtr, Ytr))
-    np.save("model_SCD.npy", w_final)
+    np.save("model_SCD1.npy", w_final)
 
 
 if __name__ == '__main__':

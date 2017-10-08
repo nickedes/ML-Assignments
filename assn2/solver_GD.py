@@ -9,15 +9,15 @@ import matplotlib.pyplot as plt
 
 def calculate_F(w, Xtr, Ytr):
     """
+        calculate value of primal objective
     """
     w = csr_matrix(w)
     wx = csr_matrix.dot(w, Xtr.T)
     ywx = wx.multiply(Ytr)
-    constraint = 0
-    z = (ywx < 1).toarray()
-    constraint = (1 - ywx.toarray()[z]).sum(axis=0)
+    # calculate sum of slack variables
+    slackSum = (1 - ywx.toarray()[(ywx < 1).toarray()]).sum(axis=0)
 
-    f = 0.5*(np.linalg.norm(w.toarray()))**2 + constraint
+    f = 0.5*(np.linalg.norm(w.toarray()))**2 + slackSum
     return f
 
 
@@ -26,7 +26,7 @@ def draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val):
     plt.show()
     plt.plot(theotime_vals, obj_val, marker='x')
     plt.show()
-    pass
+    return
 
 
 def main():
@@ -53,14 +53,9 @@ def main():
     Ytr = 2*(Ytr - 1.5)
     Ytr = Ytr.astype(int)
     Ytr = Ytr.reshape(1, n)
-    # Optional: densify the features matrix.
-    # Warning: will slow down computations
-    # Xtr = Xtr.toarray()
-
+    
     # Initialize model
     # For primal GD, you only need to maintain w
-    # Note: if you have densified the Xt matrix then you can initialize w as a
-    # NumPy array
     w = csr_matrix((1, d))
 
     # We will take a timestamp after every "spacing" iterations
@@ -73,6 +68,8 @@ def main():
 
     ttot = 0.0
     t_start = datetime.now()
+    # constant used in step length
+    C = 0.5 * 10**(2)
     for t in range(1, n_iter+1):
         try:
             # Doing primal GD
@@ -87,15 +84,11 @@ def main():
             g = w - val
             g.reshape(1, d)  # Reshaping since model is a row vector
 
-            # Calculate step lenght. Step length may depend on n and t
-            C = 0.5 * 10**(2)
-            eta = C/math.sqrt(t)
+            # step lenght. Step length depends on n and t
+            eta = C/(n*math.sqrt(t))
 
             # Update the model
-            w = w - eta * g/n
-
-            # Use the averaged model if that works better (see [\textbf{SSBD}] section 14.3)
-            # wbar = ...
+            w = w - eta * g
 
             # Take a snapshot after every few iterations
             # Take snapshots after every spacing = 5 or 10 GD iterations since they
@@ -108,19 +101,20 @@ def main():
                 ttot = time_elapsed[tick]
                 tick_vals[tick] = tick
                 theotime_vals[tick] = tick_vals[tick]*spacing*d
-                # Calculate the objective value f(w) for the current model w^t or
-                # the current averaged model \bar{w}^t
+                # Calculate the objective value f(w) for the current model w^t
                 obj_val[tick] = calculate_F(w, Xtr, Ytr)
-                print(t, obj_val[tick], len(str(int(obj_val[tick]))))
+                # print(t, obj_val[tick])
                 tick = tick+1
                 # Start the timer again - training time!
                 t_start = datetime.now()
         except KeyboardInterrupt:
             break
 
-    # Choose one of the two based on whichever works better for you
+    # Choosen w over wbar
     w_final = np.array(w)
+    # plot graphs
     draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
+    # save model
     np.save("model_GD.npy", w_final)
 
 
