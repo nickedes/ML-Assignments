@@ -8,12 +8,6 @@ import math
 import matplotlib.pyplot as plt
 
 
-def grad(w, Xtr, Ytr, i):
-    xi = Xtr[i]
-    gradient = Ytr[i]*np.dot(xi, w) - 1
-    return gradient
-
-
 def calculate_F(w, Xtr, Ytr):
     """
     """
@@ -88,9 +82,8 @@ def main():
         i_rand = random.randint(1, n - 1)
 
         # compute Gradient for random coordinate
-        xi = Xtr[i_rand]
-        #print(xi.shape, w.shape)
-        g = Ytr[i_rand]*np.dot(xi, w) - 1
+        g = Ytr[i_rand]*np.dot(Xtr[i_rand], w) - 1
+
         # projection step
         pg = g
         if d_alpha[i_rand] == 0:
@@ -107,6 +100,7 @@ def main():
             # # Update the model - takes only O(d) time!
             w = w + (d_alpha[i_rand] - d_alpha_old) * \
                 Ytr[i_rand]*Xtr[i_rand]
+
         # Take a snapshot after every few iterations
         # Take snapshots after every spacing = 5000 or so SCD
         # iterations since they are fast
@@ -118,9 +112,8 @@ def main():
             ttot = time_elapsed[tick]
             tick_vals[tick] = tick
             theotime_vals[tick] = tick_vals[tick]*spacing*d
-            # Calculate the objective dual value f(alpha) for the current model
-            # w
-            obj_val[tick] = calculate_dual(w, d_alpha)#calculate_F(w, Xtr, Ytr)
+            # Calculate the objective dual value f(w) for the current model w
+            obj_val[tick] = calculate_F(w, Xtr, Ytr)
             # print(t, obj_val[tick])
             tick = tick+1
             # Start the timer again - training time!
@@ -130,6 +123,7 @@ def main():
     w_final = w
     print("Dual - ", calculate_dual(w_final, d_alpha))
     print("Primal f(w) - ", calculate_F(w_final, Xtr, Ytr))
+    # save the scd model
     np.save("model_SCD1.npy", w_final)
 
 
