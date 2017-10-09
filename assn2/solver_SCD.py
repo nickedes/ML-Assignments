@@ -5,11 +5,11 @@ from sklearn.datasets import load_svmlight_file
 import random
 from datetime import datetime
 import math
-import matplotlib.pyplot as plt
 
 
 def calculate_F(w, Xtr, Ytr):
     """
+        Calculate Primal objective value
     """
     wx = np.dot(w, Xtr.T)
     ywx = wx*Ytr
@@ -19,24 +19,11 @@ def calculate_F(w, Xtr, Ytr):
 
 
 def calculate_dual(w, d_alpha):
+    """
+        Calculate Dual objective value
+    """
     dual = 0.5*(np.linalg.norm(w))**2 - d_alpha.sum()
     return dual
-
-
-def draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val):
-    plt.plot(time_elapsed, obj_val, marker='o')
-    plt.xlabel('Time elapsed --->')
-    plt.ylabel('f(W) --->')
-    plt.title("SCD Plot")
-    plt.savefig("SCD-elapsed.png")   # save the figure to file
-    plt.show()
-    plt.plot(theotime_vals, obj_val, marker='x')
-    plt.xlabel('Theoretical time --->')
-    plt.ylabel('f(W) --->')
-    plt.title("SCD Plot")
-    plt.savefig("SCD-theo.png")   # save the figure to file
-    plt.show()
-    return
 
 
 def main():
@@ -127,12 +114,11 @@ def main():
             # Start the timer again - training time!
             t_start = datetime.now()
 
-    # draw_plots(time_elapsed, tick_vals, theotime_vals, obj_val)
     w_final = w
-    print("Dual - ", calculate_dual(w_final, d_alpha))
-    print("Primal f(w) - ", calculate_F(w_final, Xtr, Ytr))
+    # print("Dual - ", calculate_dual(w_final, d_alpha))
+    # print("Primal f(w) - ", calculate_F(w_final, Xtr, Ytr))
     # save the scd model
-    np.save("model_SCD1.npy", w_final)
+    np.save("model_SCD.npy", w_final)
 
 
 if __name__ == '__main__':
