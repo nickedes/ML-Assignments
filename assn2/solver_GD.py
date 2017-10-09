@@ -110,6 +110,9 @@ def main():
     w_final = np.array(w)
     # save model
     np.save("model_GD.npy", w_final)
+    np.save("GDelap.npy", time_elapsed)
+    np.save("GDtheo.npy", theotime_vals)
+    np.save("GDobj.npy", obj_val)
 
 
 if __name__ == '__main__':

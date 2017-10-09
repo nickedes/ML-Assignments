@@ -32,13 +32,13 @@ n, d = Xtr.get_shape()
 Xtr.toarray()
 # The labels are named 1 and 2 in the data set. Convert them to our
 # standard -1 and 1 labels
-Ytr = 2*(Ytr - 1.5)
-Ytr = Ytr.astype(int)
-Ytr = Ytr.reshape(1, n)
-w = np.load('su/model_GD.npy')
-wx = w*Xtr.T
-print(np.sum(Ytr == np.sign(wx))/n)
-print(calculate_F(w, Xtr, Ytr))
+# Ytr = 2*(Ytr - 1.5)
+# Ytr = Ytr.astype(int)
+# Ytr = Ytr.reshape(1, n)
+# w = np.load('su/model_GD.npy')
+# wx = w*Xtr.T
+# print(np.sum(Ytr == np.sign(wx))/n)
+# print(calculate_F(w, Xtr, Ytr))
 
 # gdtime_elapsed = np.load("GDelap.npy")
 # gdtheotime_vals = np.load("GDtheo.npy")
