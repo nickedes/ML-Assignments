@@ -204,8 +204,31 @@ So I need to select a value for $C$ which works best for GD.\\
 
 \textbf{Holdout method} :
 
-I have taken 70\;\% of the data as training data and remaining 30\;\% as test data.
+I have taken 70\;\% of the data as training data and remaining 30\;\% as test data. For different values of $C$, I will observe the primal objective's value $f(w)$ on the training data and then select the value of $C$ which gives better performance/accuracy on the test data.\\\\
+First tried for different orders of values like \\\\
+C = $ [1, 10^{-1}, 10^{-2}, 10^{-3}, 10^{-4}, 10^{-5}, 10^{-6}] $\\
+After trying for different values of $C$, got that $C$ works fine for values of the order $10^{-5}$ .\\\\
+But we have data (training) around 2 lakh points (70\;\%) which is approx of order $10^{-5}$, so after some more verifying it comes that :
+\[
+C\; \propto \;\frac{1}{n}
+\]
 
+Therefore, 
+
+\[
+\eta = \frac{C}{n*\sqrt{t}}
+\]
+
+Again, for selecting $C$, 
+C = $ [10, 20, 30, 50, 60, 80] $\\
+
+For $C = 30$, observed the best accuracy on the test data compared to others and faster convergence, hence selecting 
+
+\[
+\eta = \frac{30}{n*\sqrt{t}}
+\]
+
+where n = no. of training points, t = no. of iterations.
 \newpage
 (Part V)\\
 
