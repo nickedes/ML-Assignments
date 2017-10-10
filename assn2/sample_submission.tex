@@ -103,7 +103,7 @@ Substitute w and $\xi$ back in $\mathcal{L}(w, \xi, \alpha, \beta)$ and eliminat
 \]\\
 
 \[
-  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i} - \frac{1}{4}\sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2}
+  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i} - \frac{1}{4}\sum_{i=1}^{n} \left ( \alpha_{i} + \beta_{i} \right )^{2}
 \]\\\\
 
 $\mathcal{L}(\alpha, \beta)$ is the expression for dual of $\mathcal{L}(w, \xi, \alpha, \beta)$.\\
@@ -115,7 +115,7 @@ Using the expression obtained for the Lagrangian dual problem for (P1).
 
 We have 
 \[
-  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i} - \frac{1}{4}\sum_{i=1}^{n} \left ( \frac{\alpha_{i} + \beta_{i}}{2} \right )^{2} \;\;\;\;\;\;\; - (1)
+  \mathcal{L}\left ( \alpha,\; \beta  \right ) = \underset{\alpha\geq 0, \beta \geq 0 }{\text{max}} \; -\frac{1}{4}\sum_{i=1}^{n}\sum_{j=1}^{n}\alpha_{i}\alpha_{j}y^{i}y^{j}\left \langle x^{i}, x^{j} \right \rangle+ \sum_{i=1}^{n}\alpha_{i} - \frac{1}{4}\sum_{i=1}^{n} \left ( \alpha_{i} + \beta_{i} \right )^{2} \;\;\;\;\;\;\; - (1)
 \]\\
 
 We have to maximize for $\alpha$ and $\beta$ to get optimal value for dual problem.
@@ -183,6 +183,87 @@ It may seem that $\beta_{i}$ ( Lagrange multiplier for the positivity constraint
 
 \begin{mlsolution}
 
+(Part III)\\
+
+For the GD solver current iterate $w^{t}$ give better performance than the averaged iterate $\overline{w}\;^t$.\\
+
+Reason : Running the Gradient solver using $\overline{w}\;^t$ for 2000 iterations. The accuracy obtained is 75.712\;\%.\\
+
+Running the Gradient solver using $w^{t}$ for 2000 iterations. The accuracy obtained is 76.23\;\%.\\
+
+Hence $w^{t}$ gives better performance/accuracy than $\overline{w}\;^t$.
+\newpage
+(Part IV)\\
+
+As discussed in lec9 page 49, step length (eta) can be taken to be :
+\[
+\eta = \frac{C}{\sqrt{t}}
+\]
+
+So I need to select a value for $C$ which works best for GD.\\
+
+\textbf{Holdout method} :
+
+I have taken 70\;\% of the data as training data and remaining 30\;\% as test data.
+
+\newpage
+(Part V)\\
+
+SCD Reduces the objective value $f(W)$ faster as shown in figure 4.
+
+\begin{figure}[th]%
+\centering
+\includegraphics[width=1.2\columnwidth]{GD-elapsed.png}%
+
+\caption{Gradient Descent with Time Elapsed on X and Objective f(W) on Y axis.}%
+\label{fig:GD1}%
+\end{figure}
+
+\begin{figure}[th]%
+\centering
+\includegraphics[width=1.2\columnwidth]{SCD-elapsed.png}%
+
+\caption{SCD with Time Elapsed on X and Objective f(W) on Y axis.}%
+\label{fig:SCD1}%
+\end{figure}
+
+\begin{figure}[th]%
+\centering
+\includegraphics[width=1.2\columnwidth]{GdVsScdElapsed.png}%
+
+\caption{GD And SCD with Time Elapsed on X and Objective f(W) on Y axis.}%
+\label{fig:GD3}%
+\end{figure}
+
+
+\newpage
+(Part VI)
+
+The difference observed in graph with Theoretical Time Vs Time Elapsed is that the theoretical time taken by SCD is much much smaller than that taken by GD, As one iteration does n*d work in GD which is $300K * 54$ and takes d work in SCD which is $54$. This shows that SCD takes much less time to converge as shown in figure 7.
+
+\begin{figure}[th]%
+\centering
+\includegraphics[width=1.2\columnwidth]{GD-theo.png}%
+
+\caption{GD with Theoretical Time Elapsed on X and Objective f(W) on Y axis.}%
+\label{fig:GD2}%
+\end{figure}
+
+\begin{figure}[th]%
+\centering
+\includegraphics[width=1.2\columnwidth]{SCD-theo.png}%
+
+\caption{SCD with Theoretical Time Elapsed on X and Objective f(W) on Y axis.}%
+\label{fig:SCD2}%
+\end{figure}
+
+\begin{figure}[th]%
+\centering
+\includegraphics[width=1.1\columnwidth]{GdVsSCDTheo.png}%
+
+\caption{GD And SCD with Theoretical Time Elapsed on X and Objective f(W) on Y axis.}%
+\label{fig:GD4}%
+\end{figure}
 
 \end{mlsolution}
 					
