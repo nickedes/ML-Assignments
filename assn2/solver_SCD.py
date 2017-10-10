@@ -119,9 +119,6 @@ def main():
     # print("Primal f(w) - ", calculate_F(w_final, Xtr, Ytr))
     # save the scd model
     np.save("model_SCD.npy", w_final)
-    np.save("SCDelap.npy", time_elapsed)
-    np.save("SCDtheo.npy", theotime_vals)
-    np.save("SCDobj.npy", obj_val)
 
 
 if __name__ == '__main__':

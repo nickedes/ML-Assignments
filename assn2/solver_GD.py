@@ -108,6 +108,7 @@ def main():
 
     # Choosen w over wbar
     w_final = np.array(w)
+    w_final = w_final.reshape(d,)
     # save model
     np.save("model_GD.npy", w_final)
     np.save("GDelap.npy", time_elapsed)
