@@ -90,19 +90,19 @@ def main():
             # Take a snapshot after every few iterations
             # Take snapshots after every spacing = 5 or 10 GD iterations since they
             # are slow
-            if t % spacing == 0:
-                # Stop the timer - we want to take a snapshot
-                t_now = datetime.now()
-                delta = t_now - t_start
-                time_elapsed[tick] = ttot + delta.total_seconds()
-                ttot = time_elapsed[tick]
-                tick_vals[tick] = tick
-                theotime_vals[tick] = tick_vals[tick]*spacing*d
-                # Calculate the objective value f(w) for the current model w^t
-                obj_val[tick] = calculate_F(w, Xtr, Ytr)
-                tick = tick+1
-                # Start the timer again - training time!
-                t_start = datetime.now()
+            # if t % spacing == 0:
+            #     # Stop the timer - we want to take a snapshot
+            #     t_now = datetime.now()
+            #     delta = t_now - t_start
+            #     time_elapsed[tick] = ttot + delta.total_seconds()
+            #     ttot = time_elapsed[tick]
+            #     tick_vals[tick] = tick
+            #     theotime_vals[tick] = tick_vals[tick]*spacing*d
+            #     # Calculate the objective value f(w) for the current model w^t
+            #     obj_val[tick] = calculate_F(w, Xtr, Ytr)
+            #     tick = tick+1
+            #     # Start the timer again - training time!
+            #     t_start = datetime.now()
         except KeyboardInterrupt:
             break
 
