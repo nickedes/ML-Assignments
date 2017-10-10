@@ -182,7 +182,6 @@ It may seem that $\beta_{i}$ ( Lagrange multiplier for the positivity constraint
 \end{mlsolution}
 
 \begin{mlsolution}
-
 (Part III)\\
 
 For the GD solver current iterate $w^{t}$ give better performance than the averaged iterate $\overline{w}\;^t$.\\
@@ -232,23 +231,7 @@ where n = no. of training points, t = no. of iterations.
 \newpage
 (Part V)\\
 
-SCD Reduces the objective value $f(W)$ faster as shown in figure 4.
-
-\begin{figure}[th]%
-\centering
-\includegraphics[width=1.2\columnwidth]{GD-elapsed.png}%
-
-\caption{Gradient Descent with Time Elapsed on X and Objective f(W) on Y axis.}%
-\label{fig:GD1}%
-\end{figure}
-
-\begin{figure}[th]%
-\centering
-\includegraphics[width=1.2\columnwidth]{SCD-elapsed.png}%
-
-\caption{SCD with Time Elapsed on X and Objective f(W) on Y axis.}%
-\label{fig:SCD1}%
-\end{figure}
+SCD Reduces the objective value $f(W)$ faster as shown in figure 2.
 
 \begin{figure}[th]%
 \centering
@@ -257,12 +240,34 @@ SCD Reduces the objective value $f(W)$ faster as shown in figure 4.
 \caption{GD And SCD with Time Elapsed on X and Objective f(W) on Y axis.}%
 \label{fig:GD3}%
 \end{figure}
+\begin{figure}[th]%
+\centering
+\includegraphics[width=1.2\columnwidth]{GD-elapsed.png}%
+
+\caption{Gradient Descent with Time Elapsed on X and Objective f(W) on Y axis.}%
+\label{fig:GD1}%
+\end{figure}
+\begin{figure}[th]%
+\centering
+\includegraphics[width=1.2\columnwidth]{SCD-elapsed.png}%
+
+\caption{SCD with Time Elapsed on X and Objective f(W) on Y axis.}%
+\label{fig:SCD1}%
+\end{figure}
 
 
 \newpage
 (Part VI)
 
-The difference observed in graph with Theoretical Time Vs Time Elapsed is that the theoretical time taken by SCD is much much smaller than that taken by GD, As one iteration does n*d work in GD which is $300K * 54$ and takes d work in SCD which is $54$. This shows that SCD takes much less time to converge as shown in figure 7.
+The difference observed in graph with Theoretical Time Vs Time Elapsed is that the theoretical time taken by SCD is much much smaller than that taken by GD, As one iteration does n*d work in GD which is $300K * 54$ and takes d work in SCD which is $54$. This shows that SCD takes much less time to converge where as time elapsed doesn't involve the work done per iteration as shown in figure 5. So according to theoretical time also SCD reduces $f(W)$ faster than GD.
+
+\begin{figure}[th]%
+\centering
+\includegraphics[width=1.1\columnwidth]{GdVsSCDTheo.png}%
+
+\caption{GD And SCD with Theoretical Time Elapsed on X and Objective f(W) on Y axis.}%
+\label{fig:GD4}%
+\end{figure}
 
 \begin{figure}[th]%
 \centering
@@ -278,14 +283,6 @@ The difference observed in graph with Theoretical Time Vs Time Elapsed is that t
 
 \caption{SCD with Theoretical Time Elapsed on X and Objective f(W) on Y axis.}%
 \label{fig:SCD2}%
-\end{figure}
-
-\begin{figure}[th]%
-\centering
-\includegraphics[width=1.1\columnwidth]{GdVsSCDTheo.png}%
-
-\caption{GD And SCD with Theoretical Time Elapsed on X and Objective f(W) on Y axis.}%
-\label{fig:GD4}%
 \end{figure}
 
 \end{mlsolution}
