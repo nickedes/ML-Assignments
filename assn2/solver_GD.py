@@ -97,7 +97,7 @@ def main():
                 time_elapsed[tick] = ttot + delta.total_seconds()
                 ttot = time_elapsed[tick]
                 tick_vals[tick] = tick
-                theotime_vals[tick] = tick_vals[tick]*spacing*d
+                theotime_vals[tick] = tick_vals[tick]*spacing*n*d
                 # Calculate the objective value f(w) for the current model w^t
                 obj_val[tick] = calculate_F(w, Xtr, Ytr)
                 tick = tick+1

@@ -14,7 +14,13 @@
 If we build a decision tree using the attribute name then the branching factor will be such high that it will shatter any dataset and overfit.
 \\
 
-2. Answer : Yes.\\
+2. Answer : No.\\
+    
+    Consider rows $4$ and $6$,\
+    we see, other than name, all the attribute are same, but label is no and yes, respectively.
+    So without using the label 'name' we can not classify the given data. And name is not useful in learning.
+    
+    However, if we consider only these 15 rows with name as an attribute, we can always get a perfect classification.
 
 3. Decision Tree obtained after ID3 decision tree learning algorithm is shown in Figure 1. Steps for producing this are :
 \\\\Attributes are : Size of research group, Like the research area, Average workload, No. of meetings  per week. Suppose S is this full data given. Then, \\\\Entropy(S) = 0.9182\\
@@ -40,13 +46,64 @@ Gain(S, Like the research area) = 1.0\\\\Selecting Like the research area as the
 \caption{Decision Tree}%
 \label{fig:Dtree}%
 \end{figure}
-
-
-
 \end{mlsolution}
 
 \begin{mlsolution}
-second
+
+1.
+Story :
+
+The latent variable is the list of items which user purchased.
+
+\[
+\mathbb{P} (b^{i} | x^{i}, \theta) = \sum_{k=1}^{2^{L}} \mathbb{P}\left ( b^{i}, z^{i} = S^k | x^{i}, \theta \right ) 
+\]
+
+\[
+= \sum_{k=1}^{2^{L}} \mathbb{P} \left ( b^{i} | z^{i}=S^k, x^{i}, \theta \right )*\mathbb{P} \left ( z^{i}=S^k | x^{i}, \theta \right )
+\]
+\\
+s.t. $z^{i}.C \leq b^{i}$
+
+This constraint can be solved using lagrangian method as seen as class. 
+
+$\mathbb{P} \left ( b^{i} | z^{i}=S^k, x^{i}, \theta \right )
+$ is the likelihood of the cost for a possible list of items. \\
+
+$\mathbb{P} \left ( z^{i}=S^k | x^{i}, \theta \right )$ is the probability of the list $S^k$ for user $x^{i}$.\\
+
+\[
+\mathbb{P} \left ( z^{i}| x^{i}, \theta \right ) = \prod_{j=1}^{|z^i|} p^{z^i_j} (1 -
+ p )^{1 - z^i_j}
+\]
+
+$p = \sigma(t)$ (sigmoid function)\\
+
+2. Write down the complete likelihood expression for the observed data 
+\[
+\mathbb{P}[b^{i}|x^{i}, W] = \frac{1}{2\pi\sigma^{2}}\exp( - \frac{(b^{i} - \left \langle  W[i], C\right \rangle)^{2}}{\sigma^{2}})
+\]
+
+\[
+\mathbb{P}[b|X, W] = \prod_{i=1}^{n} \frac{1}{2\pi\sigma^{2}}\exp( - \frac{(b^{i} - \left \langle  W[i], C\right \rangle)^{2}}{\sigma^{2}})
+\]
+
+C is the cost vector of items.
+
+3. Hard-assignment alternating optimization algorithm\\
+
+i) Initialize $\theta^{0} = [W^{0,0}, W^{0,1}, ... , W^{0, 2^L-1}]$\\
+
+ii) For i \in $[n]$, \text{update}\; $z^{i,t}$ using $\theta^{t}$
+    Let $z^{i,t}$ = \arg \max_{k \in [2^L]} \mathbb{P} [b^{i} | x^{i}, W^{k,t}] 
+
+iii) \[
+W^{t+1, k} = \arg \min_{w} \sum_{i:z^{i,t} = k} (b^i - \left \langle W, C \right \rangle)^2 + \sum_{i=1}^{n}\lambda_{i}(z_{i}.C - b)
+\]
+
+iv) Set $\theta^{t+1} = [W^{t+1,0}, W^{t+1,1}, ... , W^{t+1, 2^L-1}]$\\
+
+v) Repeat until convergence.
 \end{mlsolution}
 
 \begin{mlsolution}

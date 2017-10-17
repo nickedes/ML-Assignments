@@ -99,20 +99,20 @@ def main():
         # Take a snapshot after every few iterations
         # Take snapshots after every spacing = 5000 or so SCD
         # iterations since they are fast
-        # if t % spacing == 0:
-        #     # Stop the timer - we want to take a snapshot
-        #     t_now = datetime.now()
-        #     delta = t_now - t_start
-        #     time_elapsed[tick] = ttot + delta.total_seconds()
-        #     ttot = time_elapsed[tick]
-        #     tick_vals[tick] = tick
-        #     theotime_vals[tick] = tick_vals[tick]*spacing*d
-        #     # Calculate the objective dual value f(w) for the current model w
-        #     obj_val[tick] = calculate_F(w, Xtr, Ytr)
-        #     print(t, obj_val[tick])
-        #     tick = tick+1
-        #     # Start the timer again - training time!
-        #     t_start = datetime.now()
+        if t % spacing == 0:
+            # Stop the timer - we want to take a snapshot
+            t_now = datetime.now()
+            delta = t_now - t_start
+            time_elapsed[tick] = ttot + delta.total_seconds()
+            ttot = time_elapsed[tick]
+            tick_vals[tick] = tick
+            theotime_vals[tick] = tick_vals[tick]*spacing*d
+            # Calculate the objective dual value f(w) for the current model w
+            obj_val[tick] = calculate_F(w, Xtr, Ytr)
+            # print(t, obj_val[tick])
+            tick = tick+1
+            # Start the timer again - training time!
+            t_start = datetime.now()
 
     w_final = w
     # print("Dual - ", calculate_dual(w_final, d_alpha))
