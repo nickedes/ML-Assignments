@@ -1,0 +1,301 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{mlsubmit}
+\begin{document}
+
+\initmlsubmision{3}                              					% assignment number
+								{Nikhil Mittal}      						           		% your name
+								{17111056}																		% your roll number
+
+\begin{mlsolution}
+\end{mlsolution}
+
+\begin{mlsolution}
+\end{mlsolution}
+
+\begin{mlsolution}
+\begin{mlalgorithm}
+
+
+1. Initialize $\alpha_{0}$\\
+
+2. Receive data point $z^{t} = (x^{t}, y^{t})$ \\
+
+3. a = $\sum_{m} \alpha_{m} K( x^{m}, x^{t})$\\
+
+4. If {$y^{t}a \leq 0$} then follow step 5\\
+
+5. Update $\alpha_{t} = \alpha_{t} + y^{t}$\\
+
+6. Repeat
+
+\end{mlalgorithm}
+
+By Perceptron Representer Theorem, 
+\[
+    w = \sum_{m} \alpha_{m} \phi(x^{m})
+\]
+
+So calculating $w$ not needed, its expression can be directly used to get value $<w, \phi(x)>$ at test time.
+
+So for a test point $x$,
+\[
+<w, \phi(x)> \;= \;< \sum_{m} \alpha_{m} \phi(x_{m}), \phi(x)>\;
+            = \;\sum_{m} \alpha_{m} < \phi(x_{m}), \phi(x) >
+\]
+
+then,
+
+\[
+<w, \phi(x)> \;= \;\sum_{m} \alpha_{m} K( x^{m}, x)
+\]
+
+\end{mlsolution}
+
+\begin{mlsolution}
+
+3.4.1
+
+\[
+K(z^{1}, z^{2}) = (\left \langle z^{1}, z^{2} \right \rangle + 1)^{2}
+\]
+
+where \[z^{1} = (x^{1}, y^{1}), z^{2}=(x^{2}, y^{2})\]
+
+\[
+
+(\left \langle z^{1}, z^{2} \right \rangle + 1)^{2} = 1 + 2 \left \langle  z^{1}, z^{2} \right \rangle + \left \langle  z^{1}, z^{2} \right \rangle^{2}\\
+\]
+\[
+= 1  + 2(x^1x^2 + y^1y^2) + (x^1x^2 + y^1y^2)^2
+\]
+\[
+= 1 + 2x^1x^2 + 2y^1y^2 + (x^1x^2)^2 + (y^1y^2)^2 + 2x^1x^2y^1y^2
+\]
+\[
+= 1 + 2x^1x^2 + 2y^1y^2 + (x^1x^2)^2 + (y^1y^2)^2 + x^1x^2y^1y^2 + x^1x^2y^1y^2
+\]
+\[
+= 1.1 + \sqrt{2}x^1.\sqrt{2}x^2 + \sqrt{2}y^1.\sqrt{2}y^2 + (x^1)^2.(x^2)^2 + (y^1)^2.(y^2)^2 + (x^1x^2).(y^1y^2) + (x^2x^1).(y^2y^1)
+\]
+
+\[
+= (1, \sqrt{2}x^1, \sqrt{2}y^1,(x^1)^2, (y^1)^2, x^1y^1, y^1x^1)^T(1, \sqrt{2}x^2, \sqrt{2}y^2,(x^2)^2, (y^2)^2, x^2y^2, y^2x^2)
+\]
+
+\[
+= \left \langle \phi(z^1), \phi(z^2) \right \rangle
+\]
+
+where 
+\[
+
+\phi(z^1) = (1, \sqrt{2}x^1, \sqrt{2}y^1,(x^1)^2, (y^1)^2, x^1y^1, y^1x^1)
+
+\]
+
+$\mathcal{H}_{K}$ = R^{7}
+
+So, D is 7.
+\newpage
+3.4.2
+
+Let $w = \left (  w_1, w_2, w_3, w_4, w_5, w_6, w_7\right )$\\
+
+and
+
+\[
+\phi(z^1) = (1, \sqrt{2}x^1, \sqrt{2}y^1,(x^1)^2, (y^1)^2, x^1y^1, y^1x^1)
+\]
+
+$\left \langle w, \phi(z) \right \rangle = w_1 + \sqrt{2}xw_2 + \sqrt{2}yw_3 + x^2w_4 + xyw_5 + yxw_6 + y^2w_7$
+\\
+
+Let
+\[
+A =\begin{bmatrix}
+a & b'\\ 
+c' & d
+\end{bmatrix}
+\\
+and\;
+b = \begin{bmatrix}
+e\\
+f
+\end{bmatrix}
+\]
+
+\[
+z = \begin{bmatrix}
+x\\
+y
+\end{bmatrix}
+\]
+
+So,  
+\[
+\left \langle z, Az \right \rangle = \begin{bmatrix}
+x\\
+y
+\end{bmatrix}^T\begin{bmatrix}
+a & b'\\ 
+c' & d
+\end{bmatrix}*\begin{bmatrix}
+x\\
+y
+\end{bmatrix}
+\]
+
+\[
+\left \langle b, z \right \rangle = ex + fy
+\]
+
+\[
+f_(_A_,_b_,_c_)(z) = ax^2 + b'xy + c'yx + dy^2 + ex + fy + c
+\]
+
+Comparing
+\[
+\left \langle w, \phi(z) \right \rangle \;and\; f_(_A_,_b_,_c_)(z)
+\]
+
+we get, (on comparing coefficients of x, y, x^2, y^2, xy and constant term)
+
+So, 
+
+\[
+    w_1 = c 
+\]
+\[
+    \sqrt{2}x w_2  = ex
+\]
+\[
+    \sqrt{2}y w_3  = fy
+\]
+\[
+x^2w_4 = ax^2
+\]
+\[
+xyw_5 = b'xy
+\]
+\[
+yxw_6 = c'yx
+\]
+\[
+y^2w_7 = dy^2
+\]
+
+Hence,
+\[
+w_1 = c, w_2 = e/\sqrt{2}, w_3 = f/\sqrt{2}, w_4 = a, w_5 = b', w_6 = c'
+, w_7 = d\]\\
+
+$w = \left (  c, \frac{e}{\sqrt{2}}, \frac{f}{\sqrt{2}}, a, b', c', d\right )$\\
+
+\newpage
+
+3.4.3
+
+Given, $w = \left (  w_1, w_2, w_3, w_4, w_5, w_6, w_7\right )$\\
+
+Let
+\[
+A =\begin{bmatrix}
+a & b'\\ 
+c' & d
+\end{bmatrix}
+\\
+and\;
+b = \begin{bmatrix}
+e\\
+f
+\end{bmatrix}
+\]
+
+\[
+z = \begin{bmatrix}
+x\\
+y
+\end{bmatrix}
+\]
+
+So,  
+\[
+\left \langle z, Az \right \rangle = \begin{bmatrix}
+x\\
+y
+\end{bmatrix}^T\begin{bmatrix}
+a & b'\\ 
+c' & d
+\end{bmatrix}*\begin{bmatrix}
+x\\
+y
+\end{bmatrix}
+\]
+
+\[
+\left \langle b, z \right \rangle = ex + fy
+\]
+
+\[
+f_(_A_,_b_,_c_)(z) = ax^2 + b'xy + c'yx + dy^2 + ex + fy + c
+\]
+
+Comparing
+\[
+f_(_A_,_b_,_c_)(z) \;and\; \left \langle w, \phi(z) \right \rangle
+\]
+
+
+we get, (on comparing coefficients of x, y, x^2, y^2, xy \text{ and constant term})
+
+\[
+    c  = w_1
+\]
+\[
+    ex = \sqrt{2}x w_2
+\]
+\[
+    fy = \sqrt{2}y w_3 
+\]
+\[
+    ax^2 = x^2w_4
+\]
+\[
+    b'xy = xyw_5 
+\]
+\[
+    c'yx = yxw_6
+\]
+\[
+    dy^2 = y^2w_7
+\]
+
+Hence,
+\[
+c = w_1, e = \sqrt{2}w_2, f = \sqrt{2}w_3, a = w_4, b' = w_5, c' = w_6, d = w_7
+\]\\
+
+Therefore,
+
+\[
+A =\begin{bmatrix}
+w_4 & w_5\\ 
+w_6 & w_7
+\end{bmatrix}
+\\
+and\;
+b = \begin{bmatrix}
+\sqrt{2}w_2\\
+\sqrt{2}w_3
+\end{bmatrix}
+\]
+
+and
+\[
+c = w_1
+\]
+
+\end{mlsolution}
+
+\end{document}\\
