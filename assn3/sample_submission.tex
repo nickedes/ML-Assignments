@@ -368,24 +368,24 @@ Let,
 Likelihood Expression : 
 
 \[
-\mathbb{P}(x^i | \mu, W, \sigma^2) = \frac{1}{\sqrt{(2\pi)^D |C|}} \exp\left ( -\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2} \right )
+\mathbb{P}(x^i | \mu, W, \sigma^2) = \frac{1}{\sqrt{(2\pi)^D |C|}} \exp\left ( -\frac{(x_i - \mu)^TC^{-1}(x_i - \mu)}{2} \right )
 \]
 
 Taking log 
 
 \[
-\log\mathbb{P}(x^i | \mu, W, \sigma^2) = -\frac{D}{2}\log2\pi - \frac{\log|C|}{2}   -\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2}
+\log\mathbb{P}(x^i | \mu, W, \sigma^2) = -\frac{D}{2}\log2\pi - \frac{\log|C|}{2}   -\frac{(x_i - \mu)^TC^{-1}(x_i - \mu)}{2}
 \]
 
 \[
 \sum_i \log\mathbb{P}(x^i | \mu, W, \sigma^2) = 
 \sum_i \left (
--\frac{D}{2}\log2\pi - \frac{\log|C|}{2}   -\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2} \right )
+-\frac{D}{2}\log2\pi - \frac{\log|C|}{2}   -\frac{(x_i - \mu)^TC^{-1}(x_i - \mu)}{2} \right )
 \]
 
 \[
 \sum_i \log\mathbb{P}(x^i | \mu, W, \sigma^2) = 
--\frac{ND}{2}\log2\pi - \frac{N\log|C|}{2} - \sum_i\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2}
+-\frac{ND}{2}\log2\pi - \frac{N\log|C|}{2} - \sum_i\frac{(x_i - \mu)^TC^{-1}(x_i - \mu)}{2}
 \]
 
 \[
@@ -403,16 +403,58 @@ Taking log
 \textbf{Complete Likelihood Expression : }
 
 \[
-\log \mathbb{P}(X | \mu, W, \sigma^2) =-\frac{ND}{2}\log2\pi - \frac{N\log|C|}{2} - \sum_i\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2}
+\log \mathbb{P}(X | \mu, W, \sigma^2) =-\frac{ND}{2}\log2\pi - \frac{N\log|C|}{2} - \sum_i\frac{(x_i - \mu)^TC^{-1}(x_i - \mu)}{2}
 \]
 
 \[
-\log \mathbb{P}(X | \mu, W, \sigma^2) =-\frac{N}{2} \left ( D\log2\pi + \log|C| + \frac{1}{N}\sum_i\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2} \right )
+\log \mathbb{P}(X | \mu, W, \sigma^2) =-\frac{N}{2} \left ( D\log2\pi + \log|C| + \frac{1}{N}\sum_i\frac{(x_i - \mu)^TC^{-1}(x_i - \mu)}{2} \right )
 \]
 
-\textbf{Derivation for } \textbf{\mu}^{MLE}:
+\textbf{Derivation for } \textbf{\mu}^{MLE}:\\
 
-Taking 
+Taking derivative w.r.t \mu
+
+\[
+\frac{d}{d\mu} \log \mathbb{P}(X | \mu, W, \sigma^2) = \frac{d}{d\mu} \left ( -\frac{N}{2} \left ( D\log2\pi + \log|C| + \frac{1}{N}\sum_i\frac{(x_i - \mu)^TC^{-1}(x_i - \mu)}{2} \right ) \right )
+\]
+
+\[
+\frac{d}{d\mu} \log \mathbb{P}(X | \mu, W, \sigma^2) = \frac{-1}{2} \frac{d}{d\mu} \left ( \sum_i (x_i - \mu)^TC^{-1}(x_i - \mu) \right )
+\]
+
+Setting this to Zero,
+\[
+\frac{d}{d\mu} \left ( \sum_i (x_i - \mu)^TC^{-1}(x_i - \mu) \right ) = 0
+\]
+
+\[
+\left ( \sum_i (-2 C^{-1})(x_i - \mu) \right ) = 0
+\]
+
+Hence,
+
+\[
+\sum_i (x_i - \mu) = 0
+\]
+
+\[
+\sum_i (x_i) - \sum_i (\mu) = 0
+\]
+
+\[
+\sum_i (x_i) - n\mu = 0
+\]
+
+So,
+\[
+\mu = \frac{1}{n}\sum_i x_i
+\]
+
+The Expression is :
+
+\[
+\mu^{MLE} = \frac{1}{n}\sum_i x_i
+\]
 
 \end{mlsolution}
 \end{document}\\
