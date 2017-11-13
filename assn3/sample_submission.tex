@@ -355,14 +355,64 @@ Cov[x] = \mathbb{E}[(Wz + \mu + \epsilon)(Wz + \mu + \epsilon)^T]
 \]
 
 \[
-=  \mathbb{E}[Wzz^TW^T] + \mathbb{E}[\epsilon\epsilon^T]
+=  \mathbb{E}[WW^T] + \mathbb{E}[\epsilon\epsilon^T]
 \]
 \[
-=  \mathbb{E}[Wzz^TW^T] + \mathbb{E}[\epsilon\epsilon^T]
+=  WW^T + \sigma^2I_d
 \]
+
+Let,
+ \[
+    C = WW^T + \sigma^2I_d
+ \]
+Likelihood Expression : 
+
 \[
-=  Wzz^TW^T + \sigma^2I_d
+\mathbb{P}(x^i | \mu, W, \sigma^2) = \frac{1}{\sqrt{(2\pi)^D |C|}} \exp\left ( -\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2} \right )
 \]
+
+Taking log 
+
+\[
+\log\mathbb{P}(x^i | \mu, W, \sigma^2) = -\frac{D}{2}\log2\pi - \frac{\log|C|}{2}   -\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2}
+\]
+
+\[
+\sum_i \log\mathbb{P}(x^i | \mu, W, \sigma^2) = 
+\sum_i \left (
+-\frac{D}{2}\log2\pi - \frac{\log|C|}{2}   -\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2} \right )
+\]
+
+\[
+\sum_i \log\mathbb{P}(x^i | \mu, W, \sigma^2) = 
+-\frac{ND}{2}\log2\pi - \frac{N\log|C|}{2} - \sum_i\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2}
+\]
+
+\[
+\mathbb{P}(X | \mu, W, \sigma^2) = \prod_i\mathbb{P}(x^i | \mu, W, \sigma^2) 
+\]
+
+\[
+\log \mathbb{P}(X | \mu, W, \sigma^2) = \log \prod_i\mathbb{P}(x^i | \mu, W, \sigma^2) 
+\]
+
+\[
+\log \mathbb{P}(X | \mu, W, \sigma^2) = \sum_i \log \mathbb{P}(x^i | \mu, W, \sigma^2) 
+\]
+
+\textbf{Complete Likelihood Expression : }
+
+\[
+\log \mathbb{P}(X | \mu, W, \sigma^2) =-\frac{ND}{2}\log2\pi - \frac{N\log|C|}{2} - \sum_i\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2}
+\]
+
+\[
+\log \mathbb{P}(X | \mu, W, \sigma^2) =-\frac{N}{2} \left ( D\log2\pi + \log|C| + \frac{1}{N}\sum_i\frac{(x_n - \mu)^TC^{-1}(x_n - \mu)}{2} \right )
+\]
+
+\textbf{Derivation for } \textbf{\mu}^{MLE}:
+
+Taking 
 
 \end{mlsolution}
 \end{document}\\
