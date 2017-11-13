@@ -298,4 +298,71 @@ c = w_1
 
 \end{mlsolution}
 
+\begin{mlsolution}
+
+Given
+\[
+\P{\vz} = \cN(\vzero,I_k) \in \bR^k,
+\]
+whereupon an affine transformation is applied to them and noise is added to produce the observed data point, i.e. for $W \in \bR^{d\times k}, \vmu \in \bR^d, \sigma \geq 0$
+\[
+\P{\vx\cond\vz} = \cN(\vx\cond W\vz+\mu, \sigma^2\cdot I_d) \in \bR^d.
+\]
+Now using conjugacy properties of the Gaussian ([\textbf{BIS}] Chapter 12), we can show that
+\[
+\P{\vx} = \int_{\vz}\P{\vx\cond\vz}\P{\vz}\ d\vz = \cN(\vx\cond\vmu,C),
+\]
+where $C = WW^\top + \sigma^2\cdot I_d$. For a dataset $X = \bs{\vx^1,\ldots,\vx^n}$, write down the complete expression for the data log-likelihood $\P{X\cond\vmu,W,\sigma}$. Do not ignore constants in your expression. Then derive an expression for $\vmu^{\text{MLE}} = \underset{\vmu\in\bR^d}{\arg\max}\ \P{X\cond\vmu,W,\sigma}$. Show all steps. 
+
+Here, To find the mean and covariance of data X :
+
+\[
+\mathbb{E}[\textbf{x}] = \mathbb{E}[Wz + \mu + \epsilon]
+\]
+
+By, linearity of expectaion,
+
+\[
+ =  \mathbb{E}[Wz] + \mathbb{E}[\mu] + \mathbb{E}[\epsilon] 
+\]
+
+Given,
+\[
+\mathbb{E}[z] = 0,\; \mathbb{E}[\epsilon]\; =\; 0 \;and \;\mathbb{E}[\mu]\; = \;\mu 
+\]
+
+So, 
+\[
+\mathbb{E}[\textbf{x}] =  \mathbb{E}[Wz] + \mathbb{E}[\mu] + \mathbb{E}[\epsilon] = \mu
+\]
+
+Now, Covariance 
+
+\[
+Cov[x] = \mathbb{E}[(Wz + \mu + \epsilon)(Wz + \mu + \epsilon)^T]
+\]
+\[
+=  \mathbb{E}[(Wz + \mu + \epsilon)(z^TW^T + \mu^T + \epsilon^T)]
+\]
+\[
+=  \mathbb{E}[(Wzz^TW^T + \mu\mu^T + \epsilon\epsilon^T)]
+\]
+\[
+=  \mathbb{E}[(WW^T + \mu\mu^T + \epsilon\epsilon^T)]
+\]
+\[
+=  \mathbb{E}[WW^T] + \mathbb{E}[\mu\mu^T] + \mathbb{E}[\epsilon\epsilon^T]
+\]
+
+\[
+=  \mathbb{E}[Wzz^TW^T] + \mathbb{E}[\epsilon\epsilon^T]
+\]
+\[
+=  \mathbb{E}[Wzz^TW^T] + \mathbb{E}[\epsilon\epsilon^T]
+\]
+\[
+=  Wzz^TW^T + \sigma^2I_d
+\]
+
+\end{mlsolution}
 \end{document}\\
