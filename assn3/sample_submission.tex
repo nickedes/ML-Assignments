@@ -14,21 +14,22 @@
 \end{mlsolution}
 
 \begin{mlsolution}
-\begin{mlalgorithm}
-
-
-1. Initialize $\alpha_{0}$\\
-
-2. Receive data point $z^{t} = (x^{t}, y^{t})$ \\
-
-3. a = $\sum_{m} \alpha_{m} K( x^{m}, x^{t})$\\
-
-4. If {$y^{t}a \leq 0$} then follow step 5\\
-
-5. Update $\alpha_{t} = \alpha_{t} + y^{t}$\\
-
-6. Repeat
-
+\begin{mlalgorithm}[0.9\textwidth]{h!}{kernelized perceptron}\vskip-2ex
+	\label{algo:tk-means}
+	\begin{algorithmic}[1]
+		\REQUIRE Data $\vx^1,\ldots,\vx^n$ in online way
+		\STATE $\mathbf{\alpha} \leftarrow 0$\hfill //Initialize as 0 vector
+		
+		\STATE Receive data point $z^{t} = (x^{t}, y^{t})$\newline
+// Compute Activation i.e. $\left \langle w, \phi(x^t) \right \rangle$, no need to compute feature map. By Perceptron Representer Theorem $w = \sum_{m} \alpha_{m} \phi(x^{m})$.
+		So, $\left \langle w, \phi(x^t) \right \rangle = \left \langle \sum_{m} \alpha_{m} \phi(x^m), \phi(x^t) \right \rangle = \sum_{m} \alpha_{m} \left \langle  \phi(x^m), \phi(x^t) \right \rangle$ which is $\sum_{m} \alpha_{m} K( x^{m}, x^{t})$\newline
+		\STATE Compute a $\leftarrow \sum_{m} \alpha_{m} K( x^{m}, x^{t})$ \\ 
+		\\
+		\IF{$y^{t}a \leq 0$}
+		\STATE  $\alpha_{t} = \alpha_{t} + y^{t}$ // Make updates only when making a mistake\\
+		
+		\ENDIF
+	\end{algorithmic}
 \end{mlalgorithm}
 
 By Perceptron Representer Theorem, 
@@ -40,14 +41,14 @@ So calculating $w$ not needed, its expression can be directly used to get value 
 
 So for a test point $x$,
 \[
-<w, \phi(x)> \;= \;< \sum_{m} \alpha_{m} \phi(x_{m}), \phi(x)>\;
-            = \;\sum_{m} \alpha_{m} < \phi(x_{m}), \phi(x) >
+\left \langle w, \phi(x) \right \rangle \;= \;\left \langle \sum_{m} \alpha_{m} \phi(x_{m}), \phi(x)\right \rangle\;
+            = \;\sum_{m} \alpha_{m} \left \langle \phi(x_{m}), \phi(x) \right \rangle
 \]
 
 then,
 
 \[
-<w, \phi(x)> \;= \;\sum_{m} \alpha_{m} K( x^{m}, x)
+\left \langle w, \phi(x) \right \rangle \;= \;\sum_{m} \alpha_{m} K( x^{m}, x)
 \]
 
 \end{mlsolution}
@@ -312,7 +313,7 @@ Now using conjugacy properties of the Gaussian ([\textbf{BIS}] Chapter 12), we c
 \[
 \P{\vx} = \int_{\vz}\P{\vx\cond\vz}\P{\vz}\ d\vz = \cN(\vx\cond\vmu,C),
 \]
-where $C = WW^\top + \sigma^2\cdot I_d$. For a dataset $X = \bs{\vx^1,\ldots,\vx^n}$, write down the complete expression for the data log-likelihood $\P{X\cond\vmu,W,\sigma}$. Do not ignore constants in your expression. Then derive an expression for $\vmu^{\text{MLE}} = \underset{\vmu\in\bR^d}{\arg\max}\ \P{X\cond\vmu,W,\sigma}$. Show all steps. 
+where $C = WW^\top + \sigma^2\cdot I_d$. For a dataset $X = \bs{\vx^1,\ldots,\vx^n}$.\\
 
 Here, To find the mean and covariance of data X :
 
@@ -339,21 +340,17 @@ So,
 Now, Covariance 
 
 \[
-Cov[x] = \mathbb{E}[(Wz + \mu + \epsilon)(Wz + \mu + \epsilon)^T]
+Cov[x] = \mathbb{E}[(Wz + \epsilon)(Wz + \epsilon)^T]
 \]
 \[
-=  \mathbb{E}[(Wz + \mu + \epsilon)(z^TW^T + \mu^T + \epsilon^T)]
+=  \mathbb{E}[(Wz + \epsilon)(z^TW^T + \epsilon^T)]
 \]
 \[
-=  \mathbb{E}[(Wzz^TW^T + \mu\mu^T + \epsilon\epsilon^T)]
+=  \mathbb{E}[(Wzz^TW^T + \epsilon\epsilon^T)]
 \]
 \[
-=  \mathbb{E}[(WW^T + \mu\mu^T + \epsilon\epsilon^T)]
+=  \mathbb{E}[(WW^T + \epsilon\epsilon^T)]
 \]
-\[
-=  \mathbb{E}[WW^T] + \mathbb{E}[\mu\mu^T] + \mathbb{E}[\epsilon\epsilon^T]
-\]
-
 \[
 =  \mathbb{E}[WW^T] + \mathbb{E}[\epsilon\epsilon^T]
 \]
