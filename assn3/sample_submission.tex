@@ -8,10 +8,225 @@
 								{17111056}																		% your roll number
 
 \begin{mlsolution}
+
+To show :\\
+\[
+\theta^{MLE} \in \underset{\theta \; \in \; \Theta }{\arg \max} \; Q_{\theta^{MLE}} (\theta)\\
+\]
+Given, MLE model 
+\[
+\vtheta^{\text{MLE}} \in \Theta \text{ such that } \vtheta^{\text{MLE}} \in \underset{\vtheta \in \Theta}{\arg\max}\ \P{X\cond\vtheta}
+\]
+
+So,
+
+\[
+\underset{\theta \in \Theta}{max} \; \mathbb{P} [X|\theta] = \mathbb{P}[X|\theta^{MLE}]
+\]
+
+Taking log both sides :
+
+\[
+\underset{\theta \in \Theta}{max} \; \log\mathbb{P} [X|\theta] =\log \mathbb{P}[X|\theta^{MLE}] \;\;\;\;\;\;\;- (1)
+\]
+
+From Lecture 16,Slide 33
+\[
+\log\mathbb{P} [X|\theta] \geq Q_{\theta^t}(\theta) \;\forall \;\theta^t \in \Theta
+\]
+
+Since the above is true for any $\theta$ hence will be true for $\theta^{MLE}$ also.
+
+\[
+\log\mathbb{P} [X|\theta] \geq Q_{\theta^{MLE}}(\theta)
+\]
+
+Hence, 
+
+\[
+\underset{\theta \in \Theta}{\max} \;\log\mathbb{P} [X|\theta] \geq \underset{\theta \in \Theta}{\max} \;Q_{\theta^{MLE}}(\theta)
+\]
+
+Using (1), we get
+\[
+\log \mathbb{P}[X|\theta^{MLE}] \geq \underset{\theta \in \Theta}{\max} \;Q_{\theta^{MLE}}(\theta)   \;\;\;\;-(2)
+\]
+
+From Lecture16,Slide 44
+
+We proved in class,
+
+\[
+\log \mathbb{P}[X|\theta^{0}] = \;Q_{\theta^{0}}(\theta^{0})
+\]
+
+Hence this will be true for $\theta^{MLE}$ also, since $\theta^{MLE} \in \Theta$
+
+\[
+\implies \log \mathbb{P}[X|\theta^{MLE}] = \;Q_{\theta^{MLE}}(\theta^{MLE})
+\]\\
+
+Using above result and (2), we get
+
+\[
+Q_{\theta^{MLE}}(\theta^{MLE}) \geq \underset{\theta \in \Theta}{\max} \;Q_{\theta^{MLE}}(\theta)
+\]
+
+Hence,
+\[
+\theta^{MLE} \in \underset{\theta \; \in \; \Theta }{\arg \max} \; Q_{\theta^{MLE}} (\theta)\\
+\]
+
 \end{mlsolution}
 
 \begin{mlsolution}
+An $n$-partition of a set $\cX$ is a collection of $n$ subsets $\bc{\cX_1,\ldots,\cX_n}$ such that each $\cX_i \subseteq \cX$ and
+\begin{itemize}
+    \item $\cX_i \cap \cX_j = \phi$ if $i \neq j$
+    \item $\bigcup_{i=1}^n \cX_i = \cX$
+\end{itemize}
+
+\begin{enumerate}
+\item
+To show: for a linear piecewise function $f(x)$, $c \cdot f(x)$ is also piecewise linear.\
+
+A piecewise linear function $f: \bR^d \rightarrow \bR$ with $n > 0$ ``pieces'' is indexed by an $n$-partition $\bc{\Omega_1,\ldots,\Omega_n}$ of $\bR^d$ and $n$ linear models $\vw^1,\ldots,\vw^n$ such that for any $\vx \in \bR^d$.
+ 
+\[f(\vx) = \sum_{i=1}^n \ind{\vx \in \Omega_i}\cdot\ip{\vw^i}{\vx},\]
+
+\begin{align}
+ g(\vx) = c \cdot f(\vx)\\
+ = c \cdot \sum_{i=1}^n \ind{\vx \in \Omega_i}\cdot\ip{\vw^i}{\vx}\\
+ = \sum_{i=1}^n \ind{\vx \in \Omega_i}\cdot c \cdot \ip{\vw^i}{\vx}\\
+ = \sum_{i=1}^n \ind{\vx \in \Omega_i}\cdot \ip{c \vw^i}{\vx} 
+\end{align}
+
+To define $g$ from the definition of $f$, we only require to update all $\vw^i $ to be $c\vw^i$, $c\vw^i$ is also a linear model. Hence this definition of $g$ does not change the partition and the piecewise nature of the function.\\
+Hence $g(\vx) = c \cdot f(\vx) $ is a piecewise function defined on same partition set with scaled model vectors.
+
+\item
+To show, sum of 2 piecewise linear functions is also linear.
+
+Let,  
+\[f(\vx) = \sum_{i=1}^n \ind{\vx \in \Omega_i^f}\cdot\ip{\vw^i}{\vx},\]
+defined on an $n$-partition of $\bD $ is a collection of $n$ subsets $\bc{\Omega_1^f,\ldots,\Omega_n^f}$ and set of model vectors $\bc {\vw^1, \ldots \vw^n }$
+
+and
+
+\[g(\vx) = \sum_{i=1}^m \ind{\vx \in \Omega_i^g}\cdot\ip{\vv^i}{\vx},\]
+defined on an $n$-partition of $\bD $ is a collection of $n$ subsets $\bc{\Omega_1^g,\ldots,\Omega_m^g}$ and set of model vectors $\bc {\vv^1, \ldots \vv^m }$
+
+to define the sum of above function, $(f+g)(x) = f(x)+g(x)$, we define new partition set as:
+$ \Omega  = \bc {\Omega_{11}, \Omega_{12} \ldots \Omega_{1m} \ldots \Omega_{nm}} $
+
+where,
+$x \in \Omega_{ij} \text {\textit{ iff}}  x \in \Omega_i^f  \textbf{ and } x \in \Omega_j^g$
+
+\begin{claim}
+$\Omega$ is a partition of $\vD$
+\end{claim}
+\begin{proof}
+\begin{enumerate}
+
+\item To show : $\Omega_{ij} \cap \Omega_{pq} = \phi \text{\textbf{\textit{ iff }}}  i \neq p \text{\textbf{ OR }} j \neq m $
+
+let, $\Omega_{ij} \cap \Omega_{pq} \neq \phi$ for some $i,j,p,q$
+\begin{align}
+i.e., \vx \in \Omega_{ij} \cap \Omega_{pq}\\
+\implies \vx \in \Omega_{ij}\\
+\implies \vx \in \Omega_{i}^f \text{ and } \vx \in \Omega_{j}^g\\
+\text{also, } \vx \in \Omega_{pq}\\
+\implies \vx \in \Omega_{p}^f \text{ and } \vx \in \Omega_{q}^g
+\end{align}
+now if either $i \neq p$ or $j \neq q$ we have at least one common element in intersection of 2 different partitions of either $f$ or $g$, contradicting that $\Omega^f$ and $\Omega^g$ are partitions of $\vD$.
+
+\item $\bigcup_{i=1, j=1}^{i=n, j=m} \Omega_{ij} = \vD$
+\iffalse
+To see that $\Omega$ spans whole $\vD$, notice that the construction is similar to getting all cartesian products of $\Omega^f$ and $\Omega^g$,
+\fi
+
+\[ \forall \vx \in \vD, \exists i \vx \in \Omega^f_i \]
+\[ \forall \vx \in \vD, \exists j \vx \in \Omega^g_j \]
+\[ \implies \forall \vx \in \vD \exists i,j \vx \in \Omega_{ij} \]
+\end{enumerate}
+\end{proof}
+New partition is a valid partition for the "sum of functions" definition below:
+\[ 
+    f(\vx) + g(\vx) = \sum_{i=1}^{m} \sum_{j=1}^{n} \ind{\vx \in \Omega_{ij}} ( \ip{\vw^i}{\vx} + \ip{\vv^j}{\vx}
+\]
+
+\[ 
+    = \sum_{i=1}^{m} \sum_{j=1}^{n} \ind{\vx \in \Omega_{ij}} ( \ip{\vw^i + \vv^j}{\vx} )
+\]
+
+\item
+To show: if $f(\vx)$ is peicewise linear then $g(\vx) = f_{ReLU}(f(\vx)) $ is piecewise linear as well.
+\[ 
+    f_{ReLU}(f(\vx)) = \max(f(\vx), 0)
+\]
+
+$\forall \Omega_i \in \Omega$ partition $\Omega_i$ into 
+\[ \Omega_i^{0} = \bc{ \vx's | f(\vx) < 0} \]
+and
+\[ \Omega_i^{1} = \bc{ \vx's | f(\vx) \geq 0} \]
+
+Note that some of new partitions might be empty, but that does not break the definition of partition given above.
+
+And $\vw$ is updated as $ \vw^{i0}  = \textbf{0}$ and $\vw^{i1} = \vw^i$
+
+We have new $n'$-partition of the domain, with new $n'$ model vectors.
+
+With updated $\Omega$ and $\vw$ $f_{ReLU}$ is 
+
+$f_{ReLU}(f(x)) = \sum_{i=1}^{n'} \ind{\vx \in \Omega_{i}} ( \ip{\vw^i}{\vx} )$ which is piecewise linear with new $\Omega$.
+
+\item To show that neural nets with $f_{ReLU}$ activation constructs piecewise linear functions
+
+
+\textbf{Proof idea:} From (1) and (2) we have shown that any linear combination of piecewise linear functions is also piecewise linear. Also in part $(3)$ we proved, $f_{ReLU}(f(\vx))$ is 
+
+\textit{Proof by Induction on number of layers}
+
+Base case:
+
+let NN be a neural net with only one layer of activation. 
+
+
+\begin{figure}[th]%
+\centering
+\includegraphics[width=0.8\columnwidth]{nn.png}%
+\hfill
+\caption{}%
+\label{fig:proto}%
+\end{figure}
+
+Evaluation, $ \sum_{i=1}^{n_1}{\vw_i \cdot \vx_i }$ is a Piecewise Linear function.
+
+and the activation layer is $f_{ReLU}(g(\vx))$.
+
+From part $(3)$ we conclude output for above neural network is linearly piecewise.
+
+$P(1)$ is \textit{true}.
+
+Let's assume this claim is true for neural nets with $m$ layers. And let $z_i$ represent output of $i^{th}$ component of $m^{th}$ layer.
+
+Now adding a new layer $m+1$ above $m^{th}$ layer can be seen as: 
+
+Evaluation:
+$g = \sum_{i}{w^m_i \cdot z_i}$
+
+from $(1)$ and $(2)$, if $f(x)$ and $h(x)$ are piecewise linear, then so will be $g(x) = a \cdot f(x) + b \cdot h(x)$ for any scalars $ a, b$.
+
+given the $m^{th} $ layer outputs from each node as a piecewise linear function \iffalse (\textit{by induction hypothesis})\fi , Evaluation in $(m+1)^{st}$ layer is also piecewise linear.
+
+Next, (3) shows $f_{ReLU} (f(\vx))$ is piecewise linear for any piecewise linear $f(\vx)$,
+$implies$ output of $(m+1)^{st}$ layer is piecewise linear as well.
+
+
+
+\end{enumerate}
 \end{mlsolution}
+
 
 \begin{mlsolution}
 \begin{mlalgorithm}[0.9\textwidth]{h!}{kernelized perceptron}\vskip-2ex
@@ -454,4 +669,5 @@ The Expression is :
 \]
 
 \end{mlsolution}
-\end{document}\\
+
+\end{document}
